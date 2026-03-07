@@ -6,7 +6,8 @@
 
     // Trust keywords — gold
     "trust-keyword": {
-      pattern: /^(track|approve|sign|freeze|revision|policy|amendment)(?=:)/m,
+      pattern:
+        /^(track|approve|sign|freeze|revision|policy|amendment|history)(?=:)/m,
       alias: "keyword",
     },
 
@@ -44,7 +45,7 @@
 
     // Layout — gray
     "layout-keyword": {
-      pattern: /^(page|font|header|footer|watermark|signline)(?=:)/m,
+      pattern: /^(page|font|header|footer|watermark|signline|divider)(?=:)/m,
       alias: "operator",
     },
 

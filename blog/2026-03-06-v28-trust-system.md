@@ -71,7 +71,7 @@ When you seal a document with the CLI (`intenttext seal contract.it --signer "Ah
 
 Later, `intenttext verify contract.it` recomputes the hash and checks it against the seal. If anyone changed a single character, the verification fails.
 
-The trust data lives in the same `.it` file — below a history boundary (`---\n// history`). It's human-readable. It's version-controlled. It travels with the document.
+The trust data lives in the same `.it` file — below a `history:` boundary. It's human-readable. It's version-controlled. It travels with the document.
 
 ## The organizational use case
 

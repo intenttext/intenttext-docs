@@ -167,6 +167,70 @@ watermark: COPY | color: #cccccc | opacity: 0.12
 
 ---
 
+## `divider:`
+
+**Category:** Layout
+**Since:** v2.12
+**Aliases:** `hr:`, `separator:`
+
+Visible horizontal rule. Identical output to a bare `---` line, but supports style properties.
+
+### Syntax
+
+```
+divider:
+divider: | style: value
+---
+```
+
+### Properties
+
+| Property | Type   | Default | Description                              |
+| -------- | ------ | ------- | ---------------------------------------- |
+| `style`  | string | `solid` | Line style — `solid`, `dashed`, `dotted` |
+
+### Examples
+
+```intenttext
+divider:
+divider: | style: dashed
+divider: | style: dotted
+```
+
+### The `---` shorthand
+
+A bare `---` on its own line is equivalent to `divider:` with no properties. It always renders as a visible horizontal rule (`<hr>`).
+
+```intenttext
+note: Section one content.
+---
+note: Section two content.
+```
+
+As of v2.12, `---` is no longer reserved as a history boundary. It is a visible divider everywhere it appears.
+
+### `divider:` vs `break:`
+
+|              | `divider:` / `---`                 | `break:`                                |
+| ------------ | ---------------------------------- | --------------------------------------- |
+| **Visible**  | Yes — renders as `<hr>`            | No — invisible in web output            |
+| **Web**      | Horizontal rule                    | Hidden (`display:none`, `aria-hidden`)  |
+| **Print**    | Horizontal rule                    | Page break (`page-break-after: always`) |
+| **Use case** | Visual separation between sections | Force content to the next printed page  |
+
+### Notes
+
+- `---` and `divider:` produce identical output when no properties are set
+- Use `divider: | style: dashed` for a dashed line, `dotted` for dots
+- In print output, the divider renders as a printed horizontal line (not a page break)
+
+### Related
+
+- [`break:`](./structure#break) — invisible web, page break in print
+- [Migrating to v2.12 →](../../guide/migrating-to-v212)
+
+---
+
 ## `signline:`
 
 **Category:** Layout

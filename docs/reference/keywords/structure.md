@@ -64,14 +64,15 @@ note: A fee of 1.5% per month applies to overdue payments.
 
 ## `break:`
 
-**Category:** Structure / Layout
+**Category:** Structure
 **Since:** v1.0
 
-Visual or page break. In HTML, renders as a horizontal rule. In print, can force page breaks.
+Page break for print output. Invisible in web — renders as `display:none` with `aria-hidden="true"`. In print, forces a page break.
 
 ### Syntax
 
 ```
+break:
 break: | before: value | keep: value
 ```
 
@@ -88,6 +89,16 @@ break: | before: value | keep: value
 break:
 break: | before: true
 ```
+
+### `break:` vs `divider:`
+
+|              | `break:`                             | `divider:` / `---`          |
+| ------------ | ------------------------------------ | --------------------------- |
+| **Web**      | Invisible (`display:none`)           | Visible `<hr>`              |
+| **Print**    | Page break                           | Horizontal rule             |
+| **Use case** | Force next page in printed documents | Visual separation on screen |
+
+Use `break:` when you need content on the next printed page. Use `divider:` or `---` when you want a visible line between sections.
 
 ---
 

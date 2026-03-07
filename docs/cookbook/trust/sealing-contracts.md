@@ -64,7 +64,7 @@ The hash does **not** cover:
 
 - The `freeze:` block itself
 - Anything below `freeze:` (amendments, history)
-- The `---` history boundary and revisions below it
+- The `history:` boundary and revisions below it
 
 This is what makes amendments possible: they live after the `freeze:` block, so they don't break the original seal.
 

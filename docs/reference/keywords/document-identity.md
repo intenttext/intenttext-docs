@@ -141,7 +141,7 @@ context: Report Generator | goal: Produce monthly financial summary | constraint
 **Category:** Identity
 **Since:** v2.8
 
-Activates document history tracking. Once set, the CLI records revisions below the `---` history boundary.
+Activates document history tracking. Once set, the CLI records revisions below the `history:` boundary.
 
 ### Syntax
 
@@ -167,7 +167,7 @@ track: | version: 2.3 | by: Sarah Chen
 
 - `track:` content is typically empty — data is in properties
 - Required before `approve:`, `sign:`, or `freeze:` can be used
-- History is recorded below `---` as `revision:` blocks
+- History is recorded below `history:` as `revision:` blocks
 
 ### Related
 

@@ -11,7 +11,7 @@ You need a complete record of who changed what, when, and why — from first dra
 
 ## The solution
 
-`track:` enables revision tracking. The CLI records changes as `revision:` blocks below the `---` history boundary.
+`track:` enables revision tracking. The CLI records changes as `revision:` blocks below the `history:` boundary.
 
 ```intenttext
 title: Service Agreement v2.1
@@ -27,8 +27,7 @@ freeze: | status: locked | at: 2026-03-22T15:00:00Z | hash: sha256:f9a0b1c2
 
 track: | by: legal@acme.co
 
----
-// history
+history:
 revision: | version: 1.0 | at: 2026-03-01 | by: Ahmed | change: Initial draft
 revision: | version: 1.1 | at: 2026-03-05 | by: Sarah | change: Legal review — clause 4.2 updated | section: Payment | was: Net 60 | now: Net 30
 revision: | version: 1.2 | at: 2026-03-15 | by: Ahmed | change: Incorporated finance feedback
@@ -38,13 +37,13 @@ revision: | version: 2.1 | at: 2026-03-22 | by: Ahmed | change: Sealed
 
 ## The history boundary
 
-The `---` line separates the document from its history. Everything above is the document content. Everything below is metadata about the document's evolution.
+The `history:` keyword separates the document from its history. Everything above is the document content. Everything below is metadata about the document's evolution.
 
 ```
 [document content]
 track: | by: owner@example.com
----
-// history
+
+history:
 [revision blocks]
 ```
 
@@ -118,13 +117,13 @@ Each `revision:` block can track:
 
 ## Revisions vs amendments
 
-|                  | `revision:`                      | `amendment:`                   |
-| ---------------- | -------------------------------- | ------------------------------ |
-| **Where**        | Below the `---` history boundary | After `freeze:`, above `---`   |
-| **When**         | During drafting, before freeze   | After the document is sealed   |
-| **Written by**   | The CLI (auto-generated)         | The `intenttext amend` command |
-| **Purpose**      | Draft history                    | Formal post-seal changes       |
-| **Affects seal** | No — below the boundary          | No — after `freeze:`           |
+|                  | `revision:`                    | `amendment:`                      |
+| ---------------- | ------------------------------ | --------------------------------- |
+| **Where**        | Below the `history:` boundary  | After `freeze:`, above `history:` |
+| **When**         | During drafting, before freeze | After the document is sealed      |
+| **Written by**   | The CLI (auto-generated)       | The `intenttext amend` command    |
+| **Purpose**      | Draft history                  | Formal post-seal changes          |
+| **Affects seal** | No — below the boundary        | No — after `freeze:`              |
 
 Use `revision:` to track how the document was built. Use `amendment:` to track how it was changed after signing.
 

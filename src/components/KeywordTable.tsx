@@ -374,6 +374,14 @@ const ALL_KEYWORDS: Keyword[] = [
     properties: "section, was, now, ref, by, at, approved-by, hash",
     link: "/docs/reference/keywords/trust#amendment",
   },
+  {
+    name: "history",
+    category: "Trust",
+    since: "v2.12",
+    description: "History boundary — separates document from revision log",
+    properties: "—",
+    link: "/docs/reference/keywords/trust#history",
+  },
 
   // Layout
   {
@@ -423,6 +431,14 @@ const ALL_KEYWORDS: Keyword[] = [
     description: "Physical signature line for print",
     properties: "name, role, date-line, org, width, label",
     link: "/docs/reference/keywords/layout#signline",
+  },
+  {
+    name: "divider",
+    category: "Layout",
+    since: "v2.12",
+    description: "Visible horizontal rule — also available as ---",
+    properties: "style",
+    link: "/docs/reference/keywords/layout#divider",
   },
 ];
 

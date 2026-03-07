@@ -5,7 +5,7 @@ title: Aliases
 
 # Keyword Aliases
 
-IntentText supports **47 aliases** — alternative names for keywords. Use whichever reads best in your document. Every alias compiles to the same internal keyword; there is no behavioral difference.
+IntentText supports **49 aliases** — alternative names for keywords. Use whichever reads best in your document. Every alias compiles to the same internal keyword; there is no behavioral difference.
 
 ## How aliases work
 
@@ -97,17 +97,19 @@ The parser normalizes all aliases to their canonical keyword. Templates, queries
 | `revision:`  | —                                                |
 | `policy:`    | `rule:`, `constraint:`, `guard:`, `requirement:` |
 | `amendment:` | `amend:`, `change:`                              |
+| `history:`   | —                                                |
 
 ### Layout
 
-| Canonical    | Aliases |
-| ------------ | ------- |
-| `page:`      | —       |
-| `font:`      | —       |
-| `header:`    | —       |
-| `footer:`    | —       |
-| `watermark:` | —       |
-| `signline:`  | —       |
+| Canonical    | Aliases             |
+| ------------ | ------------------- |
+| `page:`      | —                   |
+| `font:`      | —                   |
+| `header:`    | —                   |
+| `footer:`    | —                   |
+| `watermark:` | —                   |
+| `signline:`  | —                   |
+| `divider:`   | `hr:`, `separator:` |
 
 ---
 
@@ -120,9 +122,9 @@ The parser normalizes all aliases to their canonical keyword. Templates, queries
 | Structure         | 6        | 10      |
 | Data              | 4        | 3       |
 | Agent             | 12       | 0       |
-| Trust             | 6        | 7       |
-| Layout            | 6        | 0       |
-| **Total**         | **55**   | **47**  |
+| Trust             | 7        | 7       |
+| Layout            | 7        | 2       |
+| **Total**         | **57**   | **49**  |
 
 ---
 

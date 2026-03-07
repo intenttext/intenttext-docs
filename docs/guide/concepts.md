@@ -18,7 +18,7 @@ task: Review the contract | owner: Ahmed | due: 2026-04-15
 
 No nesting. No indentation rules. No closing tags. The keyword tells you what the line _is_.
 
-## 2. Keywords — 55 of them
+## 2. Keywords — 57 of them
 
 Keywords are grouped into 7 categories:
 
@@ -29,8 +29,8 @@ Keywords are grouped into 7 categories:
 | **Structure** | `section:`, `sub:`, `break:`, `group:`, `ref:`, `deadline:`                                                                | How the document is organized |
 | **Data**      | `input:`, `output:`, `table:`, `metric:`                                                                                   | Typed data blocks             |
 | **Agent**     | `step:`, `gate:`, `trigger:`, `emit:`, `decision:`, `context:`, `memory:`, `prompt:`, `tool:`, `audit:`, `done:`, `error:` | Workflow for AI agents        |
-| **Trust**     | `approve:`, `sign:`, `freeze:`, `revision:`, `policy:`, `amendment:`                                                       | Document integrity            |
-| **Layout**    | `page:`, `font:`, `header:`, `footer:`, `watermark:`, `signline:`                                                          | Print and PDF rendering       |
+| **Trust**     | `approve:`, `sign:`, `freeze:`, `revision:`, `policy:`, `amendment:`, `history:`                                           | Document integrity            |
+| **Layout**    | `page:`, `font:`, `header:`, `footer:`, `watermark:`, `signline:`, `divider:`                                              | Print and PDF rendering       |
 
 Every keyword has a purpose. Use `note:` for text, `task:` for trackable work, `metric:` for measurable values, `deadline:` for dates with consequences.
 
@@ -63,7 +63,7 @@ deadline: Phase 2 complete | date: 2026-09-01
 
 ## 5. The history boundary
 
-The `---` divider separates the document from its history:
+The `history:` keyword separates the document from its history:
 
 ```intenttext
 title: Consulting Agreement
@@ -73,12 +73,11 @@ approve: Reviewed | by: Sarah Chen | role: Legal
 sign: Ahmed Al-Rashid | role: CEO
 freeze: | status: locked
 
----
-// history
+history:
 revision: | version: 1.0 | at: 2026-03-06 | by: Ahmed | change: Initial draft
 ```
 
-Everything above the `---` is the document. Everything below is machine-managed history. You read history. You don't edit it.
+Everything above `history:` is the document. Everything below is machine-managed history. You read history. You don't edit it.
 
 ## 6. Templates vs documents
 

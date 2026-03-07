@@ -21,7 +21,7 @@ Each step is a keyword. Each keyword is a line in the document. No external syst
 track: | version: 1.0 | by: Ahmed Al-Rashid
 ```
 
-This activates history. From this point, the CLI can record revisions below the `---` history boundary.
+This activates history. From this point, the CLI can record revisions below the `history:` boundary.
 
 ## Step 2: Approve
 
@@ -166,20 +166,19 @@ intenttext history contract.it --json
 
 ## The history boundary
 
-The `---` divider separates the document from machine-managed history:
+The `history:` keyword separates the document from machine-managed history:
 
 ```intenttext
 title: Consulting Agreement
 note: Terms and conditions...
 freeze: | status: locked
 
----
-// history
+history:
 revision: | version: 1.0 | at: 2026-03-01 | by: Ahmed | change: Initial draft
 revision: | version: 1.1 | at: 2026-03-03 | by: Sarah | change: Legal review
 ```
 
-History is below the line. You read it, but the CLI manages it.
+History is below the `history:` keyword. You read it, but the CLI manages it.
 
 ## Physical signatures for print
 

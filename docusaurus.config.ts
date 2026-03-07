@@ -1,148 +1,145 @@
-import {themes as prismThemes} from 'prism-react-renderer';
-import type {Config} from '@docusaurus/types';
-import type * as Preset from '@docusaurus/preset-classic';
-
-// This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
+import { themes as prismThemes } from "prism-react-renderer";
+import type { Config } from "@docusaurus/types";
+import type * as Preset from "@docusaurus/preset-classic";
 
 const config: Config = {
-  title: 'My Site',
-  tagline: 'Dinosaurs are cool',
-  favicon: 'img/favicon.ico',
+  title: "IntentText",
+  tagline: "The document language for humans and AI agents",
+  favicon: "img/favicon.ico",
 
-  // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
   future: {
-    v4: true, // Improve compatibility with the upcoming Docusaurus v4
+    v4: true,
   },
 
-  // Set the production url of your site here
-  url: 'https://your-docusaurus-site.example.com',
-  // Set the /<baseUrl>/ pathname under which your site is served
-  // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/',
+  url: "https://docs.intenttext.io",
+  baseUrl: "/",
+  organizationName: "intenttext",
+  projectName: "intenttext-docs",
 
-  // GitHub pages deployment config.
-  // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'facebook', // Usually your GitHub org/user name.
-  projectName: 'docusaurus', // Usually your repo name.
+  onBrokenLinks: "throw",
 
-  onBrokenLinks: 'throw',
-
-  // Even if you don't use internationalization, you can use this field to set
-  // useful metadata like html lang. For example, if your site is Chinese, you
-  // may want to replace "en" with "zh-Hans".
   i18n: {
-    defaultLocale: 'en',
-    locales: ['en'],
+    defaultLocale: "en",
+    locales: ["en"],
   },
 
   presets: [
     [
-      'classic',
+      "classic",
       {
         docs: {
-          sidebarPath: './sidebars.ts',
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+          sidebarPath: "./sidebars.ts",
+          editUrl: "https://github.com/intenttext/intenttext-docs/edit/main/",
         },
         blog: {
           showReadingTime: true,
+          blogTitle: "IntentText Blog",
+          blogDescription: "Releases, thinking, and decisions",
+          postsPerPage: 10,
           feedOptions: {
-            type: ['rss', 'atom'],
+            type: ["rss", "atom"],
             xslt: true,
           },
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
-          // Useful options to enforce blogging best practices
-          onInlineTags: 'warn',
-          onInlineAuthors: 'warn',
-          onUntruncatedBlogPosts: 'warn',
         },
         theme: {
-          customCss: './src/css/custom.css',
+          customCss: "./src/css/custom.css",
         },
       } satisfies Preset.Options,
     ],
   ],
 
   themeConfig: {
-    // Replace with your project's social card
-    image: 'img/docusaurus-social-card.jpg',
+    image: "img/intenttext-social-card.jpg",
     colorMode: {
       respectPrefersColorScheme: true,
     },
     navbar: {
-      title: 'My Site',
+      title: "IntentText",
       logo: {
-        alt: 'My Site Logo',
-        src: 'img/logo.svg',
+        alt: "IntentText Logo",
+        src: "img/logo.svg",
       },
       items: [
         {
-          type: 'docSidebar',
-          sidebarId: 'tutorialSidebar',
-          position: 'left',
-          label: 'Tutorial',
+          type: "docSidebar",
+          sidebarId: "guideSidebar",
+          label: "Guide",
+          position: "left",
         },
-        {to: '/blog', label: 'Blog', position: 'left'},
         {
-          href: 'https://github.com/facebook/docusaurus',
-          label: 'GitHub',
-          position: 'right',
+          type: "docSidebar",
+          sidebarId: "referenceSidebar",
+          label: "Reference",
+          position: "left",
+        },
+        {
+          type: "docSidebar",
+          sidebarId: "cookbookSidebar",
+          label: "Cookbook",
+          position: "left",
+        },
+        {
+          type: "docSidebar",
+          sidebarId: "ecosystemSidebar",
+          label: "Ecosystem",
+          position: "left",
+        },
+        { to: "/blog", label: "Blog", position: "left" },
+        {
+          href: "https://github.com/intenttext/IntentText",
+          label: "GitHub",
+          position: "right",
         },
       ],
     },
     footer: {
-      style: 'dark',
+      style: "dark",
       links: [
         {
-          title: 'Docs',
+          title: "Learn",
           items: [
+            { label: "Quick Start", to: "/docs/guide/quick-start" },
+            { label: "Concepts", to: "/docs/guide/concepts" },
+            { label: "Cookbook", to: "/docs/cookbook" },
+          ],
+        },
+        {
+          title: "Reference",
+          items: [
+            { label: "All Keywords", to: "/docs/reference/keywords" },
+            { label: "CLI", to: "/docs/reference/cli" },
+            { label: "Core API", to: "/docs/ecosystem/core-api" },
+          ],
+        },
+        {
+          title: "Ecosystem",
+          items: [
+            { label: "Hub", href: "https://intenttext-hub.vercel.app" },
+            { label: "Editor", href: "https://iteditor.vercel.app" },
             {
-              label: 'Tutorial',
-              to: '/docs/intro',
+              label: "npm",
+              href: "https://npmjs.com/package/@intenttext/core",
             },
           ],
         },
         {
-          title: 'Community',
+          title: "Community",
           items: [
             {
-              label: 'Stack Overflow',
-              href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+              label: "GitHub",
+              href: "https://github.com/intenttext/IntentText",
             },
-            {
-              label: 'Discord',
-              href: 'https://discordapp.com/invite/docusaurus',
-            },
-            {
-              label: 'X',
-              href: 'https://x.com/docusaurus',
-            },
-          ],
-        },
-        {
-          title: 'More',
-          items: [
-            {
-              label: 'Blog',
-              to: '/blog',
-            },
-            {
-              label: 'GitHub',
-              href: 'https://github.com/facebook/docusaurus',
-            },
+            { label: "Twitter / X", href: "https://x.com/IntentText" },
+            { label: "PyPI", href: "https://pypi.org/project/intenttext/" },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} IntentText.`,
     },
     prism: {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,
+      additionalLanguages: ["bash", "json", "typescript", "python"],
     },
   } satisfies Preset.ThemeConfig,
 };

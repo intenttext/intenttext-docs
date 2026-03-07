@@ -1,30 +1,210 @@
-/**
- * Any CSS included here will be global. The classic template
- * bundles Infima by default. Infima is a CSS framework designed to
- * work well for content-centric websites.
- */
-
-/* You can override the default Infima variables here. */
 :root {
-  --ifm-color-primary: #2e8555;
-  --ifm-color-primary-dark: #29784c;
-  --ifm-color-primary-darker: #277148;
-  --ifm-color-primary-darkest: #205d3b;
-  --ifm-color-primary-light: #33925d;
-  --ifm-color-primary-lighter: #359962;
-  --ifm-color-primary-lightest: #3cad6e;
-  --ifm-code-font-size: 95%;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  --ifm-color-primary: #2563eb;
+  --ifm-color-primary-dark: #1d4ed8;
+  --ifm-color-primary-darker: #1e40af;
+  --ifm-color-primary-darkest: #1e3a8a;
+  --ifm-color-primary-light: #3b82f6;
+  --ifm-color-primary-lighter: #60a5fa;
+  --ifm-color-primary-lightest: #93c5fd;
+  --ifm-font-family-base: 'Inter', system-ui, sans-serif;
+  --ifm-font-family-monospace: 'JetBrains Mono', monospace;
+  --ifm-code-font-size: 90%;
+  --docusaurus-highlighted-code-line-bg: rgba(37, 99, 235, 0.1);
 }
 
-/* For readability concerns, you should choose a lighter palette in dark mode. */
 [data-theme='dark'] {
-  --ifm-color-primary: #25c2a0;
-  --ifm-color-primary-dark: #21af90;
-  --ifm-color-primary-darker: #1fa588;
-  --ifm-color-primary-darkest: #1a8870;
-  --ifm-color-primary-light: #29d5b0;
-  --ifm-color-primary-lighter: #32d8b4;
-  --ifm-color-primary-lightest: #4fddbf;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+  --ifm-color-primary: #3b82f6;
+  --ifm-color-primary-dark: #2563eb;
+  --ifm-color-primary-darker: #1d4ed8;
+  --ifm-color-primary-darkest: #1e40af;
+  --ifm-color-primary-light: #60a5fa;
+  --ifm-color-primary-lighter: #93c5fd;
+  --ifm-color-primary-lightest: #bfdbfe;
+}
+
+/* Category badges for keywords */
+.keyword-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.keyword-badge--trust     { background: #fef3c7; color: #92400e; }
+.keyword-badge--agent     { background: #ffedd5; color: #7c2d12; }
+.keyword-badge--content   { background: #dcfce7; color: #14532d; }
+.keyword-badge--structure { background: #dbeafe; color: #1e3a8a; }
+.keyword-badge--data      { background: #ede9fe; color: #4c1d95; }
+.keyword-badge--layout    { background: #f1f5f9; color: #334155; }
+.keyword-badge--identity  { background: #e0f2fe; color: #0c4a6e; }
+
+/* LiveExample component */
+.live-example {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  margin: 1.5rem 0;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.live-example .live-source {
+  border-right: 1px solid var(--ifm-color-emphasis-300);
+}
+.live-example .live-source pre {
+  margin: 0;
+  border-radius: 0;
+  height: 100%;
+}
+.live-example .live-render {
+  padding: 1.25rem;
+  background: white;
+}
+[data-theme='dark'] .live-example .live-render {
+  background: var(--ifm-background-color);
+}
+@media (max-width: 768px) {
+  .live-example {
+    grid-template-columns: 1fr;
+  }
+  .live-example .live-source {
+    border-right: none;
+    border-bottom: 1px solid var(--ifm-color-emphasis-300);
+  }
+}
+
+/* Landing page */
+.hero-section {
+  padding: 4rem 0;
+  text-align: center;
+}
+.hero-section h1 {
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+}
+.hero-section p {
+  font-size: 1.25rem;
+  color: var(--ifm-color-emphasis-700);
+  max-width: 600px;
+  margin: 0 auto 2rem;
+}
+.hero-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.audience-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin: 2rem 0;
+}
+@media (max-width: 768px) {
+  .audience-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.audience-card {
+  padding: 1.5rem;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 8px;
+}
+.audience-card h3 {
+  margin-top: 0;
+}
+.ecosystem-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin: 2rem 0;
+}
+@media (max-width: 768px) {
+  .ecosystem-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+.ecosystem-item {
+  text-align: center;
+  padding: 1rem;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 8px;
+}
+.ecosystem-item strong {
+  display: block;
+  margin-bottom: 0.25rem;
+}
+.trust-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin: 2rem 0;
+}
+@media (max-width: 768px) {
+  .trust-steps {
+    grid-template-columns: 1fr;
+  }
+}
+.trust-step {
+  text-align: center;
+  padding: 1.5rem;
+}
+.trust-step h3 {
+  margin-top: 0;
+}
+
+/* Keyword table */
+.keyword-table-filters {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+.keyword-table-filters input,
+.keyword-table-filters select {
+  padding: 0.5rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+.keyword-table table {
+  width: 100%;
+}
+.keyword-table th {
+  cursor: pointer;
+  user-select: none;
+}
+.keyword-table th:hover {
+  background: var(--ifm-color-emphasis-100);
+}
+
+/* Theme preview */
+.theme-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+@media (max-width: 768px) {
+  .theme-preview-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.theme-preview-card {
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.theme-preview-card header {
+  padding: 0.5rem 1rem;
+  background: var(--ifm-color-emphasis-100);
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+.theme-preview-card .preview-content {
+  padding: 1rem;
+  font-size: 0.8rem;
 }

@@ -67,63 +67,86 @@ output: invoice_pdf | type: string | format: PDF file path
 
 ---
 
-## `table:`
+## `columns:`
+
+**Category:** Data
+**Since:** v1.0
+**Aliases:** `headers:` (compat-only)
+
+Table column definitions — declares column names for the following `row:` blocks.
+
+### Syntax
+
+```
+columns: Col1 | Col2 | Col3
+```
+
+### Examples
+
+```intenttext
+columns: Department | Budget | Spent | Remaining
+row: Engineering | USD 500,000 | USD 320,000 | USD 180,000
+row: Marketing | USD 200,000 | USD 175,000 | USD 25,000
+row: Operations | USD 150,000 | USD 98,000 | USD 52,000
+```
+
+### Notes
+
+- `columns:` declares the column headers, `row:` provides the data
+- `headers:` is a compat-only alias — use `columns:` in new documents
+- Tables can also be written using Markdown pipe syntax (see below)
+
+---
+
+## `row:`
 
 **Category:** Data
 **Since:** v1.0
 
-Data table with pipe-delimited columns. Supports dynamic rows via `each:` for templates.
+Table data row — pipe-separated cell values. Must follow a `columns:` declaration.
 
 ### Syntax
 
-Static table:
-
 ```
+row: Cell1 | Cell2 | Cell3
+```
+
+### Examples
+
+```intenttext
+columns: Name | Role | Email
+row: Ahmed Al-Rashid | CEO | ahmed@acme.com
+row: Sarah Chen | General Counsel | sarah@acme.com
+```
+
+---
+
+## Markdown pipe tables
+
+Tables can also be written using standard Markdown pipe syntax. The parser produces the same internal `table` structure.
+
+### Static table
+
+```intenttext
 | Header 1 | Header 2 | Header 3 |
 | Cell 1   | Cell 2   | Cell 3   |
 | Cell 4   | Cell 5   | Cell 6   |
 ```
 
-Dynamic table (template):
+### Dynamic table (templates)
 
+The `each:` property on the header row enables dynamic row expansion:
+
+```intenttext
+| Description          | Qty          | Rate          | Total          | each: items |
+| {{item.description}} | {{item.qty}} | {{item.rate}} | {{item.total}} |
 ```
-| Header 1 | Header 2 | Header 3 | each: arrayName |
-| {{item.field1}} | {{item.field2}} | {{item.field3}} |
-```
-
-### Properties
-
-| Property | Type   | Description                          |
-| -------- | ------ | ------------------------------------ |
-| `each`   | string | Array name for dynamic row expansion |
-
-### Dynamic rows with `each:`
-
-The `each:` property on the header row enables row expansion:
 
 1. Parser reads the `each:` array from data
 2. Auto-singularizes: `items` → `item`, `orders` → `order`
 3. Explicit naming: `each: orders as order`
 4. Expands one row per array element
 5. Zero items = zero rows; header always present
-
-### Examples
-
-**Static:**
-
-```intenttext
-| Department   | Budget      | Spent       | Remaining   |
-| Engineering  | USD 500,000 | USD 320,000 | USD 180,000 |
-| Marketing    | USD 200,000 | USD 175,000 | USD 25,000  |
-| Operations   | USD 150,000 | USD 98,000  | USD 52,000  |
-```
-
-**Dynamic:**
-
-```intenttext
-| Description          | Qty          | Rate          | Total          | each: items |
-| {{item.description}} | {{item.qty}} | {{item.rate}} | {{item.total}} |
-```
 
 ---
 

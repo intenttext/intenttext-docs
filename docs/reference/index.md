@@ -5,21 +5,21 @@ title: Reference Overview
 
 # Reference
 
-The complete technical reference for IntentText v2.12.
+The complete technical reference for IntentText v2.13.
 
 ## Keywords
 
-IntentText has **57 keywords** across 7 categories. Each keyword defines a block type.
+IntentText has **79 keywords** across 7 categories. Each keyword defines a block type.
 
-- [All Keywords](./keywords) — sortable, filterable table of all 57 keywords
-- [Document Identity](./keywords/document-identity) — `title:`, `summary:`, `meta:`, `context:`, `track:`
-- [Content](./keywords/content) — `note:`, `quote:`, `warning:`, `tip:`, `code:`, `image:`, `link:`, `cite:`, `def:`, `figure:`, `contact:`
-- [Structure](./keywords/structure) — `section:`, `sub:`, `break:`, `group:`, `ref:`, `deadline:`
-- [Data](./keywords/data) — `input:`, `output:`, `table:`, `metric:`
-- [Agent](./keywords/agent) — `step:`, `gate:`, `trigger:`, `emit:`, `decision:`, `context:`, `memory:`, `prompt:`, `tool:`, `audit:`, `done:`, `error:`
+- [All Keywords](./keywords) — sortable, filterable table of all 79 keywords
+- [Document Identity](./keywords/document-identity) — `title:`, `summary:`, `meta:`, `context:`, `track:`, `agent:`, `model:`
+- [Content](./keywords/content) — `text:`, `quote:`, `cite:`, `warning:`, `danger:`, `tip:`, `info:`, `success:`, `code:`, `image:`, `link:`, `def:`, `figure:`, `contact:`, `byline:`, `epigraph:`, `caption:`, `footnote:`, `dedication:`
+- [Structure](./keywords/structure) — `section:`, `sub:`, `group:`, `break:`, `ref:`, `deadline:`, `embed:`, `toc:`
+- [Data](./keywords/data) — `columns:`, `row:`, `input:`, `output:`, `metric:`
+- [Agent](./keywords/agent) — `step:`, `gate:`, `trigger:`, `signal:`, `decision:`, `memory:`, `prompt:`, `tool:`, `audit:`, `done:`, `error:`, `result:`, `handoff:`, `wait:`, `parallel:`, `retry:`, `call:`, `loop:`, `checkpoint:`, `import:`, `export:`, `progress:`, `task:`, `ask:`, `assert:`, `secret:`
 - [Trust](./keywords/trust) — `approve:`, `sign:`, `freeze:`, `revision:`, `policy:`, `amendment:`, `history:`
 - [Layout](./keywords/layout) — `page:`, `font:`, `header:`, `footer:`, `watermark:`, `signline:`, `divider:`
-- [Aliases](./keywords/aliases) — all 49 aliases mapped to canonical keywords
+- [Aliases](./keywords/aliases) — all 84 aliases mapped to canonical keywords
 
 ## Properties
 

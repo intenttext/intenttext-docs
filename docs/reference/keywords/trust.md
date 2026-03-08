@@ -185,7 +185,7 @@ history:
 
 ```intenttext
 title: Service Agreement
-note: Terms and conditions...
+text: Terms and conditions...
 
 approve: Legal review | by: Sarah Chen | role: General Counsel
 sign: Ahmed Al-Rashid | role: CEO | hash: sha256:a1b2c3d4

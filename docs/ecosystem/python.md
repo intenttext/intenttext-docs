@@ -52,11 +52,11 @@ meta:
   date: 2026-Q1
 
 section: Revenue
-note: Total revenue increased 12% year-over-year.
+text: Total revenue increased 12% year-over-year.
 metric: Revenue | value: $4.2M | target: $4.0M | status: above
 
 section: Expenses
-note: Operating expenses held flat.
+text: Operating expenses held flat.
 metric: OpEx | value: $2.1M | target: $2.3M | status: below
 """
 
@@ -126,10 +126,9 @@ meta:
   client: {{client}}
   date: {{date}}
 
-note: Amount due: {{amount}}
+text: Amount due: {{amount}}
 
 {{each: items}}
-table:
   | Item | Qty | Price |
   | {{name}} | {{qty}} | {{price}} |
 {{/each}}

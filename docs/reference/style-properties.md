@@ -25,11 +25,11 @@ Style properties control the visual appearance of blocks when rendered to HTML o
 ## Usage examples
 
 ```intenttext
-note: This is important | color: red | weight: bold
-note: Subtle aside | color: #666 | size: 0.85em | italic: true
+text: This is important | color: red | weight: bold
+text: Subtle aside | color: #666 | size: 0.85em | italic: true
 quote: Key insight | bg: #fffde7 | border: true | indent: 2em
 warning: Deadline tomorrow | color: #d32f2f | bg: #ffebee | weight: bold
-note: Fine print | size: 0.75em | opacity: 0.7 | align: center
+text: Fine print | size: 0.75em | opacity: 0.7 | align: center
 ```
 
 ## How style properties work
@@ -52,9 +52,9 @@ note: Fine print | size: 0.75em | opacity: 0.7 | align: center
 `italic:` and `border:` are boolean. Only the value `"true"` activates them — any other value (or omitting the property) means no effect.
 
 ```intenttext
-note: Emphasized | italic: true
-note: Boxed content | border: true
-note: Both | italic: true | border: true
+text: Emphasized | italic: true
+text: Boxed content | border: true
+text: Both | italic: true | border: true
 ```
 
 ## Combining style and functional properties
@@ -73,23 +73,25 @@ contact: Sarah Chen | role: CEO | email: sarah@acme.co | color: #2563eb
 
 IntentText supports inline formatting within any content string. These follow WhatsApp-style conventions and are processed within a single line only.
 
-| Syntax           | Result            | Description                   |
-| ---------------- | ----------------- | ----------------------------- |
-| `*text*`         | **text**          | Bold                          |
-| `_text_`         | _text_            | Italic                        |
-| `~text~`         | ~~text~~          | Strikethrough                 |
-| `` `text` ``     | `text`            | Inline code                   |
-| `^text^`         | <mark>text</mark> | Highlight                     |
-| `==text==`       | Quoted emphasis   | Inline quote                  |
-| `[text](url)`    | Hyperlink         | Hyperlink                     |
-| `[[text]]`       | Side-note         | Inline note / comment         |
-| `[[label\|url]]` | Link              | Inline link shorthand         |
-| `@person`        | @person           | Mention                       |
-| `#topic`         | #topic            | Tag                           |
-| `@today`         | Current date      | Date — resolves to ISO string |
-| `@tomorrow`      | Tomorrow's date   | Date — resolves to ISO string |
-| `@YYYY-MM-DD`    | Explicit date     | Date literal                  |
-| `[^N]`           | Superscript N     | Footnote reference            |
+| Syntax           | Result            | Description                     |
+| ---------------- | ----------------- | ------------------------------- |
+| `*text*`         | **text**          | Bold                            |
+| `_text_`         | _text_            | Italic                          |
+| `~text~`         | ~~text~~          | Strikethrough                   |
+| ` ```text``` `   | `text`            | Inline code (triple backtick)   |
+| `` `text` ``     | Label             | Label / badge (single backtick) |
+| `{text}`         | Label             | Label / badge (curly braces)    |
+| `^text^`         | <mark>text</mark> | Highlight                       |
+| `==text==`       | Quoted emphasis   | Inline quote                    |
+| `[text](url)`    | Hyperlink         | Hyperlink                       |
+| `[[text]]`       | Side-note         | Inline note / comment           |
+| `[[label\|url]]` | Link              | Inline link shorthand           |
+| `@person`        | @person           | Mention                         |
+| `#topic`         | #topic            | Tag                             |
+| `@today`         | Current date      | Date — resolves to ISO string   |
+| `@tomorrow`      | Tomorrow's date   | Date — resolves to ISO string   |
+| `@YYYY-MM-DD`    | Explicit date     | Date literal                    |
+| `[^N]`           | Superscript N     | Footnote reference              |
 
 ### Rules
 
@@ -101,9 +103,9 @@ IntentText supports inline formatting within any content string. These follow Wh
 
 ### Examples
 
-```intenttext
-note: The deadline is *tomorrow* at _5pm_. Contact @sarah for details.
-note: Use the `render()` function to generate output. See #api-reference.
-note: Revenue is ^up 12%^ this quarter — exceeding our ~original~ revised target.
-note: Read the [full report](https://example.com/report) for details.
-```
+````intenttext
+text: The deadline is *tomorrow* at _5pm_. Contact @sarah for details.
+text: Use the ```render()``` function to generate output. See #api-reference.
+text: Revenue is ^up 12%^ this quarter — exceeding our ~original~ revised target.
+text: Read the [full report](https://example.com/report) for details.
+````

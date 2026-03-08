@@ -7,32 +7,54 @@ title: Core Concepts
 
 Eight ideas that explain everything in IntentText.
 
-## 1. The line
+## 1. One line, one intent
 
-One line, one intent. Every line in a `.it` file starts with a keyword and a colon:
+Every block in a `.it` file follows one pattern:
+
+```
+keyword: value | property: x | property: y
+```
 
 ```intenttext
-note: This is a text block
+text: This is a text block
 task: Review the contract | owner: Ahmed | due: 2026-04-15
 ```
 
-No nesting. No indentation rules. No closing tags. The keyword tells you what the line _is_.
+No nesting. No indentation rules. No closing tags. The keyword tells you what the line _is_. The value after the colon is the content. Properties follow pipes.
 
-## 2. Keywords — 57 of them
+**Even code follows this rule.** Triple backticks delimit the value — think of it like a stringified JSON object placed as the keyword's value:
+
+````intenttext
+code: ```const total = items.reduce((s, i) => s + i.price, 0);``` | lang: js
+````
+
+Multi-line code is the same pattern — the backticks wrap the value across lines:
+
+````intenttext
+code: ```
+SELECT *
+FROM users
+WHERE active = true
+``` | lang: sql
+````
+
+The `code:` keyword isn't special. Every block is `keyword: value | properties`. The backticks are just value delimiters — like quotes around a string.
+
+## 2. Keywords — 79 of them
 
 Keywords are grouped into 7 categories:
 
-| Category      | Keywords                                                                                                                   | Purpose                       |
-| ------------- | -------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
-| **Identity**  | `title:`, `summary:`, `meta:`, `context:`, `track:`                                                                        | What the document is          |
-| **Content**   | `note:`, `quote:`, `warning:`, `tip:`, `code:`, `image:`, `link:`, `cite:`, `def:`, `figure:`, `contact:`                  | What the document says        |
-| **Structure** | `section:`, `sub:`, `break:`, `group:`, `ref:`, `deadline:`                                                                | How the document is organized |
-| **Data**      | `input:`, `output:`, `table:`, `metric:`                                                                                   | Typed data blocks             |
-| **Agent**     | `step:`, `gate:`, `trigger:`, `emit:`, `decision:`, `context:`, `memory:`, `prompt:`, `tool:`, `audit:`, `done:`, `error:` | Workflow for AI agents        |
-| **Trust**     | `approve:`, `sign:`, `freeze:`, `revision:`, `policy:`, `amendment:`, `history:`                                           | Document integrity            |
-| **Layout**    | `page:`, `font:`, `header:`, `footer:`, `watermark:`, `signline:`, `divider:`                                              | Print and PDF rendering       |
+| Category      | Keywords                                                                                                                                                                                                                                                                           | Purpose                       |
+| ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
+| **Identity**  | `title:`, `summary:`, `meta:`, `context:`, `track:`, `agent:`, `model:`                                                                                                                                                                                                            | What the document is          |
+| **Content**   | `text:`, `quote:`, `cite:`, `warning:`, `danger:`, `tip:`, `info:`, `success:`, `code:`, `image:`, `link:`, `def:`, `figure:`, `contact:`, `byline:`, `epigraph:`, `caption:`, `footnote:`, `dedication:`                                                                          | What the document says        |
+| **Structure** | `section:`, `sub:`, `group:`, `break:`, `ref:`, `deadline:`, `embed:`, `toc:`                                                                                                                                                                                                      | How the document is organized |
+| **Data**      | `columns:`, `row:`, `input:`, `output:`, `metric:`                                                                                                                                                                                                                                 | Typed data blocks             |
+| **Agent**     | `step:`, `gate:`, `trigger:`, `signal:`, `decision:`, `memory:`, `prompt:`, `tool:`, `audit:`, `done:`, `error:`, `result:`, `handoff:`, `wait:`, `parallel:`, `retry:`, `call:`, `loop:`, `checkpoint:`, `import:`, `export:`, `progress:`, `task:`, `ask:`, `assert:`, `secret:` | Workflow for AI agents        |
+| **Trust**     | `approve:`, `sign:`, `freeze:`, `revision:`, `policy:`, `amendment:`, `history:`                                                                                                                                                                                                   | Document integrity            |
+| **Layout**    | `page:`, `font:`, `header:`, `footer:`, `watermark:`, `signline:`, `divider:`                                                                                                                                                                                                      | Print and PDF rendering       |
 
-Every keyword has a purpose. Use `note:` for text, `task:` for trackable work, `metric:` for measurable values, `deadline:` for dates with consequences.
+Every keyword has a purpose. Use `text:` for text, `task:` for trackable work, `metric:` for measurable values, `deadline:` for dates with consequences.
 
 ## 3. Pipe properties
 
@@ -52,7 +74,7 @@ Sections organize blocks into groups:
 
 ```intenttext
 section: Scope
-note: The project covers phases 1 through 3.
+text: The project covers phases 1 through 3.
 
 section: Timeline
 deadline: Phase 1 complete | date: 2026-06-01
@@ -67,7 +89,7 @@ The `history:` keyword separates the document from its history:
 
 ```intenttext
 title: Consulting Agreement
-note: Terms and conditions...
+text: Terms and conditions...
 
 approve: Reviewed | by: Sarah Chen | role: Legal
 sign: Ahmed Al-Rashid | role: CEO

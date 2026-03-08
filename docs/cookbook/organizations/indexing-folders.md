@@ -31,7 +31,7 @@ Every block is indexed except layout and structural blocks:
 
 | Indexed                                      | Skipped                |
 | -------------------------------------------- | ---------------------- |
-| `note:`, `quote:`, `warning:`, `tip:`        | `page:`, `font:`       |
+| `text:`, `quote:`, `warning:`, `tip:`        | `page:`, `font:`       |
 | `contact:`, `deadline:`, `metric:`           | `header:`, `footer:`   |
 | `approve:`, `sign:`, `freeze:`, `amendment:` | `watermark:`, `break:` |
 | `step:`, `gate:`, `policy:`                  | `meta:`, `toc:`        |

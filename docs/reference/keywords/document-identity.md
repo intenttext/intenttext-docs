@@ -40,6 +40,7 @@ title: Invoice {{invoice.number}}
 
 **Category:** Identity
 **Since:** v1.0
+**Aliases:** `abstract:`
 
 Brief description of the document. Renders as a subtitle below the title.
 
@@ -174,3 +175,58 @@ track: | version: 2.3 | by: Sarah Chen
 - [`approve:`](./trust#approve) — next step in the trust chain
 - [`revision:`](./trust#revision) — auto-generated history entries
 - [Trust & Signing Guide](../../guide/trust-and-signing)
+
+---
+
+## `agent:`
+
+**Category:** Identity
+**Since:** v2.0
+
+Agent name or identifier. Pre-section metadata for workflow documents.
+
+### Syntax
+
+```
+agent: name
+```
+
+### Examples
+
+```intenttext
+agent: Data Migration Bot
+agent: Invoice Processor
+```
+
+### Notes
+
+- Typically appears before the first `section:`
+- Declares which agent owns this workflow document
+
+---
+
+## `model:`
+
+**Category:** Identity
+**Since:** v2.0
+
+Default AI model for this document. Pre-section metadata.
+
+### Syntax
+
+```
+model: identifier
+```
+
+### Examples
+
+```intenttext
+model: claude-3
+model: gpt-4
+model: llama-3-70b
+```
+
+### Notes
+
+- Sets the default model for all `prompt:` blocks in the document
+- Individual `prompt:` blocks can override with their own `model:` property

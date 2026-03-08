@@ -14,7 +14,6 @@ Your template has a table where the number of rows depends on the data — line 
 Add `each: arrayName` as the last column header. The merge engine expands the template row once per array element.
 
 ```intenttext
-table:
 | Description | Qty | Price | each: items |
 | {{item.description}} | {{item.qty}} | {{item.price}} |
 ```
@@ -60,13 +59,11 @@ The loop variable is automatically singularized from the array name:
 When auto-singularization doesn't produce the right name, use `as`:
 
 ```intenttext
-table:
 | Name | Amount | each: line_items as line |
 | {{line.name}} | {{line.amount}} |
 ```
 
 ```intenttext
-table:
 | Task | Owner | each: data as row |
 | {{row.task}} | {{row.owner}} |
 ```
@@ -92,7 +89,6 @@ This is intentional — an empty table with a header is more useful than no tabl
 Access nested properties with dot notation:
 
 ```intenttext
-table:
 | Person | Company | Email | each: contacts |
 | {{contact.name}} | {{contact.company.name}} | {{contact.company.email}} |
 ```
@@ -114,17 +110,14 @@ A template can have multiple `each:` tables, each referencing a different array:
 
 ```intenttext
 section: Team
-table:
 | Name | Role | each: team_members |
 | {{team_member.name}} | {{team_member.role}} |
 
 section: Deliverables
-table:
 | Description | Due | Status | each: deliverables |
 | {{deliverable.description}} | {{deliverable.due}} | {{deliverable.status}} |
 
 section: Expenses
-table:
 | Item | Amount | Category | each: expenses |
 | {{expense.item}} | {{expense.amount}} | {{expense.category}} |
 ```

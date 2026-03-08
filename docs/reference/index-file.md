@@ -91,7 +91,7 @@ const index = buildShallowIndex(folder, files, coreVersion);
 
 Every block type **except** layout and structural blocks:
 
-- **Indexed**: `note:`, `quote:`, `contact:`, `deadline:`, `metric:`, `approve:`, `sign:`, `freeze:`, `step:`, `gate:`, `policy:`, `amendment:`, etc.
+- **Indexed**: `text:`, `quote:`, `contact:`, `deadline:`, `metric:`, `approve:`, `sign:`, `freeze:`, `step:`, `gate:`, `policy:`, `amendment:`, etc.
 - **Skipped**: `font:`, `page:`, `header:`, `footer:`, `watermark:`, `meta:`, `break:`, `toc:`
 
 ### Index entry fields

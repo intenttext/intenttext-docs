@@ -35,7 +35,7 @@ step: Send welcome email | id: welcome | depends: permissions | tool: email-serv
 
 section: Monitoring
 
-trigger: Onboarding complete | event: welcome.sent | emit: onboarding-complete
+trigger: Onboarding complete | event: welcome.sent | signal: onboarding-complete
 audit: Pipeline initiated | by: onboarding-agent | at: 2026-03-15T10:00:00Z | level: info
 
 done: Onboarding pipeline ready | status: template | time: 2026-03-15T10:00:00Z
@@ -46,7 +46,7 @@ done: Onboarding pipeline ready | status: template | time: 2026-03-15T10:00:00Z
 1. **Steps** — Each `step:` is a unit of work with an `id:`, optional `depends:` for ordering, `tool:` for execution, and `input:`/`output:` for data flow.
 2. **Gates** — `gate:` blocks branch the pipeline. `if:` evaluates a condition, `then:` names the step to run if true, `else:` for false.
 3. **Decisions** — `decision:` blocks select from options based on data.
-4. **Triggers** — `trigger:` fires on events. `emit:` sends events for other pipelines.
+4. **Triggers** — `trigger:` fires on events. `signal:` sends events for other pipelines.
 5. **Audit** — `audit:` blocks log what happened and when.
 6. **Done** — `done:` marks the pipeline as complete or ready.
 

@@ -25,7 +25,7 @@ title: Quarterly Report
 meta: | author: Finance Team | date: 2026-Q1
 
 section: Revenue
-note: Revenue grew 12% year-over-year.
+text: Revenue grew 12% year-over-year.
 metric: Revenue | value: $4.2M | target: $4.0M | status: above
 `);
 
@@ -304,7 +304,7 @@ import { parseIntentText, mergeData } from "@intenttext/core";
 
 const template = parseIntentText(`
 title: Invoice {{number}}
-note: Amount due: {{amount}}
+text: Amount due: {{amount}}
 `);
 
 const merged = mergeData(template, { number: "INV-2847", amount: "$5,000" });
@@ -719,6 +719,7 @@ type InlineNode =
   | { type: "date"; value: string }
   | { type: "mention"; value: string }
   | { type: "tag"; value: string }
+  | { type: "label"; value: string }
   | { type: "link"; value: string; url: string }
   | { type: "footnote-ref"; value: string };
 ```
@@ -737,7 +738,7 @@ interface Diagnostic {
 
 ### `ALIASES`
 
-Record mapping 47 alias keywords to their canonical types. See [Aliases Reference](/docs/reference/keywords/aliases).
+Record mapping 84 alias keywords to their canonical types. See [Aliases Reference](/docs/reference/keywords/aliases).
 
 ### `KEYWORDS`
 

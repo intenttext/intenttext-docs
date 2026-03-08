@@ -5,7 +5,7 @@ title: All Keywords
 
 import KeywordTable from '@site/src/components/KeywordTable';
 
-# All 57 Keywords
+# All 79 Keywords
 
 Every IntentText keyword in one table. Filter by category, sort by name or version, search by description.
 
@@ -21,14 +21,14 @@ Every IntentText keyword in one table. Filter by category, sort by name or versi
 
 ## Keyword categories
 
-| Category  | Count | Purpose                                                         |
-| --------- | ----- | --------------------------------------------------------------- |
-| Identity  | 5     | What the document is — title, metadata, tracking                |
-| Content   | 11    | What the document says — text, images, quotes, definitions      |
-| Structure | 6     | How the document is organized — sections, references, deadlines |
-| Data      | 4     | Typed data — inputs, outputs, tables, metrics                   |
-| Agent     | 12    | Workflow for AI agents — steps, gates, decisions                |
-| Trust     | 7     | Document integrity — approval, signatures, history, amendments  |
-| Layout    | 7     | Print and PDF — page setup, headers, watermarks, dividers       |
+| Category  | Count | Purpose                                                                |
+| --------- | ----- | ---------------------------------------------------------------------- |
+| Identity  | 7     | What the document is — title, metadata, agent identity, tracking       |
+| Content   | 19    | What the document says — text, images, quotes, callouts, definitions   |
+| Structure | 8     | How the document is organized — sections, references, deadlines, TOC   |
+| Data      | 5     | Typed data — columns, rows, inputs, outputs, metrics                   |
+| Agent     | 26    | Workflow for AI agents — steps, gates, decisions, assertions, secrets  |
+| Trust     | 7     | Document integrity — approval, signatures, policy, history, amendments |
+| Layout    | 7     | Print and PDF — page setup, headers, watermarks, signature lines       |
 
 Each keyword also has a dedicated entry in its category page with full syntax, properties table, examples, and behavioral notes.

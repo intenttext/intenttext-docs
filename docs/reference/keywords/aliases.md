@@ -5,13 +5,13 @@ title: Aliases
 
 # Keyword Aliases
 
-IntentText supports **49 aliases** — alternative names for keywords. Use whichever reads best in your document. Every alias compiles to the same internal keyword; there is no behavioral difference.
+IntentText supports **84 aliases** — alternative names for keywords. Use whichever reads best in your document. Every alias compiles to the same internal keyword; there is no behavioral difference.
 
 ## How aliases work
 
 ```intenttext
 // These are all identical:
-note: Payment is due within 30 days.
+text: Payment is due within 30 days.
 body: Payment is due within 30 days.
 text: Payment is due within 30 days.
 content: Payment is due within 30 days.
@@ -33,83 +33,110 @@ The parser normalizes all aliases to their canonical keyword. Templates, queries
 | `meta:`    | —           |
 | `context:` | —           |
 | `track:`   | —           |
+| `agent:`   | —           |
+| `model:`   | —           |
 
 ### Content
 
-| Canonical  | Aliases                                                  |
-| ---------- | -------------------------------------------------------- |
-| `note:`    | `body:`, `text:`, `content:`, `paragraph:`               |
-| `quote:`   | `blockquote:`, `excerpt:`, `pullquote:`, `highlight:`    |
-| `warning:` | `alert:`, `caution:`                                     |
-| `tip:`     | `hint:`, `advice:`                                       |
-| `code:`    | `snippet:`                                               |
-| `image:`   | `img:`, `photo:`, `picture:`                             |
-| `link:`    | `url:`, `href:`                                          |
-| `cite:`    | `citation:`, `source:`                                   |
-| `def:`     | `define:`, `term:`, `glossary:`                          |
-| `figure:`  | `fig:`, `chart:`, `diagram:`, `illustration:`, `visual:` |
-| `contact:` | `person:`, `party:`, `entity:`                           |
+| Canonical     | Aliases                                                  |
+| ------------- | -------------------------------------------------------- |
+| `text:`       | `note:`, `body:`, `content:`, `paragraph:`               |
+| `quote:`      | `blockquote:`, `excerpt:`, `pullquote:`                  |
+| `cite:`       | `citation:`, `source:`, `reference:`                     |
+| `warning:`    | `alert:`, `caution:`                                     |
+| `danger:`     | `critical:`, `destructive:`                              |
+| `tip:`        | `hint:`, `advice:`                                       |
+| `info:`       | —                                                        |
+| `success:`    | —                                                        |
+| `code:`       | `snippet:`                                               |
+| `image:`      | `img:`, `photo:`, `picture:`                             |
+| `link:`       | `url:`, `href:`                                          |
+| `def:`        | `define:`, `term:`, `glossary:`                          |
+| `figure:`     | `fig:`, `chart:`, `diagram:`, `illustration:`, `visual:` |
+| `contact:`    | `person:`, `party:`, `entity:`                           |
+| `byline:`     | —                                                        |
+| `epigraph:`   | —                                                        |
+| `caption:`    | —                                                        |
+| `footnote:`   | —                                                        |
+| `dedication:` | —                                                        |
 
 ### Structure
 
-| Canonical   | Aliases                       |
-| ----------- | ----------------------------- |
-| `section:`  | `heading:`, `chapter:`        |
-| `sub:`      | `subsection:`, `subheading:`  |
-| `break:`    | —                             |
-| `group:`    | —                             |
-| `ref:`      | `reference:`, `xref:`, `see:` |
-| `deadline:` | `due:`, `milestone:`, `by:`   |
+| Canonical   | Aliases                                    |
+| ----------- | ------------------------------------------ |
+| `section:`  | `heading:`, `chapter:`                     |
+| `sub:`      | `subheading:`                              |
+| `group:`    | —                                          |
+| `break:`    | —                                          |
+| `ref:`      | `references:`, `see:`, `related:`, `xref:` |
+| `deadline:` | `due:`, `milestone:`, `by:`                |
+| `embed:`    | —                                          |
+| `toc:`      | —                                          |
 
 ### Data
 
-| Canonical | Aliases                          |
-| --------- | -------------------------------- |
-| `input:`  | —                                |
-| `output:` | —                                |
-| `table:`  | —                                |
-| `metric:` | `kpi:`, `measure:`, `indicator:` |
+| Canonical  | Aliases                          |
+| ---------- | -------------------------------- |
+| `columns:` | —                                |
+| `row:`     | —                                |
+| `input:`   | —                                |
+| `output:`  | —                                |
+| `metric:`  | `kpi:`, `measure:`, `indicator:` |
 
 ### Agent
 
-| Canonical   | Aliases |
-| ----------- | ------- |
-| `step:`     | —       |
-| `gate:`     | —       |
-| `trigger:`  | —       |
-| `emit:`     | —       |
-| `decision:` | —       |
-| `context:`  | —       |
-| `memory:`   | —       |
-| `prompt:`   | —       |
-| `tool:`     | —       |
-| `audit:`    | —       |
-| `done:`     | —       |
-| `error:`    | —       |
+| Canonical     | Aliases                                              |
+| ------------- | ---------------------------------------------------- |
+| `step:`       | `run:`                                               |
+| `gate:`       | —                                                    |
+| `trigger:`    | `on:`                                                |
+| `signal:`     | ~~`emit:`~~ (deprecated), ~~`status:`~~ (deprecated) |
+| `decision:`   | `if:`                                                |
+| `memory:`     | —                                                    |
+| `prompt:`     | —                                                    |
+| `tool:`       | —                                                    |
+| `audit:`      | `log:`                                               |
+| `done:`       | —                                                    |
+| `error:`      | —                                                    |
+| `result:`     | —                                                    |
+| `handoff:`    | —                                                    |
+| `wait:`       | —                                                    |
+| `parallel:`   | —                                                    |
+| `retry:`      | —                                                    |
+| `call:`       | —                                                    |
+| `loop:`       | —                                                    |
+| `checkpoint:` | —                                                    |
+| `import:`     | —                                                    |
+| `export:`     | —                                                    |
+| `progress:`   | —                                                    |
+| `task:`       | `check:`, `todo:`, `action:`, `item:`                |
+| `ask:`        | —                                                    |
+| `policy:`     | `rule:`, `constraint:`, `guard:`, `requirement:`     |
+| `assert:`     | `expect:`, `verify:`                                 |
+| `secret:`     | `credential:`, `token:`                              |
 
 ### Trust
 
-| Canonical    | Aliases                                          |
-| ------------ | ------------------------------------------------ |
-| `approve:`   | —                                                |
-| `sign:`      | —                                                |
-| `freeze:`    | `lock:`                                          |
-| `revision:`  | —                                                |
-| `policy:`    | `rule:`, `constraint:`, `guard:`, `requirement:` |
-| `amendment:` | `amend:`, `change:`                              |
-| `history:`   | —                                                |
+| Canonical    | Aliases             |
+| ------------ | ------------------- |
+| `approve:`   | —                   |
+| `sign:`      | —                   |
+| `freeze:`    | `lock:`             |
+| `revision:`  | —                   |
+| `amendment:` | `amend:`, `change:` |
+| `history:`   | —                   |
 
 ### Layout
 
-| Canonical    | Aliases             |
-| ------------ | ------------------- |
-| `page:`      | —                   |
-| `font:`      | —                   |
-| `header:`    | —                   |
-| `footer:`    | —                   |
-| `watermark:` | —                   |
-| `signline:`  | —                   |
-| `divider:`   | `hr:`, `separator:` |
+| Canonical    | Aliases                         |
+| ------------ | ------------------------------- |
+| `page:`      | —                               |
+| `font:`      | —                               |
+| `header:`    | —                               |
+| `footer:`    | —                               |
+| `watermark:` | —                               |
+| `signline:`  | `signature-line:`, `sign-here:` |
+| `divider:`   | `hr:`, `separator:`             |
 
 ---
 
@@ -117,14 +144,16 @@ The parser normalizes all aliases to their canonical keyword. Templates, queries
 
 | Category          | Keywords | Aliases |
 | ----------------- | -------- | ------- |
-| Document Identity | 5        | 1       |
-| Content           | 11       | 27      |
-| Structure         | 6        | 10      |
-| Data              | 4        | 3       |
-| Agent             | 12       | 0       |
-| Trust             | 7        | 7       |
-| Layout            | 7        | 2       |
-| **Total**         | **57**   | **49**  |
+| Document Identity | 7        | 1       |
+| Content           | 19       | 30      |
+| Structure         | 8        | 10      |
+| Data              | 5        | 3       |
+| Agent             | 27       | 19      |
+| Trust             | 6        | 3       |
+| Layout            | 7        | 4       |
+| **Total**         | **79**   | **70**  |
+
+> **Note:** There are also 14 compat-only aliases (e.g. `h1:` → `title:`, `p:` → `text:`, `h2:` → `section:`, `h3:` → `sub:`, `headers:` → `columns:`, `subsection:` → `sub:`, `due-date:` → `deadline:`, `stat:` → `metric:`, `completed:` → `done:`, `finished:` → `done:`, `question:` → `ask:`, `sig:` → `signline:`) bringing the total to **84 aliases**. Compat-only aliases are not shown in documentation or completion hints.
 
 ---
 
@@ -134,9 +163,9 @@ Queries normalize aliases automatically:
 
 ```bash
 # These return the same results:
+intenttext query . --type text
 intenttext query . --type note
 intenttext query . --type body
-intenttext query . --type text
 ```
 
 ## Using aliases in templates
@@ -145,7 +174,7 @@ Templates always use canonical names. Even if the source document uses an alias,
 
 ```json
 {
-  "type": "note",
+  "type": "text",
   "content": "Payment is due within 30 days."
 }
 ```

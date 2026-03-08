@@ -10,8 +10,8 @@ meta: | client: Acme Corp | ref: CONTRACT-2026-042
 track: | version: 1.0 | by: Ahmed
 
 section: Scope
-note: Consulting services April–June 2026
-note: Value: USD 24,000 | weight: bold
+text: Consulting services April–June 2026
+text: Value: USD 24,000 | weight: bold
 deadline: Payment due | date: 2026-04-30 | consequence: Late fee applies
 
 section: Parties
@@ -64,7 +64,7 @@ export default function Home(): React.ReactElement {
             marginBottom: "2rem",
           }}
         >
-          55 keywords. Human-readable. Machine-queryable. Legally sealable.
+          79 keywords. Human-readable. Machine-queryable. Legally sealable.
         </p>
         <div className="live-example">
           <div className="live-source">
@@ -218,7 +218,7 @@ export default function Home(): React.ReactElement {
             <div className="audience-card">
               <h3>🤖 AI Agents</h3>
               <p>
-                12 workflow keywords. Pipeline definitions agents can read and
+                27 workflow keywords. Pipeline definitions agents can read and
                 execute. Gates, decisions, handoffs. An MCP server ships ready.
                 Agents produce <code>.it</code> files, not just Markdown.
               </p>

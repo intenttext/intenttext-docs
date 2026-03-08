@@ -89,7 +89,7 @@ footer: | left: Confidential | center: Page {{page}} of {{pages}} | right: v1.0
 watermark: DRAFT
 
 section: Terms
-note: ...
+text: ...
 ```
 
 Render with `intenttext contract.it --print --theme legal` and you get a document that looks like it came from outside counsel.

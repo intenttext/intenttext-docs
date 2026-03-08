@@ -5,7 +5,7 @@ title: Agent Keywords
 
 # Agent Keywords
 
-12 keywords for AI agent workflows — task planning, pipeline definition, conditional logic, and audit logging.
+27 keywords for AI agent workflows — task planning, pipeline definition, conditional logic, audit logging, assertions, and secrets.
 
 ## `step:`
 
@@ -110,18 +110,22 @@ trigger: Deployment complete | event: deploy.success | filter: env == "productio
 
 ---
 
-## `emit:`
+## `signal:`
 
 **Category:** Agent
-**Since:** v2.3
-**Aliases:** `status:`
+**Since:** v2.2
+**Aliases:** ~~`emit:`~~ (deprecated), ~~`status:`~~ (deprecated)
 
-Emit an event or status signal. Used to communicate between workflows or log state changes.
+Emit a named workflow signal or event. Used to communicate between workflows or log state changes.
+
+:::warning Deprecation
+`emit:` and `status:` still work but produce a deprecation warning. Use `signal:` instead.
+:::
 
 ### Syntax
 
 ```
-emit: description | event: name | data: payload
+signal: description | event: name | data: payload
 ```
 
 ### Properties
@@ -134,8 +138,8 @@ emit: description | event: name | data: payload
 ### Examples
 
 ```intenttext
-emit: migration_complete | event: data.migration.done | data: rows=12450
-emit: Pipeline finished | event: pipeline.complete | data: duration=45m
+signal: migration_complete | event: data.migration.done | data: rows=12450
+signal: Pipeline finished | event: pipeline.complete | data: duration=45m
 ```
 
 ---
@@ -321,7 +325,7 @@ audit: Approved quarterly report | by: Sarah Chen | at: 2026-03-06T10:00:00Z | a
 **Since:** v2.0
 **Aliases:** `completed:`, `finished:`
 
-Completion marker. Signals that a workflow or task has finished.
+Completed task item — the resolved state of a `task:` block. Signals that a workflow or task has finished.
 
 ### Syntax
 
@@ -372,3 +376,467 @@ error: description | code: identifier | severity: level | retry: boolean
 error: Migration failed — timeout exceeded | code: MIGRATION_TIMEOUT | severity: critical | retry: true
 error: Invalid input format | code: INVALID_INPUT | severity: warning | retry: false
 ```
+
+---
+
+## `result:`
+
+**Category:** Agent
+**Since:** v2.1
+
+Terminal workflow result — the final output block of a workflow.
+
+### Syntax
+
+```
+result: description | format: type | data: payload
+```
+
+### Properties
+
+| Property | Type   | Description                     |
+| -------- | ------ | ------------------------------- |
+| `format` | string | Output format (JSON, PDF, etc.) |
+| `data`   | string | Result data or reference        |
+
+### Examples
+
+```intenttext
+result: Migration report | format: JSON | data: ./reports/migration.json
+result: Invoice generated | format: PDF | data: ./invoices/inv-2026-001.pdf
+```
+
+---
+
+## `handoff:`
+
+**Category:** Agent
+**Since:** v2.1
+
+Transfer control to another agent or workflow.
+
+### Syntax
+
+```
+handoff: description | to: agent | context: data | reason: text
+```
+
+### Properties
+
+| Property  | Type   | Description                    |
+| --------- | ------ | ------------------------------ |
+| `to`      | string | Target agent or workflow       |
+| `context` | string | Data to pass to the next agent |
+| `reason`  | string | Why the handoff is happening   |
+
+### Examples
+
+```intenttext
+handoff: Transfer to legal review | to: Legal Agent | context: contract_id=ACM-2026 | reason: Requires legal sign-off
+handoff: Escalate to human | to: Support Team | reason: Confidence below threshold
+```
+
+---
+
+## `wait:`
+
+**Category:** Agent
+**Since:** v2.1
+
+Pause execution until an event occurs or a timeout expires.
+
+### Syntax
+
+```
+wait: description | for: event | timeout: duration | fallback: step_id
+```
+
+### Properties
+
+| Property   | Type   | Description                        |
+| ---------- | ------ | ---------------------------------- |
+| `for`      | string | Event or condition to wait for     |
+| `timeout`  | string | Maximum wait time                  |
+| `fallback` | string | Step to execute if timeout expires |
+
+### Examples
+
+```intenttext
+wait: Await manager approval | for: approval.received | timeout: 72h | fallback: escalate
+wait: Cool-down period | timeout: 5m
+```
+
+---
+
+## `parallel:`
+
+**Category:** Agent
+**Since:** v2.1
+
+Run multiple steps concurrently.
+
+### Syntax
+
+```
+parallel: description | steps: step_ids | join: strategy
+```
+
+### Properties
+
+| Property | Type   | Description                                      |
+| -------- | ------ | ------------------------------------------------ |
+| `steps`  | string | Comma-separated step IDs to run in parallel      |
+| `join`   | string | Join strategy: `all` (default), `any`, `fastest` |
+
+### Examples
+
+```intenttext
+parallel: Run validations | steps: validate_schema, validate_data, validate_refs | join: all
+parallel: Fetch from sources | steps: fetch_db, fetch_api | join: any
+```
+
+---
+
+## `retry:`
+
+**Category:** Agent
+**Since:** v2.1
+
+Retry a failed step with backoff.
+
+### Syntax
+
+```
+retry: description | step: step_id | max: count | backoff: strategy | delay: duration
+```
+
+### Properties
+
+| Property  | Type   | Description                                        |
+| --------- | ------ | -------------------------------------------------- |
+| `step`    | string | Step ID to retry                                   |
+| `max`     | number | Maximum retry attempts                             |
+| `backoff` | string | Backoff strategy: `fixed`, `exponential`, `linear` |
+| `delay`   | string | Initial delay between retries                      |
+
+### Examples
+
+```intenttext
+retry: Retry export | step: export | max: 3 | backoff: exponential | delay: 5s
+retry: Retry API call | step: fetch_data | max: 5 | backoff: fixed | delay: 10s
+```
+
+---
+
+## `call:`
+
+**Category:** Agent
+**Since:** v2.2
+
+Invoke a sub-workflow by file reference.
+
+### Syntax
+
+```
+call: description | file: path | input: data | output: target
+```
+
+### Properties
+
+| Property | Type   | Description               |
+| -------- | ------ | ------------------------- |
+| `file`   | string | Path to the sub-workflow  |
+| `input`  | string | Input data to pass        |
+| `output` | string | Where to store the result |
+
+### Examples
+
+```intenttext
+call: Run data validation | file: ./workflows/validate.it | input: records.json | output: validation_result
+call: Generate invoice | file: ./templates/invoice.it | input: order_data
+```
+
+---
+
+## `loop:`
+
+**Category:** Agent
+**Since:** v2.0
+
+Iterate over a collection.
+
+### Syntax
+
+```
+loop: description | over: collection | as: variable | max: limit
+```
+
+### Properties
+
+| Property | Type   | Description                     |
+| -------- | ------ | ------------------------------- |
+| `over`   | string | Collection to iterate over      |
+| `as`     | string | Variable name for each item     |
+| `max`    | number | Maximum iterations (safety cap) |
+
+### Examples
+
+```intenttext
+loop: Process each record | over: records | as: record | max: 10000
+loop: Notify stakeholders | over: contacts | as: contact
+```
+
+---
+
+## `checkpoint:`
+
+**Category:** Agent
+**Since:** v2.0
+
+Named workflow checkpoint for resume and rollback.
+
+### Syntax
+
+```
+checkpoint: name | data: state
+```
+
+### Properties
+
+| Property | Type   | Description                    |
+| -------- | ------ | ------------------------------ |
+| `data`   | string | Serialized state at this point |
+
+### Examples
+
+```intenttext
+checkpoint: pre-migration | data: schema_snapshot
+checkpoint: post-validation | data: validation_report
+```
+
+---
+
+## `import:`
+
+**Category:** Agent
+**Since:** v2.0
+
+Import a workflow or data from a file.
+
+### Syntax
+
+```
+import: description | file: path | as: name
+```
+
+### Properties
+
+| Property | Type   | Description               |
+| -------- | ------ | ------------------------- |
+| `file`   | string | Path to import from       |
+| `as`     | string | Local name for the import |
+
+### Examples
+
+```intenttext
+import: Validation Utils | file: ./shared/validate.it | as: validate
+import: Common policies | file: ./policies/standard.it
+```
+
+---
+
+## `export:`
+
+**Category:** Agent
+**Since:** v2.0
+
+Export data or workflow output.
+
+### Syntax
+
+```
+export: description | format: type | target: path
+```
+
+### Properties
+
+| Property | Type   | Description        |
+| -------- | ------ | ------------------ |
+| `format` | string | Export format      |
+| `target` | string | Export destination |
+
+### Examples
+
+```intenttext
+export: Migration results | format: JSON | target: ./reports/migration.json
+export: Audit log | format: CSV | target: ./logs/audit.csv
+```
+
+---
+
+## `progress:`
+
+**Category:** Agent
+**Since:** v2.0
+
+Progress indicator for long-running operations.
+
+### Syntax
+
+```
+progress: description | value: number | total: number | unit: label
+```
+
+### Properties
+
+| Property | Type   | Description            |
+| -------- | ------ | ---------------------- |
+| `value`  | number | Current progress value |
+| `total`  | number | Total expected value   |
+| `unit`   | string | Unit label             |
+
+### Examples
+
+```intenttext
+progress: Migrating records | value: 4500 | total: 12450 | unit: records
+progress: Upload complete | value: 100 | total: 100 | unit: %
+```
+
+---
+
+## `task:`
+
+**Category:** Agent
+**Since:** v1.0
+**Aliases:** `check:`, `todo:`, `action:`, `item:`
+
+Actionable task item with owner and due date. The basic human-facing work unit.
+
+### Syntax
+
+```
+task: description | owner: name | due: date | priority: level | status: state
+```
+
+### Properties
+
+| Property   | Type   | Description                                 |
+| ---------- | ------ | ------------------------------------------- |
+| `owner`    | string | Who is responsible                          |
+| `due`      | string | Due date                                    |
+| `priority` | string | `low`, `medium`, `high`, `critical`         |
+| `status`   | string | `pending`, `in-progress`, `blocked`, `done` |
+
+### Examples
+
+```intenttext
+task: Review contract terms | owner: Sarah Chen | due: 2026-03-15 | priority: high
+task: Update API documentation | owner: Engineering | status: in-progress
+task: Send invoice to client | owner: Finance | due: 2026-04-01
+```
+
+---
+
+## `ask:`
+
+**Category:** Agent
+**Since:** v1.0
+**Aliases:** `question:`
+
+Question or open item requiring a response.
+
+### Syntax
+
+```
+ask: question text | to: recipient | due: date | priority: level
+```
+
+### Properties
+
+| Property   | Type   | Description       |
+| ---------- | ------ | ----------------- |
+| `to`       | string | Who should answer |
+| `due`      | string | Response due date |
+| `priority` | string | Priority level    |
+
+### Examples
+
+```intenttext
+ask: What is the expected delivery date for Phase 2? | to: Engineering | due: 2026-03-10
+ask: Should we include the optional modules? | to: Product | priority: high
+```
+
+---
+
+## `assert:`
+
+**Category:** Agent
+**Since:** v2.13
+**Aliases:** `expect:`, `verify:`
+
+Testable assertion — a condition that must be true. Evaluable by agents and CI pipelines.
+
+### Syntax
+
+```
+assert: description | expect: expression | severity: level
+```
+
+### Properties
+
+| Property   | Type   | Description                                              |
+| ---------- | ------ | -------------------------------------------------------- |
+| `expect`   | string | Boolean expression to evaluate                           |
+| `severity` | string | `error` (default) or `warning` — what happens on failure |
+
+### Examples
+
+```intenttext
+assert: All records migrated | expect: migrated_count == total_count
+assert: Response time within SLA | expect: response_ms < 200 | severity: warning
+assert: No data loss | expect: source_count == target_count | severity: error
+```
+
+### Notes
+
+- Validation error `ASSERT_MISSING_CONDITION` if both content and `expect:` are empty
+- Agents evaluate `expect:` expressions at runtime
+- CI pipelines can use `intenttext query . --type assert` to extract all assertions
+
+---
+
+## `secret:`
+
+**Category:** Agent
+**Since:** v2.13
+**Aliases:** `credential:`, `token:`
+
+Secret or credential reference — **never rendered; always redacted in output**. The renderer replaces all content with `••••••••` regardless of context.
+
+### Syntax
+
+```
+secret: name | env: variable | scope: level
+```
+
+### Properties
+
+| Property | Type   | Description                        |
+| -------- | ------ | ---------------------------------- |
+| `env`    | string | Environment variable name          |
+| `scope`  | string | Secret scope: `workflow`, `global` |
+
+### Examples
+
+```intenttext
+secret: Database password | env: DB_PASSWORD | scope: workflow
+secret: API key | env: OPENAI_API_KEY | scope: global
+secret: Deployment token | env: DEPLOY_TOKEN
+```
+
+### Notes
+
+- Validation error `SECRET_MISSING_NAME` if content is empty
+- **ALWAYS redacted** — rendered output shows `••••••••`, never the actual value
+- The parser stores the secret name and properties, but the renderer always masks content
+- Agents should read secrets from environment variables, not from the document

@@ -35,11 +35,11 @@ contact: GlobalTech Industries | role: Client | email: contracts@globaltech.co |
 
 section: Scope
 
-note: Provider shall deliver the Services to Client for the duration of the Term, including:
-note: 1. 24/7 infrastructure monitoring
-note: 2. Monthly security audits
-note: 3. Quarterly performance reviews
-note: 4. On-call incident response (< 1 hour SLA)
+text: Provider shall deliver the Services to Client for the duration of the Term, including:
+text: 1. 24/7 infrastructure monitoring
+text: 2. Monthly security audits
+text: 3. Quarterly performance reviews
+text: 4. On-call incident response (< 1 hour SLA)
 
 section: Timeline
 
@@ -53,7 +53,7 @@ section: Payment
 metric: Monthly retainer | value: 15000 | unit: USD
 metric: Annual value | value: 180000 | unit: USD | weight: bold
 deadline: Payment due | due: 2026-04-15 | status: pending
-note: Payment due within 15 days of each monthly invoice.
+text: Payment due within 15 days of each monthly invoice.
 
 section: Signatures
 

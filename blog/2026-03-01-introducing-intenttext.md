@@ -32,7 +32,7 @@ summary: Consulting services Q2 2026
 meta: | client: Acme Corp | ref: CONTRACT-2026-042
 
 section: Scope
-note: Strategic consulting for platform migration.
+text: Strategic consulting for platform migration.
 deadline: Phase 1 complete | date: 2026-04-30
 
 section: Parties
@@ -57,7 +57,7 @@ One file. Both audiences. No conversion step.
 
 IntentText ships as a core npm package (`@intenttext/core`) with:
 
-- **55 keywords** covering document identity, content, structure, data, agent workflows, trust, and print layout
+- **79 keywords** covering document identity, content, structure, data, agent workflows, trust, and print layout
 - **8 built-in themes** for professional rendering
 - **A query engine** that works across files and folders
 - **A trust system** — approvals, signatures, sealing, and tamper detection

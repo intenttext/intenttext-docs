@@ -74,7 +74,7 @@ Use dot notation for nested objects:
 ```
 
 ```intenttext
-note: {{company.name}} is headquartered in {{company.address.city}}, {{company.address.state}}.
+text: {{company.name}} is headquartered in {{company.address.city}}, {{company.address.state}}.
 ```
 
 ## Array index access

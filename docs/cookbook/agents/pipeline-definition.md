@@ -54,8 +54,8 @@ error: Schema validation failed | step: validate | fallback: flag-review | notif
 
 section: Events
 
-trigger: Document stored | event: store.complete | emit: doc-processed
-trigger: Error occurred | event: error.* | emit: ops-alert
+trigger: Document stored | event: store.complete | signal: doc-processed
+trigger: Error occurred | event: error.* | signal: ops-alert
 
 audit: Pipeline created | by: pipeline-agent | at: 2026-03-15 | level: info
 done: Pipeline definition complete | status: template

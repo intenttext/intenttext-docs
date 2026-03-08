@@ -10,7 +10,7 @@ Keywords that control the printed/PDF appearance of a document. These have no ef
 ## `page:`
 
 **Category:** Layout
-**Since:** v2.9
+**Since:** v2.5
 
 Set page dimensions and margins.
 
@@ -41,7 +41,7 @@ page: | size: 210mm 297mm | margins: 20mm 25mm 30mm 25mm
 ## `font:`
 
 **Category:** Layout
-**Since:** v2.9
+**Since:** v2.5
 
 Set document fonts.
 
@@ -202,9 +202,9 @@ divider: | style: dotted
 A bare `---` on its own line is equivalent to `divider:` with no properties. It always renders as a visible horizontal rule (`<hr>`).
 
 ```intenttext
-note: Section one content.
+text: Section one content.
 ---
-note: Section two content.
+text: Section two content.
 ```
 
 As of v2.12, `---` is no longer reserved as a history boundary. It is a visible divider everywhere it appears.
@@ -234,7 +234,8 @@ As of v2.12, `---` is no longer reserved as a history boundary. It is a visible 
 ## `signline:`
 
 **Category:** Layout
-**Since:** v2.9
+**Since:** v2.11
+**Aliases:** `signature-line:`, `sign-here:`, `sig:`
 
 Physical signature line for printed documents. This keyword creates a visual line-for-ink on the page, not a digital signature.
 
@@ -277,7 +278,7 @@ Use `signline:` when you need people to physically sign a printed document. Use 
 title: Service Agreement
 
 section: Terms
-note: Payment within 30 days of delivery...
+text: Payment within 30 days of delivery...
 
 section: Signatures
 

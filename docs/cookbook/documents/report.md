@@ -24,7 +24,7 @@ watermark: DRAFT | color: #cccccc | opacity: 0.06
 
 section: Executive Summary
 
-note: Engineering delivered 3 of 4 planned initiatives on schedule. Cloud migration completed ahead of timeline. API platform launch delayed by 2 weeks due to security review findings. Team grew from 42 to 48 engineers.
+text: Engineering delivered 3 of 4 planned initiatives on schedule. Cloud migration completed ahead of timeline. API platform launch delayed by 2 weeks due to security review findings. Team grew from 42 to 48 engineers.
 
 section: Key Metrics
 
@@ -37,7 +37,6 @@ metric: Team satisfaction | value: 4.2 | target: 4.0 | unit: /5 | trend: flat
 
 section: Project Status
 
-table:
 | Project | Status | Lead | Target Date |
 | Cloud migration | ✓ Complete | Sarah Chen | 2026-02-28 |
 | API platform | In progress | James Miller | 2026-04-15 |
@@ -51,11 +50,11 @@ figure: Incident response times | at: /images/mttr-chart.png | caption: Mean tim
 
 section: Analysis
 
-note: The 40% improvement in deployment frequency directly correlates with the CI/CD pipeline rebuild completed in January. Teams are now shipping smaller, more frequent changes.
+text: The 40% improvement in deployment frequency directly correlates with the CI/CD pipeline rebuild completed in January. Teams are now shipping smaller, more frequent changes.
 
 cite: State of DevOps Report 2025 | by: DORA Team | at: https://dora.dev/report | note: Elite performers deploy multiple times per day with sub-hour recovery times. Our metrics now meet elite performer benchmarks.
 
-note: Customer-reported bugs dropped 40% quarter-over-quarter, tracking with the code coverage increase from 82% to 91%.
+text: Customer-reported bugs dropped 40% quarter-over-quarter, tracking with the code coverage increase from 82% to 91%.
 
 section: Risks
 

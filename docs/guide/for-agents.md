@@ -7,24 +7,39 @@ title: For Agents
 
 AI agents produce Markdown. But Markdown has no structure for workflows, no typed blocks, no audit trail, no trust chain.
 
-IntentText gives agents 12 workflow keywords that produce documents machines can execute and humans can read.
+IntentText gives agents 27 workflow keywords that produce documents machines can execute and humans can read.
 
-## The 12 agent keywords
+## The agent keywords
 
-| Keyword     | Purpose                                                |
-| ----------- | ------------------------------------------------------ |
-| `step:`     | A unit of work — the building block                    |
-| `gate:`     | Conditional checkpoint — blocks until condition is met |
-| `trigger:`  | Event-based activation                                 |
-| `emit:`     | Emit an event or status signal                         |
-| `decision:` | Conditional branching — if/then/else                   |
-| `context:`  | Agent execution context — goal, constraints            |
-| `memory:`   | Agent state or memory                                  |
-| `prompt:`   | LLM prompt template                                    |
-| `tool:`     | External tool declaration                              |
-| `audit:`    | Audit log entry                                        |
-| `done:`     | Completion marker                                      |
-| `error:`    | Error record                                           |
+| Keyword       | Purpose                                                |
+| ------------- | ------------------------------------------------------ |
+| `step:`       | A unit of work — the building block                    |
+| `gate:`       | Conditional checkpoint — blocks until condition is met |
+| `trigger:`    | Event-based activation                                 |
+| `signal:`     | Emit a named workflow signal or event                  |
+| `decision:`   | Conditional branching — if/then/else                   |
+| `context:`    | Agent execution context — goal, constraints            |
+| `memory:`     | Agent state or memory                                  |
+| `prompt:`     | LLM prompt template                                    |
+| `tool:`       | External tool declaration                              |
+| `audit:`      | Audit log entry                                        |
+| `done:`       | Completed task item                                    |
+| `error:`      | Error record                                           |
+| `result:`     | Terminal workflow result                               |
+| `handoff:`    | Transfer control to another agent                      |
+| `wait:`       | Pause until event or timeout                           |
+| `parallel:`   | Run multiple steps concurrently                        |
+| `retry:`      | Retry a failed step with backoff                       |
+| `call:`       | Invoke a sub-workflow by file                          |
+| `loop:`       | Iterate over a collection                              |
+| `checkpoint:` | Named workflow checkpoint for resume                   |
+| `import:`     | Import a workflow from a file                          |
+| `export:`     | Export data or workflow output                         |
+| `progress:`   | Progress indicator for long-running ops                |
+| `task:`       | Actionable task item                                   |
+| `ask:`        | Question or open item                                  |
+| `assert:`     | Testable assertion — evaluable by CI                   |
+| `secret:`     | Secret reference — always redacted in output           |
 
 ## A complete agent task plan
 
@@ -45,13 +60,13 @@ decision: Migration successful? | if: migrate.exit_code == 0 | then: verify | el
 section: Verification
 step: Verify row counts | id: verify | depends: migrate | tool: row_counter
 step: Run integration tests | id: test | depends: verify | tool: pytest
-emit: migration_complete | event: data.migration.done | data: rows={{verify.count}}
+signal: migration_complete | event: data.migration.done | data: rows={{verify.count}}
 done: Migration complete | status: success
 
 section: Rollback
 step: Restore backup | id: rollback | tool: pg_restore | input: backup_2026.sql
 error: Migration failed | code: MIGRATION_ROLLBACK | severity: critical
-emit: migration_failed | event: data.migration.failed
+signal: migration_failed | event: data.migration.failed
 ```
 
 ## Pipeline with steps and dependencies

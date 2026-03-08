@@ -20,12 +20,13 @@ Properties appear after the pipe separator `|` (space-pipe-space). Any keyword c
 3. Every subsequent segment → `key: value`
 4. Escaped pipe `\|` is treated as a literal character, not a separator
 5. Unknown properties are stored, queryable, and carried through merge
+6. For `code:`, triple backticks delimit the value — everything between ` ``` ` and ` ``` ` is the content, properties go after the closing backticks
 
-```intenttext
-note: Payment due in 30 days | color: red | id: payment-note
+````intenttext
+text: Payment due in 30 days | color: red | id: payment-note
 quote: The only limit is imagination | by: Anonymous | size: 1.2em
-image: Logo | at: /images/logo.png | caption: Company logo | width: 200px
-```
+code: ```fetch("/api/data")``` | lang: js
+````
 
 ## Standard properties by keyword
 
@@ -115,7 +116,7 @@ Each keyword documents its own properties on its reference page. Here is a cross
 Properties are **fully open-ended**. The parser stores everything — any `key: value` pair is valid:
 
 ```intenttext
-note: Custom data | department: Engineering | priority: high | reviewed: true
+text: Custom data | department: Engineering | priority: high | reviewed: true
 ```
 
 Custom properties are preserved in parsed output, appear in queries, and survive merge operations. This makes `.it` files extensible without schema changes.

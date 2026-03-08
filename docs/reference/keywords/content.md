@@ -5,34 +5,35 @@ title: Content Keywords
 
 # Content Keywords
 
-Keywords for the actual content of your document — text, quotes, warnings, images, definitions, figures, and contacts.
+Keywords for the actual content of your document — text, quotes, callouts, images, definitions, figures, contacts, and writer blocks.
 
-## `note:`
+## `text:`
 
 **Category:** Content
 **Since:** v1.0
-**Aliases:** `text:`, `body:`, `p:`, `paragraph:`
+**Aliases:** `note:`, `body:`, `content:`, `paragraph:`, `p:`
 
-General text block. The default, most-used keyword. Use it for any paragraph of content.
+General body text — the default block type. Not a callout; for callouts use `info:`, `tip:`, `warning:`, `danger:`.
 
 ### Syntax
 
 ```
-note: content | style-properties
+text: content | style-properties
 ```
 
 ### Examples
 
 ```intenttext
-note: The project is on track for a June delivery.
-note: Total contract value: USD 24,000 | weight: bold
-note: Please review by end of week | color: #dc2626 | italic: true
+text: The project is on track for a June delivery.
+text: Total contract value: USD 24,000 | weight: bold
+text: Please review by end of week | color: #dc2626 | italic: true
 ```
 
 ### Notes
 
 - Supports all [style properties](../style-properties)
-- Supports [inline formatting](../style-properties#inline-formatting): `*bold*`, `_italic_`, `~strike~`, `` `code` ``, `^highlight^`
+- Supports [inline formatting](../style-properties#inline-formatting): `*bold*`, `_italic_`, `~strike~`, ` ```code``` `, `^highlight^`, `` `label` ``, `{Label}`
+- `note:` is the most common alias — both `text:` and `note:` work identically
 
 ---
 
@@ -40,7 +41,7 @@ note: Please review by end of week | color: #dc2626 | italic: true
 
 **Category:** Content
 **Since:** v1.0
-**Aliases:** `blockquote:`, `cite:` (as v2.11 alias), `citation:`, `source:`, `reference:`
+**Aliases:** `blockquote:`, `excerpt:`, `pullquote:`
 
 Block quotation with optional attribution.
 
@@ -52,17 +53,15 @@ quote: content | citation: source
 
 ### Properties
 
-| Property    | Type   | Description          |
-| ----------- | ------ | -------------------- |
-| `citation`  | string | Attribution text     |
-| `source`    | string | Source reference     |
-| `reference` | string | Reference identifier |
+| Property   | Type   | Description      |
+| ---------- | ------ | ---------------- |
+| `citation` | string | Attribution text |
 
 ### Examples
 
 ```intenttext
 quote: The best way to predict the future is to invent it. | citation: Alan Kay
-quote: All documents should be machine-readable from birth. | source: IntentText Manifesto
+quote: All documents should be machine-readable from birth. | citation: IntentText Manifesto
 ```
 
 ---
@@ -111,14 +110,99 @@ tip: Add meta: | theme: corporate to set a default theme.
 
 ---
 
-## `code:`
+## `info:`
 
 **Category:** Content
 **Since:** v1.0
 
-Code block with optional language for syntax highlighting.
+Informational callout block. Renders with a neutral-blue indicator.
 
 ### Syntax
+
+```
+info: content
+```
+
+### Examples
+
+```intenttext
+info: This document uses IntentText v2.13 format.
+info: All timestamps are in UTC.
+```
+
+---
+
+## `success:`
+
+**Category:** Content
+**Since:** v1.0
+
+Success or confirmation callout block. Renders with a green indicator.
+
+### Syntax
+
+```
+success: content
+```
+
+### Examples
+
+```intenttext
+success: Migration completed — 12,450 records transferred.
+success: All tests passed. Ready for deployment.
+```
+
+---
+
+## `danger:`
+
+**Category:** Content
+**Since:** v1.0
+**Aliases:** `critical:`, `destructive:`
+
+Danger callout — for irreversible actions or data loss risk. Renders with a strong red indicator.
+
+### Syntax
+
+```
+danger: content
+```
+
+### Examples
+
+```intenttext
+danger: Deleting this record is irreversible.
+danger: This action will permanently remove all associated data.
+```
+
+---
+
+## `code:`
+
+**Category:** Content
+**Since:** v1.0
+**Aliases:** `snippet:`
+
+Code block with optional language for syntax highlighting. Use `code:` for both single-line and multi-line code. Everything inside the triple backticks is the value of `code:` — just like any other keyword's value.
+
+### Syntax
+
+**Single-line code** — wrap the value in triple backticks:
+
+````
+code: ```content``` | lang: language
+````
+
+**Multi-line code** — open with triple backticks, close on a separate line:
+
+````
+code: ```
+line 1
+line 2
+``` | lang: language
+````
+
+**Plain single-line** (no backtick wrapper, for simple one-liners):
 
 ```
 code: content | lang: language
@@ -130,12 +214,53 @@ code: content | lang: language
 | -------- | ------ | ------------------------------------- |
 | `lang`   | string | Programming language for highlighting |
 
+Pipe properties go **after** the closing triple backticks, just like they go after content on any other keyword.
+
 ### Examples
 
-```intenttext
-code: const doc = parseIntentText(source); | lang: typescript
-code: intenttext seal contract.it --signer "Ahmed" | lang: bash
-```
+**Single-line:**
+
+````intenttext
+code: ```const doc = parseIntentText(source);``` | lang: typescript
+code: ```intenttext seal contract.it --signer "Ahmed"``` | lang: bash
+````
+
+**Multi-line:**
+
+````intenttext
+code: ```
+def calculate_total(items):
+    return sum(item.price for item in items)
+``` | lang: python
+````
+
+````intenttext
+code: ```
+SELECT *
+FROM users
+WHERE active = true
+``` | lang: sql
+````
+
+### Inline code
+
+To include code inline within any text block, use triple backticks:
+
+````intenttext
+text: Call the ```render()``` function to generate output.
+text: Set ```NODE_ENV=production``` before deploying.
+````
+
+Triple backticks render as `<code>` inline. For labels/badges, use single backticks — see [inline formatting](../style-properties#inline-formatting).
+
+### Notes
+
+- `code:` follows the same keyword pattern as every other IntentText keyword: `keyword: value | properties`
+- The triple backticks delimit the code value — everything between ` ``` ` and ` ``` ` is the code content
+- Properties (`| lang: js`, etc.) go after the closing ` ``` `, like any other pipe property
+- Plain `code: content` (without backtick wrapper) still works for simple one-liners
+- Standalone backtick fences (without `code:`) also work for backward compatibility
+- Inline code within text uses triple backticks: ` ```code``` `
 
 ---
 
@@ -207,8 +332,9 @@ link: View the full contract | url: ./contracts/acme-2026.it | title: Acme Servi
 
 **Category:** Content
 **Since:** v1.0
+**Aliases:** `citation:`, `source:`, `reference:`
 
-Source citation for bibliography or references.
+Bibliographic citation with author, date, and URL.
 
 ### Syntax
 
@@ -259,7 +385,7 @@ def: term | meaning: definition | abbr: abbreviation
 **Inline (near first use):**
 
 ```intenttext
-note: The document enters the sealed state after freeze.
+text: The document enters the sealed state after freeze.
 def: Sealed Document | meaning: A document whose content hash has been cryptographically locked. Any modification invalidates the seal.
 ```
 
@@ -289,7 +415,7 @@ def: Net 30 | meaning: Payment is due within 30 calendar days of the invoice dat
 
 **Category:** Content
 **Since:** v2.11
-**Aliases:** `fig:`, `diagram:`, `chart:`
+**Aliases:** `fig:`, `diagram:`, `chart:`, `illustration:`, `visual:`
 
 Numbered, captioned figure. Unlike `image:`, figures are formal elements with auto-numbering that can be referenced and that float in print layouts.
 
@@ -343,7 +469,7 @@ figure: Query architecture | src: ./diagrams/query.png | num: 2 | align: center 
 
 **Category:** Content
 **Since:** v2.11
-**Aliases:** `person:`, `party:`
+**Aliases:** `person:`, `party:`, `entity:`
 
 Person or organization contact information. Queryable across files — your documents become a contact directory.
 
@@ -382,3 +508,131 @@ contact: GlobalTech Inc. | role: Vendor | url: https://globaltech.co | address: 
 ### Related
 
 - [Contact Directory cookbook →](../../cookbook/organizations/contact-directory)
+
+---
+
+## `byline:`
+
+**Category:** Content
+**Since:** v2.5
+
+Author byline with date and publication. Typically appears below the title.
+
+### Syntax
+
+```
+byline: author name | date: value | publication: name
+```
+
+### Properties
+
+| Property      | Type   | Description             |
+| ------------- | ------ | ----------------------- |
+| `date`        | string | Publication date        |
+| `publication` | string | Publication or org name |
+
+### Examples
+
+```intenttext
+byline: Ahmed Al-Rashid | date: 2026-03-06 | publication: Acme Corp
+byline: Sarah Chen | date: March 2026
+```
+
+---
+
+## `epigraph:`
+
+**Category:** Content
+**Since:** v2.5
+
+Introductory quotation at the start of a document or section. Styled differently from `quote:` — typically italic, right-aligned.
+
+### Syntax
+
+```
+epigraph: content | attribution: source
+```
+
+### Properties
+
+| Property      | Type   | Description      |
+| ------------- | ------ | ---------------- |
+| `attribution` | string | Source or author |
+
+### Examples
+
+```intenttext
+epigraph: The document is the API. | attribution: IntentText Manifesto
+epigraph: Begin with the end in mind. | attribution: Stephen Covey
+```
+
+---
+
+## `caption:`
+
+**Category:** Content
+**Since:** v2.5
+
+Figure or table caption. Typically paired with `figure:` or a data table.
+
+### Syntax
+
+```
+caption: text
+```
+
+### Examples
+
+```intenttext
+caption: Figure 1 — Revenue trend over Q1–Q4 2025
+caption: Table 2 — Contact directory for the legal department
+```
+
+---
+
+## `footnote:`
+
+**Category:** Content
+**Since:** v2.5
+
+Numbered footnote. Referenced inline with `[^n]` syntax.
+
+### Syntax
+
+```
+footnote: content | id: identifier
+```
+
+### Properties
+
+| Property | Type   | Description                               |
+| -------- | ------ | ----------------------------------------- |
+| `id`     | string | Footnote identifier for inline references |
+
+### Examples
+
+```intenttext
+text: The agreement[^1] was signed on March 6th.
+footnote: See Appendix A for the full agreement text. | id: 1
+```
+
+---
+
+## `dedication:`
+
+**Category:** Content
+**Since:** v2.5
+
+Document dedication page. Renders on its own page in print output.
+
+### Syntax
+
+```
+dedication: content
+```
+
+### Examples
+
+```intenttext
+dedication: For the engineers who believe documents should be structured from birth.
+```

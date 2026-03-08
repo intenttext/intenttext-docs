@@ -28,8 +28,8 @@ title: Project Kickoff
 summary: Planning meeting notes for Atlas project
 
 section: Decisions
-note: Launch date confirmed for June 15
-note: Budget approved at USD 180,000 | weight: bold
+text: Launch date confirmed for June 15
+text: Budget approved at USD 180,000 | weight: bold
 
 section: Tasks
 task: Finalize vendor contracts | owner: Sarah | due: 2026-04-15
@@ -81,7 +81,7 @@ import { parseIntentText, renderHTML } from "@intenttext/core";
 
 const source = `
 title: Quick Example
-note: This is structured text.
+text: This is structured text.
 task: Review document | owner: Ahmed | due: 2026-04-01
 `;
 

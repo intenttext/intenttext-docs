@@ -29,7 +29,6 @@ contact: GlobalTech Industries | role: Client | email: accounts@globaltech.co | 
 
 section: Line Items
 
-table:
 | Description | Qty | Unit Price | Total |
 | Cloud infrastructure setup | 1 | $15,000 | $15,000 |
 | Data migration (500GB) | 1 | $8,000 | $8,000 |
@@ -45,8 +44,8 @@ metric: Total Due | value: 44280 | unit: USD | color: green | weight: bold
 section: Payment
 
 deadline: Payment due | due: 2026-04-15 | status: pending
-note: Wire transfer to Acme Corp, Account #****4521, Routing #****7890.
-note: Late payments subject to 1.5% monthly interest.
+text: Wire transfer to Acme Corp, Account #****4521, Routing #****7890.
+text: Late payments subject to 1.5% monthly interest.
 
 track: | by: billing@acme.co
 ```

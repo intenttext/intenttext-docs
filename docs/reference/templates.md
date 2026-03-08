@@ -49,11 +49,10 @@ contact: {{client_name}} | role: Client | email: {{client_email}}
 contact: {{provider_name}} | role: Provider | email: {{provider_email}}
 
 section: Terms
-note: This {{document_type}} is effective as of {{effective_date}}.
-note: {{terms}}
+text: This {{document_type}} is effective as of {{effective_date}}.
+text: {{terms}}
 
 section: Deliverables
-table:
 | Description | Due Date | Amount | each: deliverables |
 | {{deliverable.description}} | {{deliverable.due}} | {{deliverable.amount}} |
 
@@ -66,7 +65,6 @@ metric: Total Value | value: {{total}} | unit: {{currency}}
 Add `each: arrayName` as the last column header to repeat rows for each item in an array.
 
 ```intenttext
-table:
 | Item | Qty | Price | each: items |
 | {{item.description}} | {{item.qty}} | {{item.price}} |
 ```
@@ -83,7 +81,6 @@ table:
 If auto-singularization doesn't produce the right name:
 
 ```intenttext
-table:
 | Description | Amount | each: line_items as line |
 | {{line.description}} | {{line.amount}} |
 ```

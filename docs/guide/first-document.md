@@ -35,7 +35,7 @@ Every `contact:` is queryable. Later, you can run `intenttext query ./invoices -
 
 ## Add line items
 
-Use a `table:` with `each:` for dynamic rows:
+Use a Markdown pipe table with `each:` for dynamic rows:
 
 ```intenttext
 section: Line Items

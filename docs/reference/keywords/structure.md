@@ -55,9 +55,9 @@ sub: heading text
 ```intenttext
 section: Payment Terms
 sub: Invoice Schedule
-note: Invoices are issued on the 1st of each month.
+text: Invoices are issued on the 1st of each month.
 sub: Late Fees
-note: A fee of 1.5% per month applies to overdue payments.
+text: A fee of 1.5% per month applies to overdue payments.
 ```
 
 ---
@@ -227,3 +227,67 @@ deadline: Phase 1 delivery | date: 2026-06-01 | authority: Steering Committee | 
 ### Related
 
 - [Deadline Tracking cookbook →](../../cookbook/organizations/deadline-tracking)
+
+---
+
+## `embed:`
+
+**Category:** Structure
+**Since:** v1.0
+
+Embed a referenced external resource inline in the document.
+
+### Syntax
+
+```
+embed: description | src: url | type: media_type | width: value | height: value
+```
+
+### Properties
+
+| Property | Type   | Description          |
+| -------- | ------ | -------------------- |
+| `src`    | string | URL or path to embed |
+| `type`   | string | Media type hint      |
+| `width`  | string | Display width        |
+| `height` | string | Display height       |
+
+### Examples
+
+```intenttext
+embed: Project timeline | src: ./diagrams/timeline.svg | width: 100%
+embed: Demo video | src: https://example.com/demo.mp4 | type: video
+```
+
+---
+
+## `toc:`
+
+**Category:** Structure
+**Since:** v2.5
+
+Auto-generated table of contents based on `section:` and `sub:` headings in the document.
+
+### Syntax
+
+```
+toc:
+toc: | depth: number
+```
+
+### Properties
+
+| Property | Type   | Default | Description                                                               |
+| -------- | ------ | ------- | ------------------------------------------------------------------------- |
+| `depth`  | number | `3`     | Maximum heading depth to include (2=sections only, 3=include subsections) |
+
+### Examples
+
+```intenttext
+title: Service Agreement
+toc:
+
+section: Scope of Work
+sub: Deliverables
+text: ...
+```

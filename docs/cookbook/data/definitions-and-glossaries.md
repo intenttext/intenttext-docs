@@ -24,15 +24,15 @@ section: Scope
 
 def: Provider | meaning: Acme Corp, a Delaware corporation
 
-note: The Provider shall deliver cloud infrastructure services as described in Exhibit A.
+text: The Provider shall deliver cloud infrastructure services as described in Exhibit A.
 
 def: SLA | meaning: Service Level Agreement — the uptime and response time commitments in Section 4 | abbr: SLA
 
-note: Provider commits to the SLA terms including 99.9% uptime and < 1 hour incident response.
+text: Provider commits to the SLA terms including 99.9% uptime and < 1 hour incident response.
 
 def: Client | meaning: GlobalTech Industries, a California corporation
 
-note: The Client shall provide access credentials within 5 business days of contract execution.
+text: The Client shall provide access credentials within 5 business days of contract execution.
 ```
 
 ### Grouped definitions (glossary)

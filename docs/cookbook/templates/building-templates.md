@@ -24,7 +24,6 @@ contact: Acme Corp | role: Provider | email: billing@acme.co
 contact: GlobalTech Industries | role: Client | email: accounts@globaltech.co
 
 section: Line Items
-table:
 | Description | Qty | Price | Total |
 | Cloud setup | 1 | $15,000 | $15,000 |
 | Data migration | 1 | $8,000 | $8,000 |
@@ -46,7 +45,6 @@ contact: {{provider_name}} | role: Provider | email: {{provider_email}}
 contact: {{client_name}} | role: Client | email: {{client_email}}
 
 section: Line Items
-table:
 | Description | Qty | Price | Total | each: items |
 | {{item.description}} | {{item.qty}} | {{item.price}} | {{item.total}} |
 

@@ -9,17 +9,18 @@ You want to write, not fight formatting. IntentText gives you plain text in → 
 
 ## Writer-friendly keywords
 
-You don't need to memorize 55 keywords. Writers use these:
+You don't need to memorize 79 keywords. Writers use these:
 
-| You write                | It means           | Alias for  |
-| ------------------------ | ------------------ | ---------- |
-| `p:` or `text:`          | A paragraph        | `note:`    |
-| `h2:` or `heading:`      | Section heading    | `section:` |
-| `h3:` or `subheading:`   | Subsection heading | `sub:`     |
-| `blockquote:` or `cite:` | Quotation          | `quote:`   |
-| `todo:` or `check:`      | Task item          | `task:`    |
+| You write                   | It means           | Canonical  |
+| --------------------------- | ------------------ | ---------- |
+| `note:` or `body:`          | A paragraph        | `text:`    |
+| `h2:` or `heading:`         | Section heading    | `section:` |
+| `h3:` or `subheading:`      | Subsection heading | `sub:`     |
+| `blockquote:` or `excerpt:` | Quotation          | `quote:`   |
+| `citation:` or `source:`    | Citation           | `cite:`    |
+| `todo:` or `check:`         | Task item          | `task:`    |
 
-All 47 aliases are listed in the [Aliases Reference](../reference/keywords/aliases). Write what's natural — the parser maps it to the canonical keyword.
+All aliases are listed in the [Aliases Reference](../reference/keywords/aliases). Write what’s natural — the parser maps it to the canonical keyword.
 
 ## Write an article
 
@@ -29,11 +30,11 @@ summary: Why plain text formats are making a comeback
 meta: | author: Elena Vasquez | date: 2026-03-15 | tags: opinion, technology
 
 section: The Problem
-note: Every organization stores critical information in formats that can't be searched, can't be queried, and can't be verified.
-note: A contract in Word is just a blob of styled text. The deadline on page 12? Good luck finding it.
+text: Every organization stores critical information in formats that can’t be searched, can’t be queried, and can’t be verified.
+text: A contract in Word is just a blob of styled text. The deadline on page 12? Good luck finding it.
 
 section: The Solution
-note: Structured plain text — where every line declares its intent — is the answer that's been hiding in plain sight.
+text: Structured plain text — where every line declares its intent — is the answer that’s been hiding in plain sight.
 quote: The best format is the one you can still read in 50 years. | citation: Knuth, 1984
 
 section: Sources
@@ -62,7 +63,7 @@ Use `def:` near the first use of a term, or gather definitions in a glossary sec
 **Inline (near first use):**
 
 ```intenttext
-note: The document enters the sealed state after freeze.
+text: The document enters the sealed state after freeze.
 def: Sealed | meaning: A document whose content hash has been cryptographically locked. Any modification breaks the seal.
 ```
 
@@ -125,16 +126,43 @@ cite: The Pragmatic Programmer | author: Hunt, Thomas | date: 2019 | url: https:
 
 Within any block, use:
 
-| Syntax       | Result            |
-| ------------ | ----------------- |
-| `*text*`     | **bold**          |
-| `_text_`     | _italic_          |
-| `~text~`     | ~~strikethrough~~ |
-| `` `text` `` | `inline code`     |
-| `^text^`     | highlighted       |
-| `[[text]]`   | inline note       |
-| `@person`    | mention           |
-| `#topic`     | tag               |
+| Syntax         | Result            |
+| -------------- | ----------------- |
+| `*text*`       | **bold**          |
+| `_text_`       | _italic_          |
+| `~text~`       | ~~strikethrough~~ |
+| ` ```text``` ` | `inline code`     |
+| `` `text` ``   | label / badge     |
+| `{text}`       | label / badge     |
+| `^text^`       | highlighted       |
+| `[[text]]`     | inline note       |
+| `@person`      | mention           |
+| `#topic`       | tag               |
+
+## Code blocks
+
+`code:` works like any other keyword — triple backticks delimit the code value:
+
+**Single-line:**
+
+````intenttext
+code: ```console.log("Hello, World!")``` | lang: javascript
+````
+
+**Multi-line:**
+
+````intenttext
+code: ```
+def greet(name):
+    print(f"Hello, {name}")
+``` | lang: python
+````
+
+**Inline code** — use triple backticks within any text block:
+
+````intenttext
+text: Run ```npm install``` to set up the project.
+````
 
 ## The editorial workflow
 

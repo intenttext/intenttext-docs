@@ -78,7 +78,7 @@ const config: Config = {
   ],
 
   themeConfig: {
-    image: "img/intenttext-social-card.jpg",
+    image: "img/android-chrome-512x512.png",
     colorMode: {
       respectPrefersColorScheme: true,
     },

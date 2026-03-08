@@ -3,6 +3,29 @@ import Link from "@docusaurus/Link";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import Layout from "@theme/Layout";
 import CodeBlock from "@theme/CodeBlock";
+import {
+  Building2,
+  Bot,
+  PenLine,
+  ShieldCheck,
+  Lock,
+  FilePen,
+  Package,
+  Terminal,
+  Server,
+  Code2,
+  Globe,
+  LayoutDashboard,
+  GitBranch,
+  ArrowRight,
+  Search,
+  FileCheck,
+  Zap,
+  Clock,
+  Users,
+  Mail,
+  ChevronRight,
+} from "lucide-react";
 
 const LANDING_EXAMPLE = `title: Service Agreement
 summary: Consulting services Q2 2026
@@ -22,15 +45,20 @@ approve: Reviewed by legal | by: Sarah Chen | role: Legal Counsel
 sign: Ahmed Al-Rashid | role: CEO | at: 2026-03-06T14:32:00Z
 freeze: | status: locked`;
 
+function FeatureIcon({ children }: { children: React.ReactNode }) {
+  return <div className="feature-icon">{children}</div>;
+}
+
 export default function Home(): React.ReactElement {
   const { siteConfig } = useDocusaurusContext();
   return (
     <Layout title="Home" description={siteConfig.tagline}>
-      {/* Hero */}
+      {/* ── Hero ──────────────────────────────────────────── */}
       <div className="hero-section">
         <div className="container">
+          <div className="hero-badge">Open format &middot; v2.13</div>
           <h1>Documents that think.</h1>
-          <p>
+          <p className="hero-subtitle">
             IntentText (<code>.it</code>) is an open format for structured
             documents — readable by humans, queryable by code, trustworthy by
             design.
@@ -40,7 +68,7 @@ export default function Home(): React.ReactElement {
               className="button button--primary button--lg"
               to="/docs/guide/quick-start"
             >
-              Get started →
+              Get started <ArrowRight size={18} />
             </Link>
             <Link
               className="button button--secondary button--lg"
@@ -49,22 +77,33 @@ export default function Home(): React.ReactElement {
               Browse templates
             </Link>
           </div>
+          <div className="hero-stats">
+            <div className="hero-stat">
+              <strong>79</strong>
+              <span>keywords</span>
+            </div>
+            <div className="hero-stat">
+              <strong>8</strong>
+              <span>themes</span>
+            </div>
+            <div className="hero-stat">
+              <strong>5</strong>
+              <span>SDKs</span>
+            </div>
+            <div className="hero-stat">
+              <strong>76</strong>
+              <span>templates</span>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Live Example */}
-      <div className="container" style={{ padding: "2rem 0 4rem" }}>
-        <h2 style={{ textAlign: "center", marginBottom: "0.5rem" }}>
-          One format. Every audience.
-        </h2>
-        <p
-          style={{
-            textAlign: "center",
-            color: "var(--ifm-color-emphasis-700)",
-            marginBottom: "2rem",
-          }}
-        >
-          79 keywords. Human-readable. Machine-queryable. Legally sealable.
+      {/* ── Live Example ──────────────────────────────────── */}
+      <div className="container section">
+        <h2 className="section-title">One format. Every audience.</h2>
+        <p className="section-subtitle">
+          Human-readable source on the left. Rendered output on the right. Same
+          file.
         </p>
         <div className="live-example">
           <div className="live-source">
@@ -72,276 +111,266 @@ export default function Home(): React.ReactElement {
           </div>
           <div className="live-render">
             <h3 style={{ margin: "0 0 0.25rem" }}>Service Agreement</h3>
-            <p
-              style={{
-                color: "#6b7280",
-                fontStyle: "italic",
-                margin: "0 0 0.5rem",
-                fontSize: "0.9rem",
-              }}
-            >
-              Consulting services Q2 2026
-            </p>
-            <div
-              style={{
-                fontSize: "0.75rem",
-                color: "#9ca3af",
-                marginBottom: "0.75rem",
-              }}
-            >
-              <span style={{ marginRight: "1rem" }}>client: Acme Corp</span>
+            <p className="render-summary">Consulting services Q2 2026</p>
+            <div className="render-meta">
+              <span>client: Acme Corp</span>
               <span>ref: CONTRACT-2026-042</span>
             </div>
-            <div
-              style={{
-                fontSize: "0.7rem",
-                color: "#6b7280",
-                background: "#f1f5f9",
-                padding: "0.25rem 0.5rem",
-                borderRadius: "4px",
-                marginBottom: "0.75rem",
-              }}
-            >
-              📋 Tracked — version: 1.0 — by: Ahmed
+            <div className="render-track">
+              <FileCheck size={13} /> Tracked — version: 1.0 — by: Ahmed
             </div>
-            <h4
-              style={{
-                margin: "0.75rem 0 0.25rem",
-                borderBottom: "1px solid #e5e7eb",
-                paddingBottom: "0.25rem",
-              }}
-            >
-              Scope
-            </h4>
-            <p style={{ margin: "0.25rem 0", fontSize: "0.9rem" }}>
-              Consulting services April–June 2026
-            </p>
-            <p
-              style={{
-                margin: "0.25rem 0",
-                fontSize: "0.9rem",
-                fontWeight: 700,
-              }}
-            >
+            <h4 className="render-section">Scope</h4>
+            <p className="render-text">Consulting services April–June 2026</p>
+            <p className="render-text" style={{ fontWeight: 700 }}>
               Value: USD 24,000
             </p>
-            <div
-              style={{
-                padding: "0.5rem",
-                margin: "0.25rem 0",
-                background: "#fef3c7",
-                borderLeft: "3px solid #f59e0b",
-                borderRadius: "0 4px 4px 0",
-                fontSize: "0.85rem",
-              }}
-            >
-              ⏰ <strong>Payment due</strong> — 2026-04-30
+            <div className="render-deadline">
+              <Clock size={14} /> <strong>Payment due</strong> — 2026-04-30
             </div>
-            <h4
-              style={{
-                margin: "0.75rem 0 0.25rem",
-                borderBottom: "1px solid #e5e7eb",
-                paddingBottom: "0.25rem",
-              }}
-            >
-              Parties
-            </h4>
-            <div
-              style={{
-                padding: "0.5rem",
-                margin: "0.25rem 0",
-                background: "#f9fafb",
-                borderRadius: "4px",
-                fontSize: "0.85rem",
-              }}
-            >
-              <strong>Ahmed Al-Rashid</strong>{" "}
-              <span style={{ color: "#6b7280" }}>— CEO at Acme Corp</span>
-              <div style={{ fontSize: "0.75rem", color: "#3b82f6" }}>
-                ahmed@acme.com
+            <h4 className="render-section">Parties</h4>
+            <div className="render-contact">
+              <Users size={14} />
+              <div>
+                <strong>Ahmed Al-Rashid</strong>
+                <span className="render-role"> — CEO at Acme Corp</span>
+                <div className="render-email">
+                  <Mail size={12} /> ahmed@acme.com
+                </div>
               </div>
             </div>
-            <div
-              style={{
-                padding: "0.5rem",
-                margin: "0.25rem 0",
-                background: "#f9fafb",
-                borderRadius: "4px",
-                fontSize: "0.85rem",
-              }}
-            >
-              <strong>James Miller</strong>{" "}
-              <span style={{ color: "#6b7280" }}>— COO at Client Co.</span>
-              <div style={{ fontSize: "0.75rem", color: "#3b82f6" }}>
-                j.miller@client.co
+            <div className="render-contact">
+              <Users size={14} />
+              <div>
+                <strong>James Miller</strong>
+                <span className="render-role"> — COO at Client Co.</span>
+                <div className="render-email">
+                  <Mail size={12} /> j.miller@client.co
+                </div>
               </div>
             </div>
-            <div style={{ marginTop: "0.75rem", fontSize: "0.85rem" }}>
-              <div style={{ color: "#16a34a" }}>
-                ✅ Reviewed by legal — Sarah Chen, Legal Counsel
+            <div className="render-trust">
+              <div className="trust-approve">
+                <ShieldCheck size={14} /> Reviewed by legal — Sarah Chen, Legal
+                Counsel
               </div>
-              <div style={{ color: "#2563eb" }}>
-                🔏 Signed by Ahmed Al-Rashid — CEO
+              <div className="trust-sign">
+                <PenLine size={14} /> Signed by Ahmed Al-Rashid — CEO
               </div>
-              <div style={{ color: "#dc2626", fontWeight: 600 }}>
-                🔒 Document sealed
+              <div className="trust-seal">
+                <Lock size={14} /> Document sealed
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Three Audiences */}
-      <div
-        style={{
-          background: "var(--ifm-color-emphasis-100)",
-          padding: "3rem 0",
-        }}
-      >
-        <div className="container">
-          <h2 style={{ textAlign: "center", marginBottom: "2rem" }}>
-            Built for three audiences
-          </h2>
+      {/* ── Three Audiences ───────────────────────────────── */}
+      <div className="alt-bg">
+        <div className="container section">
+          <h2 className="section-title">Built for three audiences</h2>
           <div className="audience-grid">
             <div className="audience-card">
-              <h3>🏢 Organizations</h3>
+              <FeatureIcon>
+                <Building2 size={28} strokeWidth={1.5} />
+              </FeatureIcon>
+              <h3>Organizations</h3>
               <p>
                 Contracts, policies, reports — all in queryable <code>.it</code>{" "}
                 files. Find every deadline across 500 documents. Track who
-                approved what. Seal contracts with cryptographic trust. Amend
-                without voiding signatures.
+                approved what. Seal contracts with cryptographic trust.
               </p>
-              <Link to="/docs/guide/for-organizations">
-                For organizations →
+              <Link to="/docs/guide/for-organizations" className="card-link">
+                For organizations <ChevronRight size={16} />
               </Link>
             </div>
             <div className="audience-card">
-              <h3>🤖 AI Agents</h3>
+              <FeatureIcon>
+                <Bot size={28} strokeWidth={1.5} />
+              </FeatureIcon>
+              <h3>AI Agents</h3>
               <p>
                 27 workflow keywords. Pipeline definitions agents can read and
                 execute. Gates, decisions, handoffs. An MCP server ships ready.
                 Agents produce <code>.it</code> files, not just Markdown.
               </p>
-              <Link to="/docs/guide/for-agents">For agents →</Link>
+              <Link to="/docs/guide/for-agents" className="card-link">
+                For agents <ChevronRight size={16} />
+              </Link>
             </div>
             <div className="audience-card">
-              <h3>✍️ Writers</h3>
+              <FeatureIcon>
+                <PenLine size={28} strokeWidth={1.5} />
+              </FeatureIcon>
+              <h3>Writers</h3>
               <p>
                 Write in plain text. Get professional output. 8 built-in themes
                 — corporate, editorial, legal, minimal. Figures with
                 auto-numbering. Citations. PDF export in one command.
               </p>
-              <Link to="/docs/guide/for-writers">For writers →</Link>
+              <Link to="/docs/guide/for-writers" className="card-link">
+                For writers <ChevronRight size={16} />
+              </Link>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Ecosystem */}
-      <div className="container" style={{ padding: "3rem 0" }}>
-        <h2 style={{ textAlign: "center", marginBottom: "2rem" }}>
-          The ecosystem
-        </h2>
-        <div className="ecosystem-grid">
-          <div className="ecosystem-item">
-            <strong>npm</strong>
-            <span style={{ fontSize: "0.85rem" }}>@intenttext/core</span>
-          </div>
-          <div className="ecosystem-item">
-            <strong>PyPI</strong>
-            <span style={{ fontSize: "0.85rem" }}>intenttext</span>
-          </div>
-          <div className="ecosystem-item">
-            <strong>CLI</strong>
-            <span style={{ fontSize: "0.85rem" }}>Parse, render, seal</span>
-          </div>
-          <div className="ecosystem-item">
-            <strong>MCP Server</strong>
-            <span style={{ fontSize: "0.85rem" }}>For AI agents</span>
-          </div>
-          <div className="ecosystem-item">
-            <strong>VS Code</strong>
-            <span style={{ fontSize: "0.85rem" }}>Syntax + snippets</span>
-          </div>
-          <div className="ecosystem-item">
-            <strong>Hub</strong>
-            <span style={{ fontSize: "0.85rem" }}>76 templates, 8 themes</span>
-          </div>
-          <div className="ecosystem-item">
-            <strong>Editor</strong>
-            <span style={{ fontSize: "0.85rem" }}>Web-based, no CLI</span>
-          </div>
-          <div className="ecosystem-item">
-            <strong>GitHub Action</strong>
-            <span style={{ fontSize: "0.85rem" }}>CI validation</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Trust */}
-      <div
-        style={{
-          background: "var(--ifm-color-emphasis-100)",
-          padding: "3rem 0",
-        }}
-      >
-        <div className="container">
-          <h2 style={{ textAlign: "center", marginBottom: "2rem" }}>
-            Trust, built in
-          </h2>
-          <div className="trust-steps">
-            <div className="trust-step">
-              <h3>1. Approve & Sign</h3>
+      {/* ── Why IntentText ────────────────────────────────── */}
+      <div className="container section">
+        <h2 className="section-title">Why IntentText?</h2>
+        <div className="why-grid">
+          <div className="why-item">
+            <Search size={20} strokeWidth={1.5} />
+            <div>
+              <strong>Queryable</strong>
               <p>
-                Named approvals and cryptographic signatures live in the
-                document itself. Not in metadata. Not in a separate system.
+                Find every <code>deadline:</code> across hundreds of documents.
+                Extract contacts, metrics, approvals — programmatically.
               </p>
             </div>
-            <div className="trust-step">
-              <h3>2. Seal</h3>
+          </div>
+          <div className="why-item">
+            <ShieldCheck size={20} strokeWidth={1.5} />
+            <div>
+              <strong>Trustworthy</strong>
               <p>
-                One command: <code>intenttext seal</code>. The document is
-                frozen. Any tampering breaks the hash. Verify anytime.
+                Built-in approve, sign, freeze, and amend keywords. Documents
+                carry their own chain of custody.
               </p>
             </div>
-            <div className="trust-step">
-              <h3>3. Amend</h3>
+          </div>
+          <div className="why-item">
+            <Zap size={20} strokeWidth={1.5} />
+            <div>
+              <strong>Zero dependencies</strong>
               <p>
-                Frozen documents can be formally amended. The original seal is
-                preserved. The amendment carries its own approval chain.
+                Plain text files. No database, no cloud, no vendor. Parse with a
+                single function. Works offline.
+              </p>
+            </div>
+          </div>
+          <div className="why-item">
+            <FileCheck size={20} strokeWidth={1.5} />
+            <div>
+              <strong>Portable</strong>
+              <p>
+                One <code>.it</code> file renders to HTML, PDF, JSON. The format
+                is open. No lock-in, ever.
               </p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Final CTA */}
-      <div
-        className="container"
-        style={{ padding: "3rem 0", textAlign: "center" }}
-      >
-        <h2>Start writing documents that think.</h2>
-        <p
-          style={{
-            color: "var(--ifm-color-emphasis-700)",
-            marginBottom: "2rem",
-          }}
-        >
-          Open format. No lock-in. The <code>.it</code> file is yours.
+      {/* ── Ecosystem ─────────────────────────────────────── */}
+      <div className="alt-bg">
+        <div className="container section">
+          <h2 className="section-title">The ecosystem</h2>
+          <p className="section-subtitle">
+            Everything you need to create, validate, and distribute structured
+            documents.
+          </p>
+          <div className="ecosystem-grid">
+            <div className="ecosystem-item">
+              <Package size={22} strokeWidth={1.5} />
+              <strong>npm</strong>
+              <span>@intenttext/core</span>
+            </div>
+            <div className="ecosystem-item">
+              <Package size={22} strokeWidth={1.5} />
+              <strong>PyPI</strong>
+              <span>intenttext</span>
+            </div>
+            <div className="ecosystem-item">
+              <Terminal size={22} strokeWidth={1.5} />
+              <strong>CLI</strong>
+              <span>Parse, render, seal</span>
+            </div>
+            <div className="ecosystem-item">
+              <Server size={22} strokeWidth={1.5} />
+              <strong>MCP Server</strong>
+              <span>For AI agents</span>
+            </div>
+            <div className="ecosystem-item">
+              <Code2 size={22} strokeWidth={1.5} />
+              <strong>VS Code</strong>
+              <span>Syntax + snippets</span>
+            </div>
+            <div className="ecosystem-item">
+              <Globe size={22} strokeWidth={1.5} />
+              <strong>Hub</strong>
+              <span>76 templates, 8 themes</span>
+            </div>
+            <div className="ecosystem-item">
+              <LayoutDashboard size={22} strokeWidth={1.5} />
+              <strong>Editor</strong>
+              <span>Web-based WYSIWYG</span>
+            </div>
+            <div className="ecosystem-item">
+              <GitBranch size={22} strokeWidth={1.5} />
+              <strong>GitHub Action</strong>
+              <span>CI validation</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ── Trust ─────────────────────────────────────────── */}
+      <div className="container section">
+        <h2 className="section-title">Trust, built in</h2>
+        <p className="section-subtitle">
+          Documents carry their own chain of custody. No external system
+          required.
         </p>
-        <div className="hero-buttons">
-          <Link
-            className="button button--primary button--lg"
-            to="/docs/guide/quick-start"
-          >
-            Get started →
-          </Link>
-          <Link
-            className="button button--secondary button--lg"
-            href="https://intenttext-hub.vercel.app"
-          >
-            Browse the Hub
-          </Link>
+        <div className="trust-steps">
+          <div className="trust-step">
+            <div className="trust-step-number">1</div>
+            <h3>Approve & Sign</h3>
+            <p>
+              Named approvals and cryptographic signatures live in the document
+              itself. Not in metadata. Not in a separate system.
+            </p>
+          </div>
+          <div className="trust-step">
+            <div className="trust-step-number">2</div>
+            <h3>Seal</h3>
+            <p>
+              One command: <code>intenttext seal</code>. The document is frozen.
+              Any tampering breaks the hash. Verify anytime.
+            </p>
+          </div>
+          <div className="trust-step">
+            <div className="trust-step-number">3</div>
+            <h3>Amend</h3>
+            <p>
+              Frozen documents can be formally amended. The original seal is
+              preserved. The amendment carries its own approval chain.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* ── CTA ───────────────────────────────────────────── */}
+      <div className="alt-bg cta-section">
+        <div className="container" style={{ textAlign: "center" }}>
+          <h2>Start writing documents that think.</h2>
+          <p className="section-subtitle">
+            Open format. No lock-in. The <code>.it</code> file is yours.
+          </p>
+          <div className="hero-buttons">
+            <Link
+              className="button button--primary button--lg"
+              to="/docs/guide/quick-start"
+            >
+              Get started <ArrowRight size={18} />
+            </Link>
+            <Link
+              className="button button--secondary button--lg"
+              href="https://intenttext-hub.vercel.app"
+            >
+              Browse the Hub
+            </Link>
+          </div>
         </div>
       </div>
     </Layout>

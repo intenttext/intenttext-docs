@@ -18,7 +18,7 @@ A unit of work in a workflow. The basic building block for agent task plans.
 ### Syntax
 
 ```
-step: description | id: identifier | tool: name | input: data | output: target | depends: step_id | timeout: duration | retry: count
+step: description | id: identifier | tool: name | input: data | output: target | depends: step_id | timeout: duration | retries: count
 ```
 
 ### Properties
@@ -31,7 +31,7 @@ step: description | id: identifier | tool: name | input: data | output: target |
 | `output`  | string | Where to store the result             |
 | `depends` | string | Step ID(s) this step depends on       |
 | `timeout` | string | Maximum execution time                |
-| `retry`   | number | Number of retry attempts              |
+| `retries` | number | Number of retry attempts              |
 
 ### Examples
 
@@ -54,28 +54,32 @@ step: Transform records | id: transform | depends: validate | tool: jq | input: 
 **Category:** Agent
 **Since:** v2.3
 
-Conditional checkpoint. Blocks execution until the condition is met or the timeout expires.
+Human approval checkpoint. Blocks execution until the required approver grants permission or the timeout expires.
 
 ### Syntax
 
 ```
-gate: description | condition: expression | timeout: duration | fallback: step_id
+gate: description | approver: name_or_role | timeout: duration | fallback: step_id
 ```
 
 ### Properties
 
-| Property    | Type   | Description                        |
-| ----------- | ------ | ---------------------------------- |
-| `condition` | string | Boolean expression to evaluate     |
-| `timeout`   | string | Maximum wait time                  |
-| `fallback`  | string | Step to execute if timeout expires |
+| Property   | Type   | Required | Description                                                |
+| ---------- | ------ | -------- | ---------------------------------------------------------- |
+| `approver` | string | yes      | Person or role who must approve before execution continues |
+| `timeout`  | string | no       | Maximum wait time                                          |
+| `fallback` | string | no       | Step to execute if approval is not received in time        |
 
 ### Examples
 
 ```intenttext
-gate: Maintenance window open | condition: time >= 02:00 AND time <= 06:00 | timeout: 24h
-gate: Manager approval received | condition: approval_status == "approved" | timeout: 72h | fallback: escalate
+gate: Manager approval | approver: engineering-manager | timeout: 72h | fallback: escalate
+gate: Security sign-off | approver: security-team | timeout: 48h
 ```
+
+:::note
+`gate:` is IntentText's human-in-the-loop primitive. It pauses workflow execution and waits for explicit human approval. It is not an automated condition check. For system-evaluated branching, use `decision:` with an `if:` property.
+:::
 
 ---
 
@@ -330,22 +334,26 @@ Completed task item — the resolved state of a `task:` block. Signals that a wo
 ### Syntax
 
 ```
-done: description | status: result | output: data
+done: description | owner: name | time: timestamp
 ```
 
 ### Properties
 
-| Property | Type   | Description                    |
-| -------- | ------ | ------------------------------ |
-| `status` | string | `success`, `partial`, `failed` |
-| `output` | string | Final output or summary        |
+| Property | Type   | Description            |
+| -------- | ------ | ---------------------- |
+| `owner`  | string | Who completed the item |
+| `time`   | string | When it was completed  |
 
 ### Examples
 
 ```intenttext
-done: Migration complete | status: success | output: 12,450 records migrated
-done: Report generated | status: success | output: ./reports/q1-2026.pdf
+done: Migration complete | owner: ops-team | time: 2026-03-08T10:00:00Z
+done: Report generated | owner: @analyst | time: 2026-03-08T09:30:00Z
 ```
+
+:::note
+`done:` marks a completed task item. It is the resolved state of a `task:` block. For workflow terminal output or data return values, use `result:` instead.
+:::
 
 ---
 

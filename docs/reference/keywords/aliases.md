@@ -145,12 +145,12 @@ The parser normalizes all aliases to their canonical keyword. Templates, queries
 | ----------------- | -------- | ------- |
 | Document Identity | 7        | 1       |
 | Content           | 19       | 30      |
-| Structure         | 8        | 10      |
+| Structure         | 7        | 10      |
 | Data              | 5        | 3       |
 | Agent             | 27       | 19      |
 | Trust             | 6        | 3       |
 | Layout            | 7        | 4       |
-| **Total**         | **79**   | **70**  |
+| **Total**         | **78**   | **70**  |
 
 > **Note:** There are also 14 compat-only aliases (e.g. `h1:` → `title:`, `p:` → `text:`, `h2:` → `section:`, `h3:` → `sub:`, `headers:` → `columns:`, `subsection:` → `sub:`, `due-date:` → `deadline:`, `stat:` → `metric:`, `completed:` → `done:`, `finished:` → `done:`, `question:` → `ask:`, `sig:` → `signline:`) bringing the total to **84 aliases**. Compat-only aliases are not shown in documentation or completion hints.
 

@@ -52,7 +52,7 @@ step: Export legacy data | id: export | tool: pg_dump | output: legacy_dump.sql 
 step: Validate export | id: validate | depends: export | tool: checksum_verify
 
 section: Migration
-gate: Maintenance window open | condition: time >= 02:00 AND time <= 06:00 | timeout: 24h
+gate: Manager approval | approver: engineering-manager | timeout: 72h | fallback: escalate
 step: Create backup | id: backup | tool: pg_backup | output: backup_2026.sql
 step: Run migration scripts | id: migrate | depends: backup | tool: flyway | input: legacy_dump.sql
 decision: Migration successful? | if: migrate.exit_code == 0 | then: verify | else: rollback
@@ -85,7 +85,7 @@ step: Send notification | id: notify | depends: load | tool: slack_post
 `gate:` blocks execution until a condition is true:
 
 ```intenttext
-gate: Approval received | condition: approval_status == "approved" | timeout: 72h | fallback: escalate
+gate: Approval received | approver: engineering-manager | timeout: 72h | fallback: escalate
 ```
 
 `decision:` branches based on a condition:
@@ -161,8 +161,8 @@ Agents use `ref:` to navigate a document graph — finding the plan that a log i
 `policy:` blocks declare rules agents must follow:
 
 ```intenttext
-policy: No production writes during business hours | scope: production | enforce: strict
-policy: All migrations require rollback plan | scope: migration | enforce: strict
+policy: No production writes during business hours | always: require-approval | action: block | notify: ops-team
+policy: All migrations require rollback plan | requires: step | action: block
 ```
 
 ---

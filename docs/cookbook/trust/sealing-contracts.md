@@ -11,7 +11,7 @@ You need to prove a document hasn't been tampered with since it was signed. If s
 
 ## The solution
 
-`intenttext seal` computes a cryptographic hash of the document content, adds a `sign:` block and a `freeze:` block. `intenttext verify` checks the hash against the current content.
+`intenttext seal` computes a SHA-256 hash of the document content, adds a `sign:` block and a `freeze:` block. `intenttext verify` checks the hash against the current content.
 
 ### Seal
 
@@ -52,18 +52,19 @@ Output when tampered:
 
 ## What the hash covers
 
-The hash is computed from **all content above the `freeze:` block**:
+The hash is computed from **document content above the history boundary**, excluding trust metadata lines:
 
 - `title:`, `summary:`, `meta:` blocks
 - All section content
 - All block content and properties
-- `approve:` and `sign:` blocks
+- `approve:` blocks
 - Layout blocks (`page:`, `font:`, etc.)
 
 The hash does **not** cover:
 
-- The `freeze:` block itself
-- Anything below `freeze:` (amendments, history)
+- `sign:` lines (stripped before hashing)
+- `freeze:` lines (stripped before hashing)
+- `amendment:` lines (stripped before hashing)
 - The `history:` boundary and revisions below it
 
 This is what makes amendments possible: they live after the `freeze:` block, so they don't break the original seal.

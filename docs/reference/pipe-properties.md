@@ -67,25 +67,31 @@ Each keyword documents its own properties on its reference page. Here is a cross
 
 ### Agent properties
 
-| Property      | Used by               | Description                  |
-| ------------- | --------------------- | ---------------------------- |
-| `depends:`    | `step:`               | Step dependency (runs after) |
-| `input:`      | `step:`               | Input data reference         |
-| `output:`     | `step:`               | Output data reference        |
-| `tool:`       | `step:`, `tool:`      | Tool reference               |
-| `model:`      | `step:`               | AI model to use              |
-| `status:`     | `step:`               | Execution status             |
-| `confidence:` | `step:`               | Confidence threshold (0–1)   |
-| `if:`         | `gate:`               | Gate condition               |
-| `then:`       | `gate:`               | Branch if true               |
-| `else:`       | `gate:`               | Branch if false              |
-| `event:`      | `trigger:`            | Triggering event             |
-| `scope:`      | `policy:`, `context:` | Scope boundary               |
-| `enforce:`    | `policy:`             | `strict` or `advisory`       |
-| `timeout:`    | `step:`               | Maximum execution time       |
-| `retries:`    | `step:`               | Number of retry attempts     |
-| `priority:`   | `step:`               | Execution priority           |
-| `phase:`      | `step:`               | Pipeline phase               |
+| Property      | Used by                | Description                  |
+| ------------- | ---------------------- | ---------------------------- |
+| `depends:`    | `step:`                | Step dependency (runs after) |
+| `input:`      | `step:`                | Input data reference         |
+| `output:`     | `step:`                | Output data reference        |
+| `tool:`       | `step:`, `tool:`       | Tool reference               |
+| `model:`      | `step:`                | AI model to use              |
+| `status:`     | `step:`                | Execution status             |
+| `confidence:` | `step:`                | Confidence threshold (0–1)   |
+| `approver:`   | `gate:`                | Required approver            |
+| `fallback:`   | `gate:`                | Step if approval times out   |
+| `if:`         | `decision:`, `policy:` | Condition to evaluate        |
+| `then:`       | `decision:`            | Branch if true               |
+| `else:`       | `decision:`            | Branch if false              |
+| `event:`      | `trigger:`             | Triggering event             |
+| `scope:`      | `policy:`, `context:`  | Scope boundary               |
+| `always:`     | `policy:`              | Unconditional rule           |
+| `never:`      | `policy:`              | Prohibition rule             |
+| `action:`     | `policy:`              | Response when policy fires   |
+| `requires:`   | `policy:`              | Required block type          |
+| `notify:`     | `policy:`              | Alert target                 |
+| `timeout:`    | `step:`                | Maximum execution time       |
+| `retries:`    | `step:`                | Number of retry attempts     |
+| `priority:`   | `step:`                | Execution priority           |
+| `phase:`      | `step:`                | Pipeline phase               |
 
 ### Trust properties
 
@@ -94,7 +100,6 @@ Each keyword documents its own properties on its reference page. Here is a cross
 | `role:`        | `approve:`, `sign:`, `signline:`, `contact:` | Person's role      |
 | `hash:`        | `sign:`, `freeze:`, `amendment:`             | Content hash       |
 | `approved-by:` | `amendment:`                                 | Amendment approver |
-| `enforce:`     | `policy:`                                    | Enforcement level  |
 
 ### Layout properties
 

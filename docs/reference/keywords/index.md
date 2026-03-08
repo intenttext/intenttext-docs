@@ -5,7 +5,7 @@ title: All Keywords
 
 import KeywordTable from '@site/src/components/KeywordTable';
 
-# All 79 Keywords
+# All 78 Keywords
 
 Every IntentText keyword in one table. Filter by category, sort by name or version, search by description.
 
@@ -25,7 +25,7 @@ Every IntentText keyword in one table. Filter by category, sort by name or versi
 | --------- | ----- | ---------------------------------------------------------------------- |
 | Identity  | 7     | What the document is — title, metadata, agent identity, tracking       |
 | Content   | 19    | What the document says — text, images, quotes, callouts, definitions   |
-| Structure | 8     | How the document is organized — sections, references, deadlines, TOC   |
+| Structure | 7     | How the document is organized — sections, references, deadlines, TOC   |
 | Data      | 5     | Typed data — columns, rows, inputs, outputs, metrics                   |
 | Agent     | 26    | Workflow for AI agents — steps, gates, decisions, assertions, secrets  |
 | Trust     | 7     | Document integrity — approval, signatures, policy, history, amendments |

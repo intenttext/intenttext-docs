@@ -24,7 +24,7 @@ step: Detect language | id: detect-lang | depends: extract | tool: lang-detect |
 
 section: Classification
 
-gate: Supported language | if: language in [en, es, fr, de] | then: classify | else: manual-route
+decision: Supported language? | if: language in [en, es, fr, de] | then: classify | else: manual-route
 
 step: Classify document | id: classify | depends: detect-lang | tool: classifier | model: gpt-4 | input: extracted_text | output: doc_type | confidence: 0.85 | status: pending | phase: classification
 
@@ -34,7 +34,7 @@ section: Validation
 
 step: Validate schema | id: validate | depends: classify | tool: schema-validator | input: extracted_text, doc_type | output: validation_result | status: pending | phase: validation
 
-gate: Schema valid | if: validation_result.valid == true | then: enrich | else: flag-review
+decision: Schema valid? | if: validation_result.valid == true | then: enrich | else: flag-review
 
 section: Enrichment
 
@@ -75,15 +75,15 @@ step: Step C | id: c | depends: a, b | status: pending
 
 Step C waits for both A and B to complete.
 
-### Gates
+### Gates and decisions
 
-Gates branch the pipeline based on conditions:
+`gate:` pauses execution until a named approver grants permission:
 
 ```intenttext
-gate: Quality check | if: confidence >= 0.85 | then: store | else: review
+gate: Manager approval | approver: engineering-manager | timeout: 72h | fallback: escalate
 ```
 
-If the condition is true, execution continues to the `then:` step. Otherwise, it branches to `else:`.
+`decision:` branches based on a condition:
 
 ### Error handling
 

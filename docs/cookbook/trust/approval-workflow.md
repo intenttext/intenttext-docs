@@ -29,7 +29,7 @@ approve: Legal review complete | by: Sarah Chen | role: General Counsel | at: 20
 approve: Finance approved | by: James Miller | role: CFO | at: 2026-03-21
 approve: Management sign-off | by: Lisa Park | role: CTO | at: 2026-03-21
 
-// Step 2: Digital signatures (cryptographic)
+// Step 2: Integrity hash seals (tamper-evident)
 sign: Ahmed Al-Rashid | role: CEO | at: 2026-03-22T10:00:00Z | hash: sha256:a1b2c3d4
 sign: Maria Santos | role: COO, GlobalTech | at: 2026-03-22T14:30:00Z | hash: sha256:e5f6a7b8
 
@@ -74,7 +74,7 @@ Add as many `approve:` blocks as your workflow requires. Common chains:
 sign: Ahmed Al-Rashid | role: CEO | at: 2026-03-22T10:00:00Z | hash: sha256:a1b2c3d4
 ```
 
-`sign:` records a cryptographic hash of the document content at the time of signing. This is machine-verifiable: if anyone changes the content, the hash won't match.
+`sign:` records a SHA-256 hash of the document content at the time of signing. This is machine-verifiable: if anyone changes the content, the hash won't match.
 
 ### 4. Freeze the document
 

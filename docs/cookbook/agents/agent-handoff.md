@@ -54,7 +54,7 @@ step: Expand mid-market offering | id: expand | priority: high | status: recomme
 step: Adjust pricing for enterprise tier | id: pricing | priority: medium | depends: expand | status: recommended
 step: Invest in AI integration features | id: ai-invest | priority: high | status: recommended
 
-gate: Budget available | if: budget > 2000000 | then: expand | else: pricing
+decision: Budget available? | if: budget > 2000000 | then: expand | else: pricing
 
 decision: Market entry strategy | options: organic growth, acquisition, partnership | output: strategy
 
@@ -87,7 +87,7 @@ section: Phase 2 — Launch
 step: Beta program | id: beta | depends: mvp | tool: customer-success | output: feedback | deadline: 2026-07-01
 step: GA release | id: ga | depends: beta | tool: marketing-team | deadline: 2026-08-01
 
-policy: All features must pass security review before beta | scope: product | enforce: strict
+policy: All features must pass security review before beta | always: require-security-review | action: block
 
 audit: Plan created | by: execution-agent | at: 2026-03-16T09:00:00Z | level: info
 ```

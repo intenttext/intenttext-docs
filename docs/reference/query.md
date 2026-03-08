@@ -23,6 +23,10 @@ type=task owner=Ahmed due<2026-03-01 sort:due:asc limit:10
 
 Space-separated conditions. All conditions are ANDed.
 
+:::warning Whitespace limitation
+Conditions are split on whitespace. Values that contain spaces (e.g., `owner=Ahmed Al-Rashid`) cannot be expressed in the string syntax — the parser will treat `Al-Rashid` as a separate (broken) token. Use the programmatic API with `QueryOptions` for multi-word values.
+:::
+
 ### Operators
 
 | Operator         | Description      | Example                   |
@@ -118,16 +122,14 @@ const results = queryDocument(doc, {
 
 ### Return value
 
-Array of matching blocks with full metadata:
+Array of matching `IntentBlock` objects:
 
 ```javascript
 [
   {
     type: "deadline",
     content: "Q2 deliverables due",
-    section: "Timeline",
     properties: { due: "2026-06-30", status: "pending" },
-    line: 42,
   },
 ];
 ```

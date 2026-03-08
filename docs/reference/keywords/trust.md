@@ -50,7 +50,7 @@ approve: Compliance review | by: Maria Santos | role: Compliance Officer | ref: 
 **Category:** Trust
 **Since:** v2.8
 
-Cryptographic digital signature. The signer's identity and a content hash are recorded in the document.
+Integrity hash seal. Records the signer's name, role, timestamp, and a SHA-256 hash of the document body at the time of signing. If the document is modified after signing, the stored hash will no longer match and verification will report the discrepancy. This is tamper evidence via hash comparison, not cryptographic non-repudiation (there are no private keys or PKI).
 
 ### Syntax
 
@@ -75,13 +75,13 @@ sign: James Miller | role: CFO | at: 2026-03-06T15:00:00Z
 
 ### `sign:` vs `signline:`
 
-|                  | `sign:`                                 | `signline:`                             |
-| ---------------- | --------------------------------------- | --------------------------------------- |
-| **Type**         | Digital                                 | Physical                                |
-| **Verification** | Cryptographic hash — machine-verifiable | Visual line on paper — human-verifiable |
-| **Lives in**     | The `.it` file permanently              | The printed/PDF output                  |
-| **Queryable**    | Yes                                     | Yes                                     |
-| **Use case**     | File integrity verification             | Paper contract signatures               |
+|                  | `sign:`                                      | `signline:`                             |
+| ---------------- | -------------------------------------------- | --------------------------------------- |
+| **Type**         | Digital                                      | Physical                                |
+| **Verification** | SHA-256 hash comparison — machine-verifiable | Visual line on paper — human-verifiable |
+| **Lives in**     | The `.it` file permanently                   | The printed/PDF output                  |
+| **Queryable**    | Yes                                          | Yes                                     |
+| **Use case**     | File integrity verification                  | Paper contract signatures               |
 
 Use both when a contract needs digital verification _and_ paper signatures.
 
@@ -229,22 +229,27 @@ Enforceable constraint or rule. Declares policies that agents and workflows must
 ### Syntax
 
 ```
-policy: description | scope: area | enforce: level
+policy: description | if: condition | always: rule | never: rule | action: response | requires: block_type | notify: target
 ```
 
 ### Properties
 
-| Property  | Type   | Description                                           |
-| --------- | ------ | ----------------------------------------------------- |
-| `scope`   | string | What the policy applies to                            |
-| `enforce` | string | `strict` (must follow) or `advisory` (recommendation) |
+| Property   | Type      | Required                        | Description                                       |
+| ---------- | --------- | ------------------------------- | ------------------------------------------------- |
+| `if`       | condition | one of if/always/never required | Conditional rule — applies when condition is true |
+| `always`   | rule      | one of if/always/never required | Rule that applies unconditionally                 |
+| `never`    | rule      | one of if/always/never required | Rule that must never be violated                  |
+| `action`   | response  | yes (if `if:` is set)           | What happens when the policy triggers             |
+| `requires` | string    | no                              | Mandates presence of a specific block type        |
+| `notify`   | string    | no                              | Who to alert when the policy triggers             |
+| `priority` | number    | no                              | Evaluation order (lower = higher priority)        |
 
 ### Examples
 
 ```intenttext
-policy: No production changes during business hours | scope: production | enforce: strict
-policy: All contracts require legal review | scope: contracts | enforce: strict
-policy: Prefer email over phone for initial contact | scope: communications | enforce: advisory
+policy: No production changes during business hours | always: require-approval | action: block | notify: ops-team
+policy: All contracts require legal review | requires: approve | action: block
+policy: Prefer email for initial contact | always: log-reminder | notify: sender
 ```
 
 ---

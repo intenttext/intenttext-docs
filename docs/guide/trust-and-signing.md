@@ -36,13 +36,13 @@ Multiple approvals are common — legal, finance, management, compliance.
 
 ## Step 3: Sign
 
-Cryptographic digital signature:
+Integrity hash seal (tamper-evident record):
 
 ```intenttext
 sign: Ahmed Al-Rashid | role: CEO | at: 2026-03-06T14:32:00Z | hash: sha256:a1b2c3d4...
 ```
 
-`sign:` is digital — it lives in the file and is verifiable by code.
+`sign:` is tamper-evident — it records the signer's name, role, timestamp, and a SHA-256 hash of the document body at the time of signing. If the document is modified after signing, the stored hash will no longer match and verification will report the discrepancy. This is integrity sealing, not cryptographic non-repudiation (there are no private keys or PKI).
 
 ## Step 4: Freeze
 
@@ -182,7 +182,7 @@ History is below the `history:` keyword. You read it, but the CLI manages it.
 
 ## Physical signatures for print
 
-`sign:` is digital — cryptographic, in-file, verifiable.
+`sign:` is tamper-evident — records signer name, role, timestamp, and SHA-256 hash. Verifiable by code.
 `signline:` is physical — a printed signature line for paper:
 
 ```intenttext
@@ -197,12 +197,12 @@ sign: Ahmed Al-Rashid | role: CEO | at: 2026-03-06T14:32:00Z
 signline: Ahmed Al-Rashid | role: CEO | org: Acme Corp | date-line: Date
 ```
 
-|                  | `sign:`            | `signline:`        |
-| ---------------- | ------------------ | ------------------ |
-| **Type**         | Digital            | Physical           |
-| **Verification** | Cryptographic hash | Visual on paper    |
-| **Lives in**     | The `.it` file     | The printed output |
-| **Queryable**    | Yes                | Yes                |
+|                  | `sign:`                 | `signline:`        |
+| ---------------- | ----------------------- | ------------------ |
+| **Type**         | Digital                 | Physical           |
+| **Verification** | SHA-256 hash comparison | Visual on paper    |
+| **Lives in**     | The `.it` file          | The printed output |
+| **Queryable**    | Yes                     | Yes                |
 
 ---
 

@@ -24,7 +24,7 @@ step: Credit check | id: credit | depends: gather | tool: credit-api | input: cu
 
 section: Evaluation
 
-gate: Credit approved | if: credit_score > 650 | then: setup | else: manual-review
+decision: Credit approved? | if: credit_score > 650 | then: setup | else: manual-review
 decision: Account tier | options: standard, premium, enterprise | input: customer_data.revenue | output: tier
 
 section: Account Setup
@@ -44,7 +44,7 @@ done: Onboarding pipeline ready | status: template | time: 2026-03-15T10:00:00Z
 ## Step by step
 
 1. **Steps** — Each `step:` is a unit of work with an `id:`, optional `depends:` for ordering, `tool:` for execution, and `input:`/`output:` for data flow.
-2. **Gates** — `gate:` blocks branch the pipeline. `if:` evaluates a condition, `then:` names the step to run if true, `else:` for false.
+2. **Gates** — `gate:` blocks pause execution until a named approver grants permission. Use `decision:` for automated condition-based branching.
 3. **Decisions** — `decision:` blocks select from options based on data.
 4. **Triggers** — `trigger:` fires on events. `signal:` sends events for other pipelines.
 5. **Audit** — `audit:` blocks log what happened and when.

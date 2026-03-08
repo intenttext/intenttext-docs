@@ -133,10 +133,10 @@ For a fully auditable document:
 
 1. `track:` — enables tracking
 2. `approve:` — records who reviewed
-3. `sign:` — cryptographic signatures
+3. `sign:` — integrity hash seals
 4. `freeze:` — seals the content
 5. `amendment:` — formal post-seal changes
-6. `revision:` — draft history below `---`
+6. `revision:` — draft history below `history:`
 
 ```bash
 # Full picture

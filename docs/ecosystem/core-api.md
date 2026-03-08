@@ -341,7 +341,7 @@ Verify document integrity against its seal.
 import { verifyDocument } from "@intenttext/core";
 
 const result = verifyDocument(source);
-// result.valid, result.hash, result.frozen, result.signatures
+// result.intact, result.hash, result.frozen, result.signers
 ```
 
 ### `computeDocumentHash(source)`
@@ -381,11 +381,20 @@ interface SealResult {
 }
 
 interface VerifyResult {
-  valid: boolean;
-  hash: string;
-  expectedHash?: string;
-  signatures: Array<{ signer: string; valid: boolean }>;
+  intact: boolean;
   frozen: boolean;
+  frozenAt?: string;
+  signers?: Array<{
+    signer: string;
+    role?: string;
+    at: string;
+    valid: boolean;
+    signedCurrentVersion: boolean;
+  }>;
+  hash?: string;
+  expectedHash?: string;
+  error?: string;
+  warning?: string;
 }
 
 interface TrustDiff {
@@ -697,7 +706,7 @@ Union type covering all keyword types across all versions:
 - **Core:** title, summary, section, sub, divider, note, task, done, ask, quote, image, link, code
 - **v2 Agentic:** step, decision, trigger, loop, checkpoint, error, import, export
 - **v2.1:** result, handoff, wait, parallel, retry
-- **v2.2:** gate, call, emit
+- **v2.2:** gate, call, signal (formerly emit)
 - **v2.7:** policy
 - **v2.8 Trust:** track, approve, sign, freeze, revision, meta
 - **v2.9 Layout:** header, footer, watermark, page, font, break

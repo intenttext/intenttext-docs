@@ -241,14 +241,6 @@ const ALL_KEYWORDS: Keyword[] = [
     link: "/docs/reference/keywords/structure#sub",
   },
   {
-    name: "group",
-    category: "Structure",
-    since: "v1.0",
-    description: "Logical grouping of blocks — no visual output",
-    properties: "—",
-    link: "/docs/reference/keywords/structure#group",
-  },
-  {
     name: "break",
     category: "Structure",
     since: "v1.0",

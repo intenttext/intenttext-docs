@@ -40,7 +40,7 @@ WHERE active = true
 
 The `code:` keyword isn't special. Every block is `keyword: value | properties`. The backticks are just value delimiters — like quotes around a string.
 
-## 2. Keywords — 79 of them
+## 2. Keywords — 78 of them
 
 Keywords are grouped into 7 categories:
 
@@ -135,7 +135,7 @@ Documents follow a lifecycle: **draft → tracked → approved → signed → fr
 ```intenttext
 track: | version: 1.0 | by: Ahmed          // activate history
 approve: Legal review | by: Sarah Chen      // named approval
-sign: Ahmed Al-Rashid | role: CEO           // cryptographic signature
+sign: Ahmed Al-Rashid | role: CEO           // integrity hash seal
 freeze: | status: locked                    // seal — no more edits
 amendment: Payment terms | section: Payment | was: 30 days | now: 15 days
 ```

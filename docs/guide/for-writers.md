@@ -9,7 +9,7 @@ You want to write, not fight formatting. IntentText gives you plain text in → 
 
 ## Writer-friendly keywords
 
-You don't need to memorize 79 keywords. Writers use these:
+You don't need to memorize 78 keywords. Writers use these:
 
 | You write                   | It means           | Canonical  |
 | --------------------------- | ------------------ | ---------- |

@@ -9,12 +9,12 @@ The complete technical reference for IntentText v2.13.
 
 ## Keywords
 
-IntentText has **79 keywords** across 7 categories. Each keyword defines a block type.
+IntentText has **78 keywords** across 7 categories. Each keyword defines a block type.
 
-- [All Keywords](./keywords) — sortable, filterable table of all 79 keywords
+- [All Keywords](./keywords) — sortable, filterable table of all 78 keywords
 - [Document Identity](./keywords/document-identity) — `title:`, `summary:`, `meta:`, `context:`, `track:`, `agent:`, `model:`
 - [Content](./keywords/content) — `text:`, `quote:`, `cite:`, `warning:`, `danger:`, `tip:`, `info:`, `success:`, `code:`, `image:`, `link:`, `def:`, `figure:`, `contact:`, `byline:`, `epigraph:`, `caption:`, `footnote:`, `dedication:`
-- [Structure](./keywords/structure) — `section:`, `sub:`, `group:`, `break:`, `ref:`, `deadline:`, `embed:`, `toc:`
+- [Structure](./keywords/structure) — `section:`, `sub:`, `break:`, `ref:`, `deadline:`, `embed:`, `toc:`
 - [Data](./keywords/data) — `columns:`, `row:`, `input:`, `output:`, `metric:`
 - [Agent](./keywords/agent) — `step:`, `gate:`, `trigger:`, `signal:`, `decision:`, `memory:`, `prompt:`, `tool:`, `audit:`, `done:`, `error:`, `result:`, `handoff:`, `wait:`, `parallel:`, `retry:`, `call:`, `loop:`, `checkpoint:`, `import:`, `export:`, `progress:`, `task:`, `ask:`, `assert:`, `secret:`
 - [Trust](./keywords/trust) — `approve:`, `sign:`, `freeze:`, `revision:`, `policy:`, `amendment:`, `history:`

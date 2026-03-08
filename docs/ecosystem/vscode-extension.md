@@ -19,7 +19,7 @@ code --install-extension dotit.intenttext
 
 ### Syntax highlighting
 
-All 79 keywords and 84 aliases are highlighted with semantic coloring:
+All 78 keywords and 84 aliases are highlighted with semantic coloring:
 
 | Category          | Color  | Keywords                                                                               |
 | ----------------- | ------ | -------------------------------------------------------------------------------------- |

@@ -66,7 +66,6 @@ The parser normalizes all aliases to their canonical keyword. Templates, queries
 | ----------- | ------------------------------------------ |
 | `section:`  | `heading:`, `chapter:`                     |
 | `sub:`      | `subheading:`                              |
-| `group:`    | —                                          |
 | `break:`    | —                                          |
 | `ref:`      | `references:`, `see:`, `related:`, `xref:` |
 | `deadline:` | `due:`, `milestone:`, `by:`                |

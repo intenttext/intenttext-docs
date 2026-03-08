@@ -102,30 +102,6 @@ Use `break:` when you need content on the next printed page. Use `divider:` or `
 
 ---
 
-## `group:`
-
-**Category:** Structure
-**Since:** v1.0
-
-Logical grouping of blocks. No visual rendering — used for semantic grouping and query targeting.
-
-### Syntax
-
-```
-group: label
-```
-
-### Examples
-
-```intenttext
-group: Financial Summary
-metric: Revenue | value: 1200000 | unit: USD
-metric: Expenses | value: 890000 | unit: USD
-metric: Net Income | value: 310000 | unit: USD
-```
-
----
-
 ## `ref:`
 
 **Category:** Structure

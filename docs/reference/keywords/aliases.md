@@ -5,20 +5,51 @@ title: Aliases
 
 # Keyword Aliases
 
-IntentText supports **84 aliases** — alternative names for keywords. Use whichever reads best in your document. Every alias compiles to the same internal keyword; there is no behavioral difference.
+Many IntentText keywords have **aliases** — alternative names that compile to the same canonical form. Use whichever reads best in your document. There is no behavioral difference between a canonical keyword and its alias.
 
 ## How aliases work
 
 ```intenttext
 // These are all identical:
 text: Payment is due within 30 days.
+note: Payment is due within 30 days.
 body: Payment is due within 30 days.
-text: Payment is due within 30 days.
-content: Payment is due within 30 days.
 paragraph: Payment is due within 30 days.
 ```
 
-The parser normalizes all aliases to their canonical keyword. Templates, queries, and the API always use canonical names.
+The parser normalizes every alias to its canonical keyword. Templates, queries, and the API always use canonical names.
+
+---
+
+## Callout aliases
+
+`info:` is the canonical callout block. The four variant forms — `warning:`, `danger:`, `tip:`, and `success:` — are aliases that set the callout's `type` property automatically.
+
+```intenttext
+// Canonical form
+info: Aliases are supported across all categories. | type: warning
+
+// Equivalent — both produce { type: "info", properties: { type: "warning" } }
+warning: Aliases are supported across all categories.
+```
+
+| Alias      | Equivalent canonical form           |
+| ---------- | ----------------------------------- |
+| `warning:` | `info: ... \| type: warning`        |
+| `danger:`  | `info: ... \| type: danger`         |
+| `tip:`     | `info: ... \| type: tip`            |
+| `success:` | `info: ... \| type: success`        |
+
+Secondary callout aliases:
+
+| Alias          | Resolves to              |
+| -------------- | ------------------------ |
+| `alert:`       | `info: \| type: warning` |
+| `caution:`     | `info: \| type: warning` |
+| `hint:`        | `info: \| type: tip`     |
+| `advice:`      | `info: \| type: tip`     |
+| `critical:`    | `info: \| type: danger`  |
+| `destructive:` | `info: \| type: danger`  |
 
 ---
 
@@ -28,131 +59,84 @@ The parser normalizes all aliases to their canonical keyword. Templates, queries
 
 | Canonical  | Aliases     |
 | ---------- | ----------- |
-| `title:`   | —           |
+| `title:`   | `h1:`       |
 | `summary:` | `abstract:` |
 | `meta:`    | —           |
 | `context:` | —           |
-| `track:`   | —           |
-| `agent:`   | —           |
-| `model:`   | —           |
-
-### Content
-
-| Canonical     | Aliases                                                  |
-| ------------- | -------------------------------------------------------- |
-| `text:`       | `note:`, `body:`, `content:`, `paragraph:`               |
-| `quote:`      | `blockquote:`, `excerpt:`, `pullquote:`                  |
-| `cite:`       | `citation:`, `source:`, `reference:`                     |
-| `warning:`    | `alert:`, `caution:`                                     |
-| `danger:`     | `critical:`, `destructive:`                              |
-| `tip:`        | `hint:`, `advice:`                                       |
-| `info:`       | —                                                        |
-| `success:`    | —                                                        |
-| `code:`       | `snippet:`                                               |
-| `image:`      | `img:`, `photo:`, `picture:`                             |
-| `link:`       | `url:`, `href:`                                          |
-| `def:`        | `define:`, `term:`, `glossary:`                          |
-| `figure:`     | `fig:`, `chart:`, `diagram:`, `illustration:`, `visual:` |
-| `contact:`    | `person:`, `party:`, `entity:`                           |
-| `byline:`     | —                                                        |
-| `epigraph:`   | —                                                        |
-| `caption:`    | —                                                        |
-| `footnote:`   | —                                                        |
-| `dedication:` | —                                                        |
 
 ### Structure
 
-| Canonical   | Aliases                                    |
-| ----------- | ------------------------------------------ |
-| `section:`  | `heading:`, `chapter:`                     |
-| `sub:`      | `subheading:`                              |
-| `break:`    | —                                          |
-| `ref:`      | `references:`, `see:`, `related:`, `xref:` |
-| `deadline:` | `due:`, `milestone:`, `by:`                |
-| `embed:`    | —                                          |
-| `toc:`      | —                                          |
+| Canonical  | Aliases                           |
+| ---------- | --------------------------------- |
+| `section:` | `h2:`, `heading:`, `chapter:`     |
+| `sub:`     | `h3:`, `subheading:`              |
+| `toc:`     | —                                 |
+
+### Content
+
+| Canonical | Aliases                                                                                   |
+| --------- | ----------------------------------------------------------------------------------------- |
+| `text:`   | `note:`, `body:`, `content:`, `paragraph:`, `p:`                                         |
+| `info:`   | `warning:`, `danger:`, `tip:`, `success:` (see [Callout aliases](#callout-aliases))       |
+| `quote:`  | `blockquote:`, `excerpt:`, `pullquote:`                                                   |
+| `cite:`   | `citation:`, `source:`, `reference:`                                                      |
+| `code:`   | `snippet:`                                                                                |
+| `image:`  | `img:`, `photo:`, `picture:`                                                              |
+| `link:`   | `url:`, `href:`                                                                           |
+
+### Tasks
+
+| Canonical | Aliases                               |
+| --------- | ------------------------------------- |
+| `task:`   | `check:`, `todo:`, `action:`, `item:` |
+| `done:`   | `completed:`, `finished:`             |
+| `ask:`    | `question:`                           |
 
 ### Data
 
 | Canonical  | Aliases                          |
 | ---------- | -------------------------------- |
-| `columns:` | —                                |
+| `columns:` | `headers:`                       |
 | `row:`     | —                                |
-| `input:`   | —                                |
-| `output:`  | —                                |
 | `metric:`  | `kpi:`, `measure:`, `indicator:` |
 
-### Agent
+### Agentic Workflow
 
-| Canonical     | Aliases                                              |
-| ------------- | ---------------------------------------------------- |
-| `step:`       | `run:`                                               |
-| `gate:`       | —                                                    |
-| `trigger:`    | `on:`                                                |
-| `signal:`     | ~~`emit:`~~ (deprecated), ~~`status:`~~ (deprecated) |
-| `decision:`   | `if:`                                                |
-| `memory:`     | —                                                    |
-| `prompt:`     | —                                                    |
-| `tool:`       | —                                                    |
-| `audit:`      | `log:`                                               |
-| `done:`       | —                                                    |
-| `error:`      | —                                                    |
-| `result:`     | —                                                    |
-| `handoff:`    | —                                                    |
-| `wait:`       | —                                                    |
-| `parallel:`   | —                                                    |
-| `retry:`      | —                                                    |
-| `call:`       | —                                                    |
-| `loop:`       | —                                                    |
-| `checkpoint:` | —                                                    |
-| `import:`     | —                                                    |
-| `export:`     | —                                                    |
-| `progress:`   | —                                                    |
-| `task:`       | `check:`, `todo:`, `action:`, `item:`                |
-| `ask:`        | —                                                    |
-| `policy:`     | `rule:`, `constraint:`, `guard:`, `requirement:`     |
-| `assert:`     | `expect:`, `verify:`                                 |
-| `secret:`     | `credential:`, `token:`                              |
+| Canonical   | Aliases                                          |
+| ----------- | ------------------------------------------------ |
+| `step:`     | `run:`                                           |
+| `decision:` | `if:`                                            |
+| `gate:`     | —                                                |
+| `trigger:`  | `on:`                                            |
+| `result:`   | —                                                |
+| `policy:`   | `rule:`, `constraint:`, `guard:`, `requirement:` |
+| `audit:`    | `log:`                                           |
 
 ### Trust
 
 | Canonical    | Aliases             |
 | ------------ | ------------------- |
+| `track:`     | —                   |
 | `approve:`   | —                   |
 | `sign:`      | —                   |
 | `freeze:`    | `lock:`             |
-| `revision:`  | —                   |
 | `amendment:` | `amend:`, `change:` |
-| `history:`   | —                   |
 
 ### Layout
 
-| Canonical    | Aliases                         |
-| ------------ | ------------------------------- |
-| `page:`      | —                               |
-| `font:`      | —                               |
-| `header:`    | —                               |
-| `footer:`    | —                               |
-| `watermark:` | —                               |
-| `signline:`  | `signature-line:`, `sign-here:` |
-| `divider:`   | `hr:`, `separator:`             |
+| Canonical    | Aliases |
+| ------------ | ------- |
+| `page:`      | —       |
+| `header:`    | —       |
+| `footer:`    | —       |
+| `watermark:` | —       |
+| `break:`     | —       |
 
 ---
 
-## Quick counts
+## Extension keyword aliases
 
-| Category          | Keywords | Aliases |
-| ----------------- | -------- | ------- |
-| Document Identity | 7        | 1       |
-| Content           | 19       | 30      |
-| Structure         | 7        | 10      |
-| Data              | 5        | 3       |
-| Agent             | 27       | 19      |
-| Trust             | 6        | 3       |
-| Layout            | 7        | 4       |
-| **Total**         | **78**   | **70**  |
-
-> **Note:** There are also 14 compat-only aliases (e.g. `h1:` → `title:`, `p:` → `text:`, `h2:` → `section:`, `h3:` → `sub:`, `headers:` → `columns:`, `subsection:` → `sub:`, `due-date:` → `deadline:`, `stat:` → `metric:`, `completed:` → `done:`, `finished:` → `done:`, `question:` → `ask:`, `sig:` → `signline:`) bringing the total to **84 aliases**. Compat-only aliases are not shown in documentation or completion hints.
+Extension blocks (`x-ns: type`) do not have aliases — the full `x-ns: type` form is always used. See [Extension Keywords →](./extensions).
 
 ---
 
@@ -177,3 +161,4 @@ Templates always use canonical names. Even if the source document uses an alias,
   "content": "Payment is due within 30 days."
 }
 ```
+

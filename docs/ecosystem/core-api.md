@@ -518,9 +518,100 @@ const diff = diffDocuments(oldDoc, newDoc);
 
 ## Workflow
 
+### `executeWorkflow(document, runtime)`
+
+Run a workflow document against a runtime. Policy enforcement and gate checks are applied before execution begins.
+
+```typescript
+import { executeWorkflow } from "@intenttext/core";
+
+const result = await executeWorkflow(doc, {
+  executeStep: async (block) => {
+    // dispatch block to your agent/tool
+    return { status: "completed", output: "Done" };
+  },
+  evaluateDecision: async (block) => {
+    return { branch: "yes" };
+  },
+  checkGate: async (block) => {
+    return { passed: true };
+  },
+  dryRun: false,
+});
+
+console.log(result.status); // "completed"
+console.log(result.executedSteps); // ["step-1", "step-2", ...]
+```
+
+**Return value:**
+
+```typescript
+interface ExecutionResult {
+  status: "completed" | "gate_blocked" | "policy_blocked" | "error" | "dry_run";
+  executedSteps: string[];
+  skippedSteps: string[];
+  blockingGate?: string;
+  blockingPolicy?: string;
+  error?: string;
+  dryRunPlan?: string[];
+}
+```
+
+**Status reference:**
+
+| Status            | Meaning                                                                 |
+| ----------------- | ----------------------------------------------------------------------- |
+| `completed`       | All steps executed successfully                                         |
+| `gate_blocked`    | A `gate:` check returned `passed: false` — execution halted at that gate |
+| `policy_blocked`  | A `policy:` block's `requires: gate` was not satisfied before execution |
+| `error`           | A step threw an unhandled exception                                     |
+| `dry_run`         | Runtime `dryRun: true` — plan returned without execution                |
+
+**Runtime interface:**
+
+```typescript
+interface WorkflowRuntime {
+  executeStep: (block: IntentBlock) => Promise<StepResult>;
+  evaluateDecision?: (block: IntentBlock) => Promise<DecisionResult>;
+  checkGate?: (block: IntentBlock) => Promise<GateResult>;
+  dryRun?: boolean;
+}
+
+interface StepResult {
+  status: "completed" | "error";
+  output?: string;
+  error?: string;
+}
+
+interface GateResult {
+  passed: boolean;
+  reason?: string;
+}
+
+interface DecisionResult {
+  branch: string;
+}
+```
+
+**Policy enforcement:**
+
+Before the execution loop starts, `executeWorkflow` checks every `policy:` block for `requires: gate`. If the required `gate:` block has not passed, the function returns immediately with `status: "policy_blocked"` and does not execute any steps.
+
+```typescript
+// policy enforcement example
+const doc = parseIntentText(`
+policy: | requires: gate | gate: security-review
+step: Deploy to production
+`);
+
+const result = await executeWorkflow(doc, runtime);
+// result.status === "policy_blocked" if security-review gate is unmet
+// result.blockingPolicy === "policy-id"
+```
+
 ### `extractWorkflow(document)`
 
-Extract a task DAG from step/gate/decision blocks.
+Extract a task DAG from step/gate/decision blocks without executing.
 
 ```typescript
 import { extractWorkflow } from "@intenttext/core";
@@ -701,17 +792,22 @@ interface IntentDocumentMetadata {
 
 ### `BlockType`
 
-Union type covering all keyword types across all versions:
+Union type covering all 37 canonical keywords plus extension namespace blocks.
 
-- **Core:** title, summary, section, sub, divider, note, task, done, ask, quote, image, link, code
-- **v2 Agentic:** step, decision, trigger, loop, checkpoint, error, import, export
-- **v2.1:** result, handoff, wait, parallel, retry
-- **v2.2:** gate, call, signal (formerly emit)
-- **v2.7:** policy
-- **v2.8 Trust:** track, approve, sign, freeze, revision, meta
-- **v2.9 Layout:** header, footer, watermark, page, font, break
-- **v2.9 Editorial:** byline, epigraph, caption, footnote, toc, dedication
-- **v2.11:** def, metric, amendment, figure, signline, contact, deadline
+**Canonical (37 total):**
+
+- **Document Identity (4):** `title`, `summary`, `meta`, `context`
+- **Structure (3):** `section`, `sub`, `toc`
+- **Content (7):** `text`, `info`, `quote`, `cite`, `code`, `image`, `link`
+- **Tasks (3):** `task`, `done`, `ask`
+- **Data (3):** `columns`, `row`, `metric`
+- **Agentic Workflow (7):** `step`, `decision`, `gate`, `trigger`, `result`, `policy`, `audit`
+- **Trust (5):** `track`, `approve`, `sign`, `freeze`, `amendment`
+- **Layout (5):** `page`, `header`, `footer`, `watermark`, `break`
+
+**Extension blocks:**
+
+Extension blocks have the form `x-ns: type` (e.g., `x-agent: loop`, `x-doc: def`). They are typed as `{ type: string; namespace: string }` and passed through the renderer without core evaluation. See [Extension Keywords →](/docs/reference/keywords/extensions).
 
 ### `InlineNode`
 
@@ -747,8 +843,8 @@ interface Diagnostic {
 
 ### `ALIASES`
 
-Record mapping 84 alias keywords to their canonical types. See [Aliases Reference](/docs/reference/keywords/aliases).
+Record mapping alias keywords to their canonical types. Includes callout aliases (`warning:` → `info:` with `type: warning`), shorthand forms, and per-category aliases. See [Aliases Reference](/docs/reference/keywords/aliases).
 
 ### `KEYWORDS`
 
-Array of all recognized keyword strings (~90 entries including canonical and aliases).
+Array of all recognized keyword strings — 37 canonical keywords plus their registered aliases.

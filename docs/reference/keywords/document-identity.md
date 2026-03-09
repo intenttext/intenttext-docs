@@ -5,7 +5,7 @@ title: Document Identity
 
 # Document Identity Keywords
 
-Keywords that define what the document is — its title, metadata, and tracking status.
+Four keywords that establish what a document is — its title, description, metadata, and execution context.
 
 ## `title:`
 
@@ -104,10 +104,10 @@ meta: | theme: corporate | version: 2.1
 
 ## `context:`
 
-**Category:** Identity / Agent
+**Category:** Document Identity
 **Since:** v2.0
 
-Agent execution context. Declares the agent identity, goal, and constraints.
+Execution context for the document — the agent identity, goal, and operating constraints.
 
 ### Syntax
 
@@ -132,101 +132,10 @@ context: Report Generator | goal: Produce monthly financial summary | constraint
 
 ### Notes
 
-- Also appears in the Agent category — it serves both identity and workflow purposes
 - Typically the first block after `title:` in agent task plans
-
----
-
-## `track:`
-
-**Category:** Identity
-**Since:** v2.8
-
-Activates document history tracking. Once set, the CLI records revisions below the `history:` boundary.
-
-### Syntax
-
-```
-track: | version: value | by: author
-```
-
-### Properties
-
-| Property  | Type   | Required | Description                |
-| --------- | ------ | -------- | -------------------------- |
-| `version` | string | yes      | Current version identifier |
-| `by`      | string | yes      | Who created this version   |
-
-### Examples
-
-```intenttext
-track: | version: 1.0 | by: Ahmed Al-Rashid
-track: | version: 2.3 | by: Sarah Chen
-```
-
-### Notes
-
-- `track:` content is typically empty — data is in properties
-- Required before `approve:`, `sign:`, or `freeze:` can be used
-- History is recorded below `history:` as `revision:` blocks
+- Sets the framing for all `step:`, `gate:`, and `decision:` blocks that follow
 
 ### Related
 
-- [`approve:`](./trust#approve) — next step in the trust chain
-- [`revision:`](./trust#revision) — auto-generated history entries
-- [Trust & Signing Guide](../../guide/trust-and-signing)
-
----
-
-## `agent:`
-
-**Category:** Identity
-**Since:** v2.0
-
-Agent name or identifier. Pre-section metadata for workflow documents.
-
-### Syntax
-
-```
-agent: name
-```
-
-### Examples
-
-```intenttext
-agent: Data Migration Bot
-agent: Invoice Processor
-```
-
-### Notes
-
-- Typically appears before the first `section:`
-- Declares which agent owns this workflow document
-
----
-
-## `model:`
-
-**Category:** Identity
-**Since:** v2.0
-
-Default AI model for this document. Pre-section metadata.
-
-### Syntax
-
-```
-model: identifier
-```
-
-### Examples
-
-```intenttext
-model: claude-3
-model: gpt-4
-model: llama-3-70b
-```
-
-### Notes
-
-- Sets the default model for all `prompt:` blocks in the document
-- Individual `prompt:` blocks can override with their own `model:` property
+- [`step:`](./agent#step) — workflow execution unit
+- [For Agents guide →](../../guide/for-agents)

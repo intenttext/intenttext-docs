@@ -1,298 +1,226 @@
 ---
-sidebar_position: 8
+sidebar_position: 9
 title: Layout Keywords
 ---
 
 # Layout Keywords
 
-Keywords that control the printed/PDF appearance of a document. These have no effect in HTML output — they target physical pages.
+Five keywords for controlling how a document looks when rendered — pagination, headers, footers, watermarks, and print page breaks.
 
 ## `page:`
 
 **Category:** Layout
-**Since:** v2.5
+**Since:** v2.0
 
-Set page dimensions and margins.
-
-### Syntax
-
-```
-page: description | size: dimensions | margins: values | orientation: value
-```
-
-### Properties
-
-| Property      | Type   | Default    | Description                                                                                                      |
-| ------------- | ------ | ---------- | ---------------------------------------------------------------------------------------------------------------- |
-| `size`        | string | `A4`       | Page size — `A4`, `Letter`, `Legal`, `A3`, `A5`, or custom `WxH`                                                 |
-| `margins`     | string | `2.54cm`   | Page margins. Single value (all sides), two values (vertical horizontal), or four values (top right bottom left) |
-| `orientation` | string | `portrait` | `portrait` or `landscape`                                                                                        |
-
-### Examples
-
-```intenttext
-page: | size: A4 | margins: 2.54cm
-page: | size: Letter | margins: 1in 1.25in | orientation: landscape
-page: | size: 210mm 297mm | margins: 20mm 25mm 30mm 25mm
-```
-
----
-
-## `font:`
-
-**Category:** Layout
-**Since:** v2.5
-
-Set document fonts.
+Defines the page layout settings for print and PDF output.
 
 ### Syntax
 
 ```
-font: description | body: family | heading: family | mono: family | size: value
+page: | size: value | orientation: value | margin: value
 ```
 
 ### Properties
 
-| Property  | Type   | Default       | Description           |
-| --------- | ------ | ------------- | --------------------- |
-| `body`    | string | Theme default | Body text font family |
-| `heading` | string | Theme default | Heading font family   |
-| `mono`    | string | Theme default | Monospace font family |
-| `size`    | string | `11pt`        | Base font size        |
+| Property      | Type   | Description                                          |
+| ------------- | ------ | ---------------------------------------------------- |
+| `size`        | string | Paper size — `A4`, `letter`, `legal`, `A3`           |
+| `orientation` | string | `portrait` (default) or `landscape`                  |
+| `margin`      | string | CSS margin value — `1in`, `2cm`, `normal`, `narrow`  |
 
 ### Examples
 
 ```intenttext
-font: | body: Inter | heading: Inter | mono: JetBrains Mono | size: 11pt
-font: | body: Times New Roman | heading: Georgia | size: 12pt
-font: | body: Helvetica | size: 10pt
+page: | size: A4 | orientation: portrait | margin: 1in
+page: | size: letter | orientation: landscape | margin: 2cm
 ```
+
+### Notes
+
+- Browser rendering inherits the system default — `page:` primarily affects PDF export and print
+- Only one `page:` block per document is valid
+- `margin: normal` is equivalent to `1in` top/bottom, `1.25in` left/right (Word defaults)
+- `margin: narrow` is equivalent to `0.5in` on all sides
 
 ---
 
 ## `header:`
 
 **Category:** Layout
-**Since:** v2.9
+**Since:** v2.0
+**Aliases:** `running-head:`
 
-Page header content. Appears at the top of every printed page.
+Defines the running header for multi-page output.
 
 ### Syntax
 
 ```
-header: content | align: value | size: value
+header: content | align: value | show-on: value
 ```
 
 ### Properties
 
-| Property | Type   | Default  | Description                  |
-| -------- | ------ | -------- | ---------------------------- |
-| `align`  | string | `center` | `left`, `center`, or `right` |
-| `size`   | string | `9pt`    | Font size of the header      |
+| Property   | Type   | Description                                  |
+| ---------- | ------ | -------------------------------------------- |
+| `align`    | string | `left` (default), `center`, or `right`       |
+| `show-on`  | string | `all` (default), `odd`, `even`, `after-first` |
 
 ### Examples
 
 ```intenttext
-header: CONFIDENTIAL | align: right | size: 8pt
-header: Acme Corp — Service Agreement v2.1 | align: left
-header: {{title}} — Page {page} of {pages} | align: center
+header: Acme Corporation Confidential
+header: | align: right | show-on: all
+header: Service Agreement v1.0 | align: center | show-on: after-first
 ```
 
 ### Notes
 
-- `{page}` and `{pages}` are auto-replaced with the current page number and total page count
-- Template variables `{{}}` are resolved before rendering
+- Header is hidden in web rendering — visible in print and PDF only
+- `show-on: after-first` is standard for formal documents — suppresses the header on the title page
+- Content can include template variables: `{{title}}`, `{{page}}`, `{{date}}`
 
 ---
 
 ## `footer:`
 
 **Category:** Layout
-**Since:** v2.9
+**Since:** v2.0
 
-Page footer content. Appears at the bottom of every printed page.
+Defines the running footer for multi-page output, including page numbers.
 
 ### Syntax
 
 ```
-footer: content | align: value | size: value
+footer: content | align: value | show-on: value
 ```
 
 ### Properties
 
-| Property | Type   | Default  | Description                  |
-| -------- | ------ | -------- | ---------------------------- |
-| `align`  | string | `center` | `left`, `center`, or `right` |
-| `size`   | string | `9pt`    | Font size of the footer      |
+| Property   | Type   | Description                                  |
+| ---------- | ------ | -------------------------------------------- |
+| `align`    | string | `left`, `center` (default), or `right`       |
+| `show-on`  | string | `all` (default), `odd`, `even`, `after-first` |
 
 ### Examples
 
 ```intenttext
-footer: Page {page} of {pages} | align: center
-footer: © 2026 Acme Corp. All rights reserved. | align: left | size: 7pt
-footer: Document ID: {hash} — Generated {date} | align: right
+footer: Page {{page}} of {{pages}}
+footer: Confidential — Acme Corporation | align: center | show-on: all
+footer: {{date}} | align: right | show-on: after-first
 ```
+
+### Template variables
+
+| Variable     | Output                         |
+| ------------ | ------------------------------ |
+| `{{page}}`   | Current page number            |
+| `{{pages}}`  | Total page count               |
+| `{{title}}`  | Document title                 |
+| `{{date}}`   | Current date (render time)     |
+| `{{author}}` | Author from `meta:` block      |
+
+### Notes
+
+- Footer is hidden in web rendering — visible in print and PDF only
+- `show-on: after-first` is standard practice — suppresses footer on the title/cover page
 
 ---
 
 ## `watermark:`
 
 **Category:** Layout
-**Since:** v2.9
+**Since:** v2.2
 
-Watermark overlay on every page.
-
-### Syntax
-
-```
-watermark: text | color: value | opacity: value | angle: value | size: value
-```
-
-### Properties
-
-| Property  | Type   | Default   | Description                     |
-| --------- | ------ | --------- | ------------------------------- |
-| `color`   | string | `#cccccc` | Watermark color                 |
-| `opacity` | string | `0.1`     | Opacity (0–1)                   |
-| `angle`   | string | `-45`     | Rotation angle in degrees       |
-| `size`    | string | `72pt`    | Font size of the watermark text |
-
-### Examples
-
-```intenttext
-watermark: DRAFT | color: #ff0000 | opacity: 0.08 | angle: -45
-watermark: CONFIDENTIAL | color: #999999 | opacity: 0.05 | size: 96pt
-watermark: COPY | color: #cccccc | opacity: 0.12
-```
-
----
-
-## `divider:`
-
-**Category:** Layout
-**Since:** v2.12
-**Aliases:** `hr:`, `separator:`
-
-Visible horizontal rule. Identical output to a bare `---` line, but supports style properties.
+Watermark printed diagonally across every page.
 
 ### Syntax
 
 ```
-divider:
-divider: | style: value
----
+watermark: text | opacity: value | color: value | angle: degrees
 ```
 
 ### Properties
 
-| Property | Type   | Default | Description                              |
-| -------- | ------ | ------- | ---------------------------------------- |
-| `style`  | string | `solid` | Line style — `solid`, `dashed`, `dotted` |
+| Property  | Type   | Description                                          |
+| --------- | ------ | ---------------------------------------------------- |
+| `opacity` | number | 0.0–1.0, default `0.15`                              |
+| `color`   | string | CSS color — default `gray`                           |
+| `angle`   | number | Rotation in degrees, default `45`                    |
 
 ### Examples
 
 ```intenttext
-divider:
-divider: | style: dashed
-divider: | style: dotted
+watermark: DRAFT
+watermark: CONFIDENTIAL | opacity: 0.2 | color: red
+watermark: For Review Only | opacity: 0.1 | angle: 30
 ```
-
-### The `---` shorthand
-
-A bare `---` on its own line is equivalent to `divider:` with no properties. It always renders as a visible horizontal rule (`<hr>`).
-
-```intenttext
-text: Section one content.
----
-text: Section two content.
-```
-
-As of v2.12, `---` is no longer reserved as a history boundary. It is a visible divider everywhere it appears.
-
-### `divider:` vs `break:`
-
-|              | `divider:` / `---`                 | `break:`                                |
-| ------------ | ---------------------------------- | --------------------------------------- |
-| **Visible**  | Yes — renders as `<hr>`            | No — invisible in web output            |
-| **Web**      | Horizontal rule                    | Hidden (`display:none`, `aria-hidden`)  |
-| **Print**    | Horizontal rule                    | Page break (`page-break-after: always`) |
-| **Use case** | Visual separation between sections | Force content to the next printed page  |
 
 ### Notes
 
-- `---` and `divider:` produce identical output when no properties are set
-- Use `divider: | style: dashed` for a dashed line, `dotted` for dots
-- In print output, the divider renders as a printed horizontal line (not a page break)
-
-### Related
-
-- [`break:`](./structure#break) — invisible web, page break in print
-- [Migrating to v2.12 →](../../guide/migrating-to-v212)
+- Printed diagonally across every page in print/PDF output
+- Visible in web rendering as a CSS background layer
+- Remove by deleting the `watermark:` block — sealing the document with `freeze:` prevents removal
 
 ---
 
-## `signline:`
+## `break:`
 
 **Category:** Layout
-**Since:** v2.11
-**Aliases:** `signature-line:`, `sign-here:`, `sig:`
+**Since:** v1.0
 
-Physical signature line for printed documents. This keyword creates a visual line-for-ink on the page, not a digital signature.
+Page break for print output. Invisible in web rendering — renders as `display:none` with `aria-hidden="true"`. In print and PDF, forces a page break at the point where `break:` appears.
 
 ### Syntax
 
 ```
-signline: signer name | role: title | label: text | width: value
+break:
+break: | before: value | keep: value
 ```
 
 ### Properties
 
-| Property | Type   | Default     | Description                 |
-| -------- | ------ | ----------- | --------------------------- |
-| `role`   | string | —           | Signer's role               |
-| `label`  | string | `Signature` | Text printed below the line |
-| `width`  | string | `60%`       | Width of the signature line |
+| Property | Type    | Description                                                   |
+| -------- | ------- | ------------------------------------------------------------- |
+| `before` | boolean | Force a page break before the following content               |
+| `keep`   | string  | Keep surrounding content together — `together` or `avoid`    |
 
 ### Examples
 
 ```intenttext
-signline: Ahmed Al-Rashid | role: CEO | label: Authorized Signature
-signline: Sarah Chen | role: General Counsel | label: Legal Approval | width: 50%
-signline: James Miller | role: CFO
+section: Chapter One
+text: Introduction material...
+
+break:
+
+section: Chapter Two
+text: New chapter starts on a fresh page.
 ```
-
-### `signline:` vs `sign:`
-
-|                  | `signline:`                             | `sign:`                                 |
-| ---------------- | --------------------------------------- | --------------------------------------- |
-| **Purpose**      | Physical line on paper for wet ink      | Digital signature in the file           |
-| **Appears in**   | PDF/print output only                   | The `.it` file structure                |
-| **Verification** | Human visual — someone signed the paper | Machine — hash matches content          |
-| **Common use**   | Contracts that need physical signatures | Digital verification and seal integrity |
-
-Use `signline:` when you need people to physically sign a printed document. Use `sign:` when you need machine-verifiable proof of who signed. Use both when a contract needs both.
-
-### Typical trust + layout combination
 
 ```intenttext
-title: Service Agreement
-
-section: Terms
-text: Payment within 30 days of delivery...
-
-section: Signatures
-
-// Digital signatures (in the file)
-approve: Legal review | by: Sarah Chen | role: General Counsel | at: 2026-03-05
-sign: Ahmed Al-Rashid | role: CEO | at: 2026-03-06 | hash: sha256:a1b2c3d4
-
-// Physical signature lines (on printed page)
-signline: Ahmed Al-Rashid | role: CEO | label: Client Signature
-signline: John Davis | role: Director | label: Provider Signature
-
-// Date lines
-signline: | label: Date | width: 30%
-signline: | label: Date | width: 30%
-
-freeze: | status: locked | at: 2026-03-06T14:33:00Z | hash: sha256:e5f6a7b8
+break: | before: true | keep: together
 ```
+
+### `break:` vs `x-layout: divider`
+
+|                | `break:`                       | `x-layout: divider`         |
+| -------------- | ------------------------------ | ----------------------------|
+| **Visible in** | Print/PDF only                 | Both web and print          |
+| **Effect**     | Forces page boundary           | Visual horizontal rule      |
+| **Print**      | New page                       | `<hr>` on the page          |
+| **Web**        | Invisible (`display:none`)     | Rendered thematic break     |
+
+Use `break:` for structural pagination. Use `x-layout: divider` for visible section dividers.
+
+---
+
+## Extension keywords
+
+Typography and decorative layout keywords are available in the `x-layout:` and `x-doc:` namespaces. These are rendered by the renderer but do not affect the core document model.
+
+| Extension         | Purpose                                                         |
+| ----------------- | --------------------------------------------------------------- |
+| `x-layout: font`    | Typography settings — family, size, line-height                 |
+| `x-layout: divider` | Visual horizontal rule, shown in both web and print             |
+| `x-doc: signline`   | Physical signature line for printed/PDF contracts               |
+
+See [Extension Keywords →](./extensions) for full syntax documentation.

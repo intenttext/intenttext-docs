@@ -1,11 +1,51 @@
 ---
-sidebar_position: 7
+sidebar_position: 8
 title: Trust Keywords
 ---
 
 # Trust Keywords
 
-Keywords for document integrity — approvals, signatures, sealing, history, policy enforcement, and formal amendments.
+Five keywords for document integrity — tracking versions, recording approvals, signing with hash verification, sealing against modification, and formally amending sealed documents.
+
+## `track:`
+
+**Category:** Trust
+**Since:** v2.8
+
+Activates document version tracking. Once set, the CLI records revisions below the `history:` boundary automatically.
+
+### Syntax
+
+```
+track: | version: value | by: author
+```
+
+### Properties
+
+| Property  | Type   | Required | Description                |
+| --------- | ------ | -------- | -------------------------- |
+| `version` | string | yes      | Current version identifier |
+| `by`      | string | yes      | Who created this version   |
+
+### Examples
+
+```intenttext
+track: | version: 1.0 | by: Ahmed Al-Rashid
+track: | version: 2.3 | by: Sarah Chen
+```
+
+### Notes
+
+- `track:` content is typically empty — data is in properties
+- Required before `approve:`, `sign:`, or `freeze:` can be used
+- History is recorded automatically below `x-trust: history` as `x-trust: revision` blocks
+
+### Related
+
+- [`approve:`](#approve) — next step in the trust chain
+- [Trust & Signing Guide](../../guide/trust-and-signing)
+
+---
 
 ## `approve:`
 
@@ -50,7 +90,7 @@ approve: Compliance review | by: Maria Santos | role: Compliance Officer | ref: 
 **Category:** Trust
 **Since:** v2.8
 
-Integrity hash seal. Records the signer's name, role, timestamp, and a SHA-256 hash of the document body at the time of signing. If the document is modified after signing, the stored hash will no longer match and verification will report the discrepancy. This is tamper evidence via hash comparison, not cryptographic non-repudiation (there are no private keys or PKI).
+Integrity hash seal. Records the signer's name, role, timestamp, and a SHA-256 hash of the document body at the time of signing. If the document is modified after signing, the stored hash will no longer match and verification will report the discrepancy. This is tamper evidence via hash comparison, not cryptographic non-repudiation.
 
 ### Syntax
 
@@ -73,15 +113,14 @@ sign: Ahmed Al-Rashid | role: CEO | at: 2026-03-06T14:32:00Z | hash: sha256:a1b2
 sign: James Miller | role: CFO | at: 2026-03-06T15:00:00Z
 ```
 
-### `sign:` vs `signline:`
+### `sign:` vs `x-doc: signline`
 
-|                  | `sign:`                                      | `signline:`                             |
-| ---------------- | -------------------------------------------- | --------------------------------------- |
-| **Type**         | Digital                                      | Physical                                |
+|                  | `sign:`                                      | `x-doc: signline`                   |
+| ---------------- | -------------------------------------------- | ----------------------------------- |
+| **Type**         | Digital                                      | Physical                            |
 | **Verification** | SHA-256 hash comparison — machine-verifiable | Visual line on paper — human-verifiable |
-| **Lives in**     | The `.it` file permanently                   | The printed/PDF output                  |
-| **Queryable**    | Yes                                          | Yes                                     |
-| **Use case**     | File integrity verification                  | Paper contract signatures               |
+| **Lives in**     | The `.it` file permanently                   | The printed/PDF output              |
+| **Use case**     | File integrity verification                  | Paper contract signatures           |
 
 Use both when a contract needs digital verification _and_ paper signatures.
 
@@ -124,136 +163,6 @@ freeze: | status: locked | at: 2026-03-06T14:33:00Z | hash: sha256:e5f6a7b8
 
 ---
 
-## `revision:`
-
-**Category:** Trust
-**Since:** v2.8
-
-Auto-generated change record. Appears below the `history:` boundary. Managed by the CLI — you don't write these manually.
-
-### Syntax
-
-```
-revision: | version: value | at: timestamp | by: author | change: description | id: block_id | block: type | section: name | was: old_value | now: new_value
-```
-
-### Properties
-
-| Property  | Type   | Description                       |
-| --------- | ------ | --------------------------------- |
-| `version` | string | Version identifier                |
-| `at`      | string | When the change was made          |
-| `by`      | string | Who made the change               |
-| `change`  | string | Description of what changed       |
-| `id`      | string | Block identifier                  |
-| `block`   | string | Block type that changed           |
-| `section` | string | Section where the change occurred |
-| `was`     | string | Previous value                    |
-| `now`     | string | New value                         |
-
-### Examples
-
-```intenttext
-history:
-revision: | version: 1.0 | at: 2026-03-01 | by: Ahmed | change: Initial draft
-revision: | version: 1.1 | at: 2026-03-03 | by: Sarah | change: Legal review — clause 4.2 updated | section: Payment | was: Net 30 | now: Net 15
-revision: | version: 1.2 | at: 2026-03-05 | by: Ahmed | change: Final edits
-```
-
-### Notes
-
-- Always below the `history:` boundary
-- Generated by the CLI, not written by hand
-- Queryable with `intenttext history`
-
----
-
-## `history:`
-
-**Category:** Trust
-**Since:** v2.12
-
-History boundary marker. Separates the live document from its machine-managed history section. Produces no rendered output — it is a structural marker only.
-
-### Syntax
-
-```
-history:
-```
-
-### Examples
-
-```intenttext
-title: Service Agreement
-text: Terms and conditions...
-
-approve: Legal review | by: Sarah Chen | role: General Counsel
-sign: Ahmed Al-Rashid | role: CEO | hash: sha256:a1b2c3d4
-freeze: | status: locked | hash: sha256:e5f6a7b8
-
-history:
-revision: | version: 1.0 | at: 2026-03-01 | by: Ahmed | change: Initial draft
-revision: | version: 1.1 | at: 2026-03-03 | by: Sarah | change: Legal review
-```
-
-### Notes
-
-- Written automatically by `intenttext seal` and `intenttext amend` — never by the user
-- Everything above `history:` is the document. Everything below is machine-managed history
-- Renderers ignore the history section — it is not visible in HTML or print output
-- `intenttext history <file>` reads the content after this marker
-- If `history:` is present but no `freeze:` block exists, the parser emits a `HISTORY_WITHOUT_FREEZE` warning
-- Replaces the old `---` + `// history` pattern from v2.11 and earlier
-
-### Backward compatibility
-
-The old two-line pattern (`---` followed by `// history`) is still recognized by the parser but emits a `LEGACY_HISTORY_BOUNDARY` diagnostic warning. New documents always use `history:`.
-
-### Related
-
-- [`freeze:`](#freeze) — seals the document before history
-- [`revision:`](#revision) — auto-generated entries below `history:`
-- [Migrating to v2.12 →](../../guide/migrating-to-v212)
-- [Audit Trail cookbook →](../../cookbook/trust/audit-trail)
-
----
-
-## `policy:`
-
-**Category:** Trust
-**Since:** v2.7
-**Aliases:** `rule:`, `constraint:`, `guard:`, `requirement:`
-
-Enforceable constraint or rule. Declares policies that agents and workflows must follow.
-
-### Syntax
-
-```
-policy: description | if: condition | always: rule | never: rule | action: response | requires: block_type | notify: target
-```
-
-### Properties
-
-| Property   | Type      | Required                        | Description                                       |
-| ---------- | --------- | ------------------------------- | ------------------------------------------------- |
-| `if`       | condition | one of if/always/never required | Conditional rule — applies when condition is true |
-| `always`   | rule      | one of if/always/never required | Rule that applies unconditionally                 |
-| `never`    | rule      | one of if/always/never required | Rule that must never be violated                  |
-| `action`   | response  | yes (if `if:` is set)           | What happens when the policy triggers             |
-| `requires` | string    | no                              | Mandates presence of a specific block type        |
-| `notify`   | string    | no                              | Who to alert when the policy triggers             |
-| `priority` | number    | no                              | Evaluation order (lower = higher priority)        |
-
-### Examples
-
-```intenttext
-policy: No production changes during business hours | always: require-approval | action: block | notify: ops-team
-policy: All contracts require legal review | requires: approve | action: block
-policy: Prefer email for initial contact | always: log-reminder | notify: sender
-```
-
----
-
 ## `amendment:`
 
 **Category:** Trust
@@ -286,7 +195,6 @@ amendment: description | section: target | was: previous | now: current | ref: i
 ```intenttext
 amendment: Payment terms updated | section: Payment | was: Net 30 | now: Net 15 | ref: Amendment #1 | by: Ahmed Al-Rashid | approved-by: Sarah Chen
 amendment: Scope extended | section: Scope | now: Includes Phase 2 deliverables | ref: Amendment #2 | by: Ahmed Al-Rashid | at: 2026-04-01
-amendment: Contact updated | section: Parties | was: j.miller@old.co | now: j.miller@globaltech.co | ref: Amendment #3
 ```
 
 ### The amendment model
@@ -294,10 +202,7 @@ amendment: Contact updated | section: Parties | was: j.miller@old.co | now: j.mi
 Without `amendment:`, changing a frozen document means:
 
 1. Breaking the seal (invalidating `freeze:` and `sign:`)
-2. Making edits
-3. Re-approving
-4. Re-signing
-5. Re-freezing
+2. Making edits, re-approving, re-signing, re-freezing
 
 All original signatures are voided. The audit trail has a gap.
 
@@ -322,12 +227,45 @@ intenttext amend contract.it \
 ### Notes
 
 - Validation error `AMENDMENT_WITHOUT_FREEZE` if the document has no `freeze:` block
-- Amendments appear after `freeze:` but before the `history:` boundary
+- Amendments appear after `freeze:` but before the `x-trust: history` boundary
 - Each amendment is independently queryable
-- This is the page every lawyer will read: amendments preserve the evidentiary chain
 
 ### Related
 
 - [`freeze:`](#freeze) — amendments require a frozen document
-- [Amending Frozen Documents cookbook →](../../cookbook/trust/amending-frozen-docs)
 - [Trust & Signing guide →](../../guide/trust-and-signing)
+
+---
+
+## The trust chain
+
+A typical trust workflow combines all five keywords:
+
+```intenttext
+title: Service Agreement
+
+section: Parties
+contact: Ahmed Al-Rashid | role: CEO | email: ahmed@acme.com
+contact: Sarah Chen | role: General Counsel | email: sarah@acme.com
+
+section: Terms
+text: Full contract terms...
+
+track: | version: 1.0 | by: Ahmed Al-Rashid
+approve: Legal review complete | by: Sarah Chen | role: General Counsel | at: 2026-03-05
+sign: Ahmed Al-Rashid | role: CEO | at: 2026-03-06T14:32:00Z | hash: sha256:a1b2c3d4
+freeze: | status: locked | at: 2026-03-06T14:33:00Z | hash: sha256:e5f6a7b8
+```
+
+---
+
+## Extension keywords
+
+Automated history and revision blocks are available in the `x-trust:` namespace. These are managed by the CLI — you do not write them manually.
+
+| Extension            | Purpose                                            |
+| -------------------- | -------------------------------------------------- |
+| `x-trust: history`   | History boundary marker — separates live document from machine-managed history section |
+| `x-trust: revision`  | Auto-generated change record written by `intenttext seal` and `intenttext amend` |
+
+See [Extension Keywords →](./extensions) for full syntax documentation.

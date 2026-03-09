@@ -3,100 +3,160 @@ sidebar_position: 7
 title: For Agents
 ---
 
-# IntentText for AI Agents
+# IntentText for Agents
 
-AI agents produce Markdown. But Markdown has no structure for workflows, no typed blocks, no audit trail, no trust chain.
+AI agents produce Markdown. Markdown has no structure for workflows, no typed blocks, no audit trail, no trust chain.
 
-IntentText gives agents 27 workflow keywords that produce documents machines can execute and humans can read.
+IntentText gives agents a small set of canonical workflow keywords that produce documents machines can execute and humans can read. The executor enforces gate checks and policy rules before a single step runs.
 
-## The agent keywords
+## The workflow keywords
 
-| Keyword       | Purpose                                                |
-| ------------- | ------------------------------------------------------ |
-| `step:`       | A unit of work — the building block                    |
-| `gate:`       | Conditional checkpoint — blocks until condition is met |
-| `trigger:`    | Event-based activation                                 |
-| `signal:`     | Emit a named workflow signal or event                  |
-| `decision:`   | Conditional branching — if/then/else                   |
-| `context:`    | Agent execution context — goal, constraints            |
-| `memory:`     | Agent state or memory                                  |
-| `prompt:`     | LLM prompt template                                    |
-| `tool:`       | External tool declaration                              |
-| `audit:`      | Audit log entry                                        |
-| `done:`       | Completed task item                                    |
-| `error:`      | Error record                                           |
-| `result:`     | Terminal workflow result                               |
-| `handoff:`    | Transfer control to another agent                      |
-| `wait:`       | Pause until event or timeout                           |
-| `parallel:`   | Run multiple steps concurrently                        |
-| `retry:`      | Retry a failed step with backoff                       |
-| `call:`       | Invoke a sub-workflow by file                          |
-| `loop:`       | Iterate over a collection                              |
-| `checkpoint:` | Named workflow checkpoint for resume                   |
-| `import:`     | Import a workflow from a file                          |
-| `export:`     | Export data or workflow output                         |
-| `progress:`   | Progress indicator for long-running ops                |
-| `task:`       | Actionable task item                                   |
-| `ask:`        | Question or open item                                  |
-| `assert:`     | Testable assertion — evaluable by CI                   |
-| `secret:`     | Secret reference — always redacted in output           |
+Seven canonical keywords cover the full agent workflow lifecycle:
+
+| Keyword      | Purpose                                                              |
+| ------------ | -------------------------------------------------------------------- |
+| `step:`      | A unit of work — the primary building block                          |
+| `decision:`  | Conditional branching — if/then/else                                 |
+| `gate:`      | Hard checkpoint — execution blocked until the condition is satisfied |
+| `trigger:`   | Event-based activation                                               |
+| `result:`    | Terminal workflow outcome                                            |
+| `policy:`    | Rule declaration — constraints the executor enforces before running  |
+| `audit:`     | Immutable audit log entry                                            |
+
+**Related keywords in other categories:**
+
+- `task:` / `done:` / `ask:` — task tracking (Tasks category)
+- `context:` — agent execution context, goal, and constraints (Document Identity)
+
+**Extended workflow keywords** (for complex orchestration):
+
+Looping, parallel execution, handoff, retry, wait, checkpoint, and other advanced workflow primitives are available in the `x-agent:` extension namespace. See [Agentic Workflow Keywords →](../reference/keywords/agent#extension-keywords).
+
+---
+
+## Executing a workflow
+
+Use `executeWorkflow()` from `@intenttext/core` to run a document against a runtime. The executor evaluates `policy:` blocks first — if a required gate is unmet, execution returns `policy_blocked` without running any steps.
+
+```typescript
+import { parseIntentText, executeWorkflow } from "@intenttext/core";
+
+const doc = parseIntentText(source);
+
+const result = await executeWorkflow(doc, {
+  executeStep: async (block) => {
+    // dispatch to your agent or tool runner
+    console.log(`Executing: ${block.content}`);
+    return { status: "completed", output: "Done" };
+  },
+  evaluateDecision: async (block) => {
+    // evaluate the if: condition
+    return { branch: "yes" };
+  },
+  checkGate: async (block) => {
+    // check external approval, condition, etc.
+    return { passed: true };
+  },
+});
+
+console.log(result.status); // "completed" | "gate_blocked" | "policy_blocked" | "error" | "dry_run"
+console.log(result.executedSteps);
+```
+
+### Execution result statuses
+
+| Status           | Meaning                                                                 |
+| ---------------- | ----------------------------------------------------------------------- |
+| `completed`      | All steps executed successfully                                         |
+| `gate_blocked`   | A `gate:` check returned `passed: false` — halted at that gate         |
+| `policy_blocked` | A `policy:` `requires: gate` was not satisfied before execution started |
+| `error`          | A step threw an unhandled exception                                     |
+| `dry_run`        | Runtime `dryRun: true` — returns plan without execution                 |
+
+---
 
 ## A complete agent task plan
 
 ```intenttext
 title: Data Migration Pipeline
-context: Data Engineering Agent | goal: Migrate customer data from legacy DB | constraints: Zero downtime, max 4 hours
+context: agent | goal: Migrate customer data from legacy DB | constraints: Zero downtime, max 4 hours
+
+policy: Migrations require manager approval | requires: gate | gate: manager-approval
 
 section: Preparation
-step: Export legacy data | id: export | tool: pg_dump | output: legacy_dump.sql | timeout: 30m
+step: Export legacy data | id: export | tool: pg_dump | timeout: 30m
 step: Validate export | id: validate | depends: export | tool: checksum_verify
 
 section: Migration
-gate: Manager approval | approver: engineering-manager | timeout: 72h | fallback: escalate
-step: Create backup | id: backup | tool: pg_backup | output: backup_2026.sql
-step: Run migration scripts | id: migrate | depends: backup | tool: flyway | input: legacy_dump.sql
-decision: Migration successful? | if: migrate.exit_code == 0 | then: verify | else: rollback
+gate: Manager approval | id: manager-approval | approver: engineering-manager | timeout: 72h
+step: Create backup | id: backup | depends: manager-approval | tool: pg_backup
+step: Run migration scripts | id: migrate | depends: backup | tool: flyway
+decision: Migration successful? | if: migrate.exit_code == 0 | then: verify | else: result-fail
 
 section: Verification
 step: Verify row counts | id: verify | depends: migrate | tool: row_counter
 step: Run integration tests | id: test | depends: verify | tool: pytest
-signal: migration_complete | event: data.migration.done | data: rows={{verify.count}}
-done: Migration complete | status: success
+audit: Migration complete | by: DataBot | at: {{now}} | action: migrate
+result: Success | status: completed
 
 section: Rollback
-step: Restore backup | id: rollback | tool: pg_restore | input: backup_2026.sql
-error: Migration failed | code: MIGRATION_ROLLBACK | severity: critical
-signal: migration_failed | event: data.migration.failed
+result: id: result-fail | status: error | message: Migration failed — rollback initiated
+step: Restore backup | depends: result-fail | tool: pg_restore
 ```
 
-## Pipeline with steps and dependencies
-
-Steps can declare dependencies with `depends:`. The agent (or orchestrator) uses this to determine execution order:
-
-```intenttext
-step: Fetch data | id: fetch | tool: http_get | input: https://api.internal/data
-step: Transform data | id: transform | depends: fetch | tool: jq | input: {{fetch.output}}
-step: Load to warehouse | id: load | depends: transform | tool: bq_load | input: {{transform.output}}
-step: Send notification | id: notify | depends: load | tool: slack_post
-```
+---
 
 ## Gates and decisions
 
-`gate:` blocks execution until a condition is true:
+`gate:` blocks execution until a condition is satisfied:
 
 ```intenttext
-gate: Approval received | approver: engineering-manager | timeout: 72h | fallback: escalate
+gate: Approval received | id: approval | approver: engineering-manager | timeout: 72h
 ```
 
-`decision:` branches based on a condition:
+`decision:` branches the workflow based on a condition:
 
 ```intenttext
 decision: Budget approved? | if: budget.amount <= 10000 | then: auto_approve | else: manager_review
 ```
 
+Gates are evaluated by the `checkGate` handler in your runtime. If `gate:` returns `passed: false`, `executeWorkflow` returns `{ status: "gate_blocked", blockingGate: "approval" }`.
+
+---
+
+## Policy enforcement
+
+`policy:` blocks declare constraints the executor enforces _before_ any step runs:
+
+```intenttext
+policy: No production writes without approval | requires: gate | gate: prod-approval | action: block
+policy: All migrations require a backup step | requires: step | id: backup
+```
+
+If a required gate has not passed, the executor returns `policy_blocked` without touching any steps. No partial execution — either the policy allows the run, or nothing runs.
+
+---
+
+## Audit logging
+
+Agents write `audit:` blocks to build an immutable record of what was executed, by whom, and when:
+
+```intenttext
+audit: Fetched 12,450 records | by: DataBot | at: 2026-03-06T02:15:00Z | action: export
+audit: Migration complete — 0 errors | by: DataBot | at: 2026-03-06T03:45:00Z | action: migrate
+```
+
+Query the audit trail:
+
+```bash
+intenttext query ./logs --type audit --by DataBot --format table
+```
+
+---
+
 ## MCP server integration
 
-The IntentText MCP server gives agents direct access to `.it` files:
+The IntentText MCP server gives agents direct access to `.it` files without the need to import `@intenttext/core` directly:
 
 ```bash
 npm install intenttext-mcp
@@ -104,17 +164,17 @@ npm install intenttext-mcp
 
 Available MCP tools:
 
-| Tool                | Purpose                           |
-| ------------------- | --------------------------------- |
-| `intenttext_parse`  | Parse a `.it` file to JSON        |
-| `intenttext_render` | Render to HTML                    |
-| `intenttext_query`  | Query blocks with filters         |
-| `intenttext_merge`  | Merge template with data          |
-| `intenttext_seal`   | Seal a document                   |
-| `intenttext_verify` | Verify integrity                  |
-| `intenttext_amend`  | Amend a frozen document           |
-| `intenttext_diff`   | Diff two document versions        |
-| `intenttext_source` | Convert JSON back to `.it` source |
+| Tool                | Purpose                            |
+| ------------------- | ---------------------------------- |
+| `intenttext_parse`  | Parse a `.it` file to JSON         |
+| `intenttext_render` | Render to HTML                     |
+| `intenttext_query`  | Query blocks with filters          |
+| `intenttext_merge`  | Merge template with data           |
+| `intenttext_seal`   | Seal a document                    |
+| `intenttext_verify` | Verify integrity                   |
+| `intenttext_amend`  | Amend a frozen document            |
+| `intenttext_diff`   | Diff two document versions         |
+| `intenttext_source` | Convert JSON back to `.it` source  |
 
 Connect to Claude:
 
@@ -129,47 +189,12 @@ Connect to Claude:
 }
 ```
 
-## Audit logging
-
-Agents write `audit:` blocks to record what they did:
-
-```intenttext
-audit: Fetched 12,450 records | by: DataBot | at: 2026-03-06T02:15:00Z | action: export
-audit: Migration complete — 0 errors | by: DataBot | at: 2026-03-06T03:45:00Z | action: migrate
-```
-
-Query the audit trail:
-
-```bash
-intenttext query ./logs --type audit --by DataBot --format table
-```
-
-## Cross-document references
-
-Use `ref:` to link related documents in agent workflows:
-
-```intenttext
-ref: Migration plan | file: ./plans/migration-v2.it | rel: implements
-ref: Rollback procedure | file: ./runbooks/rollback.it | rel: fallback
-ref: Previous migration | file: ./logs/migration-2025.it | rel: supersedes
-```
-
-Agents use `ref:` to navigate a document graph — finding the plan that a log implements, or the runbook to follow when things go wrong.
-
-## Policy enforcement
-
-`policy:` blocks declare rules agents must follow:
-
-```intenttext
-policy: No production writes during business hours | always: require-approval | action: block | notify: ops-team
-policy: All migrations require rollback plan | requires: step | action: block
-```
-
 ---
 
 **Related:**
 
+- [Agentic Workflow Keywords →](../reference/keywords/agent)
+- [Core API — executeWorkflow →](../ecosystem/core-api#workflow)
 - [Task Planning →](../cookbook/agents/task-planning)
 - [Pipeline Definition →](../cookbook/agents/pipeline-definition)
-- [Agent Handoff →](../cookbook/agents/agent-handoff)
 - [MCP Integration →](../cookbook/agents/mcp-integration)

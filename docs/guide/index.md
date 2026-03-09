@@ -17,8 +17,8 @@ IntentText is a plain-text document format that uses **keywords** to give every 
 
 ## What you get
 
-- **78 keywords** across 7 categories — from `text:` to `freeze:`
-- **84 aliases** — write `todo:` and the parser reads `task:`
+- **Canonical + extension language model** — stable core keywords with alias and extension support
+- **Alias normalization** — write `todo:` and the parser resolves it to `task:`
 - **8 built-in themes** — corporate, minimal, warm, technical, print, legal, editorial, dark
 - **Full trust system** — approve, sign, seal, verify, amend
 - **Template engine** — `{{variables}}`, dynamic table rows, data merge

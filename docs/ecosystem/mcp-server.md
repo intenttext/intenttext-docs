@@ -155,4 +155,4 @@ The MCP server operates on the local filesystem. It has the same access as the u
 
 ## Source
 
-Repository: [intenttext-mcp](https://github.com/nicholasgriffintn/intenttext-mcp)
+Repository: [intenttext-mcp](https://github.com/intenttext/intenttext-mcp)

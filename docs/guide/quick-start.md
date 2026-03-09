@@ -16,7 +16,7 @@ npm install @intenttext/core
 Or use the CLI globally:
 
 ```bash
-npx @intenttext/core
+npm install -g intenttext
 ```
 
 ## Write your first `.it` file

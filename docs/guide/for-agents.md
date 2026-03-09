@@ -13,15 +13,15 @@ IntentText gives agents a small set of canonical workflow keywords that produce 
 
 Seven canonical keywords cover the full agent workflow lifecycle:
 
-| Keyword      | Purpose                                                              |
-| ------------ | -------------------------------------------------------------------- |
-| `step:`      | A unit of work — the primary building block                          |
-| `decision:`  | Conditional branching — if/then/else                                 |
-| `gate:`      | Hard checkpoint — execution blocked until the condition is satisfied |
-| `trigger:`   | Event-based activation                                               |
-| `result:`    | Terminal workflow outcome                                            |
-| `policy:`    | Rule declaration — constraints the executor enforces before running  |
-| `audit:`     | Immutable audit log entry                                            |
+| Keyword     | Purpose                                                              |
+| ----------- | -------------------------------------------------------------------- |
+| `step:`     | A unit of work — the primary building block                          |
+| `decision:` | Conditional branching — if/then/else                                 |
+| `gate:`     | Hard checkpoint — execution blocked until the condition is satisfied |
+| `trigger:`  | Event-based activation                                               |
+| `result:`   | Terminal workflow outcome                                            |
+| `policy:`   | Rule declaration — constraints the executor enforces before running  |
+| `audit:`    | Immutable audit log entry                                            |
 
 **Related keywords in other categories:**
 
@@ -30,7 +30,7 @@ Seven canonical keywords cover the full agent workflow lifecycle:
 
 **Extended workflow keywords** (for complex orchestration):
 
-Looping, parallel execution, handoff, retry, wait, checkpoint, and other advanced workflow primitives are available in the `x-agent:` extension namespace. See [Agentic Workflow Keywords →](../reference/keywords/agent#extension-keywords).
+Looping, parallel execution, handoff, retry, wait, checkpoint, and other advanced workflow primitives are available in the `x-agent:` extension namespace. See [Extension Keywords →](../reference/keywords/extensions).
 
 ---
 
@@ -68,7 +68,7 @@ console.log(result.executedSteps);
 | Status           | Meaning                                                                 |
 | ---------------- | ----------------------------------------------------------------------- |
 | `completed`      | All steps executed successfully                                         |
-| `gate_blocked`   | A `gate:` check returned `passed: false` — halted at that gate         |
+| `gate_blocked`   | A `gate:` check returned `passed: false` — halted at that gate          |
 | `policy_blocked` | A `policy:` `requires: gate` was not satisfied before execution started |
 | `error`          | A step threw an unhandled exception                                     |
 | `dry_run`        | Runtime `dryRun: true` — returns plan without execution                 |
@@ -164,17 +164,17 @@ npm install intenttext-mcp
 
 Available MCP tools:
 
-| Tool                | Purpose                            |
-| ------------------- | ---------------------------------- |
-| `intenttext_parse`  | Parse a `.it` file to JSON         |
-| `intenttext_render` | Render to HTML                     |
-| `intenttext_query`  | Query blocks with filters          |
-| `intenttext_merge`  | Merge template with data           |
-| `intenttext_seal`   | Seal a document                    |
-| `intenttext_verify` | Verify integrity                   |
-| `intenttext_amend`  | Amend a frozen document            |
-| `intenttext_diff`   | Diff two document versions         |
-| `intenttext_source` | Convert JSON back to `.it` source  |
+| Tool                | Purpose                           |
+| ------------------- | --------------------------------- |
+| `intenttext_parse`  | Parse a `.it` file to JSON        |
+| `intenttext_render` | Render to HTML                    |
+| `intenttext_query`  | Query blocks with filters         |
+| `intenttext_merge`  | Merge template with data          |
+| `intenttext_seal`   | Seal a document                   |
+| `intenttext_verify` | Verify integrity                  |
+| `intenttext_amend`  | Amend a frozen document           |
+| `intenttext_diff`   | Diff two document versions        |
+| `intenttext_source` | Convert JSON back to `.it` source |
 
 Connect to Claude:
 

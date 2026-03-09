@@ -438,7 +438,7 @@ Build a shallow `.it-index` for a folder.
 ```typescript
 import { buildShallowIndex } from "@intenttext/core";
 
-const index = buildShallowIndex("./contracts", filesMap, "2.11.0");
+const index = buildShallowIndex("./contracts", filesMap, "3.1.0");
 ```
 
 ### `buildIndexEntry(document, source, modifiedAt)`
@@ -559,13 +559,13 @@ interface ExecutionResult {
 
 **Status reference:**
 
-| Status            | Meaning                                                                 |
-| ----------------- | ----------------------------------------------------------------------- |
-| `completed`       | All steps executed successfully                                         |
-| `gate_blocked`    | A `gate:` check returned `passed: false` — execution halted at that gate |
-| `policy_blocked`  | A `policy:` block's `requires: gate` was not satisfied before execution |
-| `error`           | A step threw an unhandled exception                                     |
-| `dry_run`         | Runtime `dryRun: true` — plan returned without execution                |
+| Status           | Meaning                                                                  |
+| ---------------- | ------------------------------------------------------------------------ |
+| `completed`      | All steps executed successfully                                          |
+| `gate_blocked`   | A `gate:` check returned `passed: false` — execution halted at that gate |
+| `policy_blocked` | A `policy:` block's `requires: gate` was not satisfied before execution  |
+| `error`          | A step threw an unhandled exception                                      |
+| `dry_run`        | Runtime `dryRun: true` — plan returned without execution                 |
 
 **Runtime interface:**
 

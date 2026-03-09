@@ -747,7 +747,7 @@ export default function KeywordTable(): React.ReactElement {
           {filtered.map((k) => (
             <tr key={k.name}>
               <td>
-                <Link to={k.link}>
+                <Link to={k.link.split("#")[0]}>
                   <code>{k.name}:</code>
                 </Link>
               </td>

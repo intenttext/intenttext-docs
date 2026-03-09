@@ -62,7 +62,7 @@ Point-and-click block addition:
 
 ### Syntax highlighting
 
-All 78 keywords and 84 aliases are highlighted by category:
+IntentText keywords and aliases are highlighted by category:
 
 | Category  | Color      |
 | --------- | ---------- |

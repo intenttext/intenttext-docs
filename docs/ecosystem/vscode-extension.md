@@ -12,14 +12,14 @@ Full IntentText support inside VS Code: syntax highlighting, hover documentation
 Search "IntentText" in the VS Code Extensions panel, or:
 
 ```bash
-code --install-extension dotit.intenttext
+code --install-extension intenttext.intenttext
 ```
 
 ## Features
 
 ### Syntax highlighting
 
-All 78 keywords and 84 aliases are highlighted with semantic coloring:
+IntentText keywords, aliases, and template markers are highlighted with semantic coloring:
 
 | Category          | Color  | Keywords                                                                               |
 | ----------------- | ------ | -------------------------------------------------------------------------------------- |
@@ -117,4 +117,4 @@ Live-rendered preview in a side panel:
 
 ## Source
 
-Repository: [intenttext-vscode](https://github.com/nicholasgriffintn/intenttext-vscode)
+Repository: [intenttext-vscode](https://github.com/intenttext/intenttext-vscode)

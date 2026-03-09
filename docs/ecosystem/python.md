@@ -211,4 +211,4 @@ for metric in results:
 
 ## Source
 
-Repository: [intenttext-python](https://github.com/nicholasgriffintn/intenttext-python)
+Repository: [intenttext-python](https://github.com/intenttext/intenttext-python)

@@ -57,7 +57,7 @@ const index = buildShallowIndex(folder, files, coreVersion);
   "scope": "shallow",
   "folder": "contracts",
   "built_at": "2026-03-15T10:30:00Z",
-  "core_version": "2.11.0",
+  "core_version": "3.1.0",
   "files": {
     "service-agreement.it": {
       "hash": "abc123",

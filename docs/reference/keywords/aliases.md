@@ -33,12 +33,12 @@ info: Aliases are supported across all categories. | type: warning
 warning: Aliases are supported across all categories.
 ```
 
-| Alias      | Equivalent canonical form           |
-| ---------- | ----------------------------------- |
-| `warning:` | `info: ... \| type: warning`        |
-| `danger:`  | `info: ... \| type: danger`         |
-| `tip:`     | `info: ... \| type: tip`            |
-| `success:` | `info: ... \| type: success`        |
+| Alias      | Equivalent canonical form    |
+| ---------- | ---------------------------- |
+| `warning:` | `info: ... \| type: warning` |
+| `danger:`  | `info: ... \| type: danger`  |
+| `tip:`     | `info: ... \| type: tip`     |
+| `success:` | `info: ... \| type: success` |
 
 Secondary callout aliases:
 
@@ -66,23 +66,23 @@ Secondary callout aliases:
 
 ### Structure
 
-| Canonical  | Aliases                           |
-| ---------- | --------------------------------- |
-| `section:` | `h2:`, `heading:`, `chapter:`     |
-| `sub:`     | `h3:`, `subheading:`              |
-| `toc:`     | —                                 |
+| Canonical  | Aliases                       |
+| ---------- | ----------------------------- |
+| `section:` | `h2:`, `heading:`, `chapter:` |
+| `sub:`     | `h3:`, `subheading:`          |
+| `toc:`     | —                             |
 
 ### Content
 
-| Canonical | Aliases                                                                                   |
-| --------- | ----------------------------------------------------------------------------------------- |
-| `text:`   | `note:`, `body:`, `content:`, `paragraph:`, `p:`                                         |
-| `info:`   | `warning:`, `danger:`, `tip:`, `success:` (see [Callout aliases](#callout-aliases))       |
-| `quote:`  | `blockquote:`, `excerpt:`, `pullquote:`                                                   |
-| `cite:`   | `citation:`, `source:`, `reference:`                                                      |
-| `code:`   | `snippet:`                                                                                |
-| `image:`  | `img:`, `photo:`, `picture:`                                                              |
-| `link:`   | `url:`, `href:`                                                                           |
+| Canonical | Aliases                                                                             |
+| --------- | ----------------------------------------------------------------------------------- |
+| `text:`   | `note:`, `body:`, `content:`, `paragraph:`, `p:`                                    |
+| `info:`   | `warning:`, `danger:`, `tip:`, `success:` (see [Callout aliases](#callout-aliases)) |
+| `quote:`  | `blockquote:`, `excerpt:`, `pullquote:`                                             |
+| `cite:`   | `citation:`, `source:`, `reference:`                                                |
+| `code:`   | `snippet:`                                                                          |
+| `image:`  | `img:`, `photo:`, `picture:`                                                        |
+| `link:`   | `url:`, `href:`                                                                     |
 
 ### Tasks
 
@@ -161,4 +161,3 @@ Templates always use canonical names. Even if the source document uses an alias,
   "content": "Payment is due within 30 days."
 }
 ```
-

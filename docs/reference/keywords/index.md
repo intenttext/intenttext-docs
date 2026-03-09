@@ -38,14 +38,14 @@ Each keyword has a dedicated entry in its category page with full syntax, proper
 
 Beyond the 37 canonical keywords, IntentText supports **extension blocks** via a namespaced `x-ns:` prefix. Extensions cover domain-specific and advanced use cases without polluting the core keyword set.
 
-| Namespace   | Domain                       | Examples                                                                                                                                                       |
-| ----------- | ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `x-writer:` | Editorial / publishing       | `byline`, `figure`, `caption`, `footnote`, `epigraph`, `dedication`                                                                                            |
-| `x-doc:`    | Document cross-references    | `def`, `contact`, `deadline`, `ref`, `signline`                                                                                                                |
+| Namespace   | Domain                       | Examples                                                                                                                                                              |
+| ----------- | ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `x-writer:` | Editorial / publishing       | `byline`, `figure`, `caption`, `footnote`, `epigraph`, `dedication`                                                                                                   |
+| `x-doc:`    | Document cross-references    | `def`, `contact`, `deadline`, `ref`, `signline`                                                                                                                       |
 | `x-agent:`  | Advanced agent orchestration | `loop`, `parallel`, `retry`, `wait`, `handoff`, `call`, `checkpoint`, `signal`, `import`, `export`, `progress`, `tool`, `prompt`, `memory`, `error`, `agent`, `model` |
-| `x-trust:`  | Trust history                | `history`, `revision`                                                                                                                                          |
-| `x-layout:` | Advanced typography          | `font`, `divider`                                                                                                                                              |
-| `x-exp:`    | Experimental                 | `assert`, `secret`, `input`, `output`                                                                                                                          |
+| `x-trust:`  | Trust history                | `history`, `revision`                                                                                                                                                 |
+| `x-layout:` | Advanced typography          | `font`, `divider`                                                                                                                                                     |
+| `x-exp:`    | Experimental                 | `assert`, `secret`, `input`, `output`                                                                                                                                 |
 
 Extension blocks follow the same pipe-property syntax as canonical blocks. They are parsed, rendered, and queryable through all core APIs.
 

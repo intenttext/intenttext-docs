@@ -40,7 +40,9 @@ WHERE active = true
 
 The `code:` keyword isn't special. Every block is `keyword: value | properties`. The backticks are just value delimiters — like quotes around a string.
 
-## 2. Keywords — 78 of them
+## 2. Keywords
+
+IntentText has a stable **37-keyword canonical core**, plus aliases and extension keywords for specialized domains.
 
 Keywords are grouped into 7 categories:
 

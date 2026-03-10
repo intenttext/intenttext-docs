@@ -57,7 +57,7 @@ One file. Both audiences. No conversion step.
 
 IntentText ships as a core npm package (`@intenttext/core`) with:
 
-- **79 keywords** covering document identity, content, structure, data, agent workflows, trust, and print layout
+- **A stable canonical keyword core** with aliases and extensions for document identity, content, structure, data, agent workflows, trust, and print layout
 - **8 built-in themes** for professional rendering
 - **A query engine** that works across files and folders
 - **A trust system** — approvals, signatures, sealing, and tamper detection
